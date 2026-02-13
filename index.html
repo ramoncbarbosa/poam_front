@@ -20,11 +20,9 @@
             </div>
             
             <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-gray-600">
-                <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-green-600">Início</a>
-                <a href="javascript:void(0)" onclick="navigateTo('database')" class="hover:text-green-600">Banco de Dados</a>
-                <a href="javascript:void(0)" onclick="navigateTo('publications')" class="hover:text-green-600">Publicações</a>
-                <a href="javascript:void(0)" onclick="navigateTo('projects')" class="hover:text-green-600">Projetos</a>
-                <a href="javascript:void(0)" onclick="navigateTo('team')" class="hover:text-green-600">Equipe</a>
+                <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-green-600 transition-colors">Início</a>
+                <a href="javascript:void(0)" onclick="navigateTo('publications')" class="hover:text-green-600 transition-colors">Publicações</a>
+                <a href="javascript:void(0)" onclick="navigateTo('team')" class="hover:text-green-600 transition-colors">Equipe</a>
             </div>
             <button class="md:hidden text-green-800 relative z-[3100]" onclick="toggleMenu()">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -32,19 +30,19 @@
         </div>
     </header>
 
-    <div id="menu-overlay" onclick="toggleMenu()"></div>
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[2500] hidden opacity-0 transition-opacity duration-300" onclick="toggleMenu()"></div>
     
-    <aside id="mobile-menu"></aside>
+    <aside id="mobile-menu" class="fixed top-0 right-0 h-full w-[70%] max-w-[300px] bg-[#064e3b] z-[3000] translate-x-full transition-transform duration-300 shadow-2xl"></aside>
 
     <main id="content-area"></main>
 
-    <footer id="global-footer" style="display:none;" class="bg-white py-12 border-t">
+    <footer id="global-footer" style="display:none;" class="bg-white py-12 border-t mt-auto">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="flex justify-center space-x-10 mb-8 font-black text-xs tracking-widest text-green-900">
                 <a href="https://www.instagram.com/poam.ufpa/" target="_blank">INSTAGRAM</a>
             </div>
             <p class="text-gray-400 text-sm italic">© 2026 POAM - Belém, Pará - Brasil • UFPA</p>
-            <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link">Desenvolvido por Ramon Castro Barbosa</a>
+            <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link block mt-4 text-[10px] uppercase font-extrabold text-gray-300 hover:text-green-600 transition-colors">Desenvolvido por Ramon Castro Barbosa</a>
         </div>
     </footer>
 
