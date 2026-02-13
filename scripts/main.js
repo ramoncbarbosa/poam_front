@@ -28,7 +28,6 @@ const pubData = [
   { id: 9, t: "Fauna Silvestre e Tráfico", orientadorId: "MD", pesquisadoresIds: ["LC"], d: "15 Out 2022", c: "Estratégias de combate ao comércio ilegal.", textoCompleto: "Levantamento de rotas e impactos na biodiversidade amazônica.", link: "#", image: "https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?q=80&w=2000" }
 ];
 
-// --- VARIÁVEIS DE ESTADO GLOBAL ---
 let htCurrentIndex = 0;
 let lastWindowWidth = window.innerWidth;
 let currentPubB = 0;
@@ -36,7 +35,6 @@ let currentPubPage = 1;
 const pubsPerPage = 5;
 
 // --- 1. SISTEMA DE NAVEGAÇÃO SPA ---
-
 async function loadMenu() {
   const menuAside = document.getElementById('mobile-menu');
   if (!menuAside) return;
@@ -47,20 +45,16 @@ async function loadMenu() {
 }
 
 async function navigateTo(pId, extraData = null) {
-  // BLOQUEIO DE SEGURANÇA: Só permite as páginas liberadas
+  // SEGURANÇA: Restringe acesso a páginas não autorizadas
   const allowedPages = ['home', 'publications', 'team', 'pubdetail'];
-
-  if (!allowedPages.includes(pId)) {
-    console.warn(`Página ${pId} indisponível.`);
-    pId = 'home';
-  }
+  if (!allowedPages.includes(pId)) pId = 'home';
 
   const contentArea = document.getElementById('content-area');
   const globalFooter = document.getElementById('global-footer');
 
   try {
     const response = await fetch(`pages/${pId}.html`);
-    if (!response.ok) throw new Error('Falha ao carregar a página.');
+    if (!response.ok) throw new Error('Falha ao carregar página.');
 
     contentArea.innerHTML = await response.text();
     if (globalFooter) globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
@@ -78,16 +72,12 @@ async function navigateTo(pId, extraData = null) {
     if (menu && menu.classList.contains('open')) {
       menu.classList.remove('open');
       menu.style.transform = 'translateX(100%)';
+      if (overlay) overlay.style.display = 'none';
     }
-    if (overlay) {
-      overlay.classList.add('hidden');
-      overlay.style.opacity = '0';
-    }
-  } catch (error) { console.error("Erro de navegação:", error); }
+  } catch (error) { console.error(error); }
 }
 
 // --- 2. COMPONENTE CORPO CIENTÍFICO ---
-
 async function loadHomeTeamSection() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
@@ -97,7 +87,7 @@ async function loadHomeTeamSection() {
       injectionPoint.innerHTML = await resp.text();
       initHomeCarousel();
     }
-  } catch (e) { console.error("Erro Home-Team:", e); }
+  } catch (e) { console.error(e); }
 }
 
 function createHtCard(m) {
@@ -105,7 +95,7 @@ function createHtCard(m) {
     <div class="ht-card bg-white border border-gray-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all cursor-pointer group" onclick="htToggleCard(event, this)">
         <div class="ht-card-header flex items-center justify-between">
             <div class="ht-info flex items-center gap-5">
-                <div class="ht-photo w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-black text-green-800 text-xl shadow-inner group-hover:bg-green-800 group-hover:text-white transition-colors">${m.i}</div>
+                <div class="ht-photo w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-black text-green-800 text-xl group-hover:bg-green-800 group-hover:text-white transition-colors">${m.i}</div>
                 <div>
                     <h4 class="ht-name font-black text-gray-900 text-lg leading-tight">${m.n}</h4>
                     <p class="ht-role font-bold text-green-700 text-[10px] uppercase tracking-widest mt-1">${m.r}</p>
@@ -139,17 +129,12 @@ function initHomeCarousel() {
     groups.push(researchers.slice(i, i + itemsPerSlide));
   }
   track.innerHTML = groups.map(g => `<div class="ht-slide flex-shrink-0 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">${g.map(createHtCard).join('')}</div>`).join('');
-
   if (dotsContainer) {
-    dotsContainer.innerHTML = groups.map((_, idx) => `<div class="ht-dot w-2 h-2 rounded-full bg-gray-200 cursor-pointer transition-all ${idx === 0 ? 'active !bg-green-800 scale-125' : ''}" onclick="moveResearchTo(${idx})"></div>`).join('');
+    dotsContainer.innerHTML = groups.map((_, idx) => `<div class="ht-dot w-2 h-2 rounded-full bg-gray-200 cursor-pointer transition-all ${idx === htCurrentIndex ? 'active !bg-green-800 scale-125' : ''}" onclick="moveResearchTo(${idx})"></div>`).join('');
   }
-  htCurrentIndex = 0;
-  track.style.transform = `translateX(0)`;
-  updateNavButtons();
 }
 
 // --- 3. COMPONENTE DE PUBLICAÇÕES ---
-
 function renderPublications() {
   const list = document.getElementById('pub-list');
   const track = document.getElementById('bannerTrack');
@@ -161,9 +146,9 @@ function renderPublications() {
          style="background: linear-gradient(to top, rgba(6,78,59,0.95), transparent), url('${p.image}') center/cover no-repeat;"
          onclick="navigateTo('pubdetail', ${p.id})">
         <div class="relative z-10">
-            <span class="bg-green-500 text-white font-bold uppercase text-[10px] px-3 py-1 rounded-full mb-3 inline-block shadow-lg">Destaque</span>
-            <h2 class="text-4xl font-black mb-2 leading-none uppercase italic tracking-tighter">${p.t}</h2>
-            <p class="opacity-90 line-clamp-2 max-w-2xl text-sm font-medium">${p.c}</p>
+            <span class="bg-green-500 text-white font-bold uppercase text-[10px] px-3 py-1 rounded-full mb-3 inline-block">Destaque</span>
+            <h2 class="text-4xl font-black mb-2 leading-none uppercase italic">${p.t}</h2>
+            <p class="opacity-90 line-clamp-2 max-w-2xl text-sm">${p.c}</p>
         </div>
     </div>`).join('');
 
@@ -181,30 +166,28 @@ function renderPubPage(page) {
   const totalPages = Math.ceil(pubData.length / pubsPerPage);
 
   list.innerHTML = paginatedItems.map(p => `
-        <div class="p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group" onclick="navigateTo('pubdetail', ${p.id})">
+        <div class="p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group mb-4" onclick="navigateTo('pubdetail', ${p.id})">
             <h4 class="text-xl font-black text-gray-900 group-hover:text-green-800 transition-colors">${p.t}</h4>
             <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-2 mb-4">${p.d}</p>
-            <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">${p.c}</p>
+            <p class="text-gray-500 text-sm line-clamp-2">${p.c}</p>
         </div>`).join('');
 
   container.innerHTML = `
         <div class="flex items-center justify-center gap-6 mt-12">
-            <button onclick="renderPubPage(${currentPubPage - 1})" class="pub-page-btn px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest border border-gray-200 hover:bg-green-800 hover:text-white transition-all disabled:opacity-20" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
-            <span class="font-black text-green-900 uppercase text-[10px] tracking-widest">Página ${currentPubPage} de ${totalPages}</span>
-            <button onclick="renderPubPage(${currentPubPage + 1})" class="pub-page-btn px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest border border-gray-200 hover:bg-green-800 hover:text-white transition-all disabled:opacity-20" ${currentPubPage === totalPages ? 'disabled' : ''}>Próxima →</button>
+            <button onclick="renderPubPage(${currentPubPage - 1})" class="px-6 py-2 rounded-full font-black text-[10px] uppercase border hover:bg-green-800 hover:text-white transition-all disabled:opacity-20" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
+            <span class="font-black text-green-900 text-[10px]">Página ${currentPubPage} de ${totalPages}</span>
+            <button onclick="renderPubPage(${currentPubPage + 1})" class="px-6 py-2 rounded-full font-black text-[10px] uppercase border hover:bg-green-800 hover:text-white transition-all disabled:opacity-20" ${currentPubPage === totalPages ? 'disabled' : ''}>Próxima →</button>
         </div>`;
 }
 
 function moveB(dir) {
   const track = document.getElementById('bannerTrack');
   if (!track) return;
-  const total = Math.min(pubData.length, 5);
-  currentPubB = (currentPubB + dir + total) % total;
+  currentPubB = (currentPubB + dir + 5) % 5;
   track.style.transform = `translateX(-${currentPubB * 100}%)`;
 }
 
-// --- 4. CONTROLES DE UI ---
-
+// --- 4. CONTROLES E BUG FIXES ---
 function htToggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
@@ -212,10 +195,12 @@ function htToggleCard(event, el) {
   const icon = el.querySelector('.ht-toggle');
 
   document.querySelectorAll('.ht-card.active').forEach(card => {
-    card.classList.remove('active');
-    card.querySelector('.ht-details').style.maxHeight = '0';
-    card.querySelector('.ht-details').style.opacity = '0';
-    card.querySelector('.ht-toggle').innerText = '+';
+    if (card !== el) {
+      card.classList.remove('active');
+      card.querySelector('.ht-details').style.maxHeight = '0';
+      card.querySelector('.ht-details').style.opacity = '0';
+      card.querySelector('.ht-toggle').innerText = '+';
+    }
   });
 
   if (!isActive) {
@@ -223,18 +208,19 @@ function htToggleCard(event, el) {
     details.style.maxHeight = '300px';
     details.style.opacity = '1';
     icon.innerText = '-';
+  } else {
+    el.classList.remove('active');
+    details.style.maxHeight = '0';
+    details.style.opacity = '0';
+    icon.innerText = '+';
   }
 }
 
 function moveResearchTo(idx) {
   htCurrentIndex = idx;
   const track = document.getElementById('home-research-track');
-  const dots = document.querySelectorAll('.ht-dot');
   if (track) track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === htCurrentIndex);
-    dot.style.backgroundColor = i === htCurrentIndex ? '#064e3b' : '#e5e7eb';
-  });
+  document.querySelectorAll('.ht-dot').forEach((dot, i) => dot.style.backgroundColor = i === htCurrentIndex ? '#064e3b' : '#e5e7eb');
 }
 
 function getHtItemsPerSlide() {
@@ -248,20 +234,25 @@ function toggleMenu() {
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('menu-overlay');
   if (!menu || !overlay) return;
-
   const isOpen = menu.classList.contains('open');
   if (isOpen) {
     menu.classList.remove('open');
     menu.style.transform = 'translateX(100%)';
-    overlay.classList.add('hidden');
-    overlay.style.opacity = '0';
+    overlay.style.display = 'none';
   } else {
     menu.classList.add('open');
     menu.style.transform = 'translateX(0)';
-    overlay.classList.remove('hidden');
-    overlay.style.opacity = '1';
+    overlay.style.display = 'block';
   }
 }
+
+// BUG FIX: SCROLL SNAP VS FOOTER
+window.addEventListener('scroll', () => {
+  const container = document.querySelector('.snap-container');
+  if (!container) return;
+  const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 150;
+  container.style.scrollSnapType = isAtBottom ? 'none' : 'y proximity';
+});
 
 window.addEventListener('resize', () => {
   if (document.getElementById('home-research-track')) initHomeCarousel();

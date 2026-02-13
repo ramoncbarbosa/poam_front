@@ -137,7 +137,9 @@ header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backgroun
 .dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; cursor: pointer; }
 .dot.active { background: #064e3b; transform: scale(1.2); }
 
-.snap-container { height: 100vh; scroll-snap-type: y proximity; overflow-y: auto; }
+.snap-container { height: 100vh; scroll-snap-type: y proximity; overflow-y: auto; scroll-behavior: smooth; }
 .snap-section { min-height: 100vh; width: 100%; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; }
-footer { padding: 3rem 0; background: white; border-top: 1px solid #eee; }
-.dev-link { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #9ca3af; text-decoration: none; }
+
+footer { padding: 3rem 0; background: white; border-top: 1px solid #eee; scroll-snap-align: end; }
+.dev-link { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #9ca3af; text-decoration: none; transition: color 0.3s; }
+.dev-link:hover { color: #059669; }
