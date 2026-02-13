@@ -8,124 +8,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
-            scroll-behavior: smooth; 
-            margin: 0; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .snap-container { 
-            height: 100vh; 
-            scroll-snap-type: y mandatory; 
-            scroll-behavior: smooth;
-        }
-        .snap-section { 
-            height: 100vh; 
-            width: 100%; 
-            scroll-snap-align: start; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            position: relative; 
-        }
-
-        .snap-footer { scroll-snap-align: end; }
-
-        .page-content { display: none; padding-top: 80px; flex: 1; }
-        .page-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Mosaico Diamante Matemático */
-        .diamond-grid {
-            position: relative;
-            width: 100%;
-            height: 600px;
-            margin-left: 2rem;
-        }
-        .diamond {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
-            transform: rotate(45deg);
-            border: 4px solid white;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
-            background: #fff;
-            z-index: 1;
-        }
-        .diamond img {
-            width: 145%;
-            height: 145%;
-            object-fit: cover;
-            transform: rotate(-45deg) scale(1.1);
-        }
-        .d1 { top: 0; left: 40%; }
-        .d2 { top: 120px; left: 15%; }
-        .d3 { top: 240px; left: 40%; border-color: #064e3b; border-width: 5px; z-index: 2; }
-        .d4 { top: 360px; left: 15%; }
-        .d5 { top: 480px; left: 40%; }
-
-        #mobile-menu { 
-            position: fixed; top: 0; right: 0; height: 100vh; z-index: 3000;
-            background: #064e3b; width: 80%; max-width: 300px;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%); display: flex; flex-direction: column;
-            padding: 2.5rem; box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-        }
-        #mobile-menu.open { transform: translateX(0); }
-        #menu-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 2500; display: none; }
-        #menu-overlay.active { display: block; }
-
-        .researcher-card { transition: all 0.3s ease; cursor: pointer; border: 1px solid #e5e7eb; }
-        .details-content { max-height: 0; opacity: 0; transition: all 0.4s ease; overflow: hidden; }
-        .researcher-card.active { border-color: #10b981; background: #064e3b; color: white; }
-        .researcher-card.active .details-content { max-height: 500px; opacity: 1; margin-top: 1rem; }
-        
-        .photo-circle { 
-            width: 70px; height: 70px; border-radius: 50%; 
-            background: #10b981; display: flex; align-items: center; justify-content: center; 
-            font-weight: 800; color: white; flex-shrink: 0;
-        }
-
-        .article-banner { height: 350px; position: relative; overflow: hidden; border-radius: 1.5rem; }
-        .article-track { display: flex; transition: transform 0.5s ease; height: 100%; }
-        .article-slide { min-width: 100%; padding: 2rem; display: flex; align-items: flex-end; }
-
-        footer { margin-top: auto; width: 100%; background: white; padding: 3rem 0; border-top: 1px solid #e5e7eb; }
-        .dev-link { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; text-decoration: none; transition: color 0.3s ease; }
-        .dev-link:hover { color: #10b981; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-white">
 
     <header>
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="font-extrabold text-green-800 text-2xl tracking-tighter cursor-pointer" onclick="navigateTo('home')">POAM</h1>
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                <img src="assets/logo.jpg" alt="Logo POAM" class="w-10 h-10 object-cover rounded-full">
+                <h1 class="font-extrabold text-green-800 text-2xl tracking-tighter">POAM</h1>
+            </div>
+            
             <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-gray-600">
                 <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-green-600">Início</a>
-                <a href="javascript:void(0)" onclick="navigateTo('banco-dados')" class="hover:text-green-600">Banco de Dados</a>
-                <a href="javascript:void(0)" onclick="navigateTo('publicacoes')" class="hover:text-green-600">Publicações</a>
-                <a href="javascript:void(0)" onclick="navigateTo('projetos')" class="hover:text-green-600">Projetos</a>
-                <a href="javascript:void(0)" onclick="navigateTo('equipe')" class="hover:text-green-600">Equipe</a>
+                <a href="javascript:void(0)" onclick="navigateTo('database')" class="hover:text-green-600">Banco de Dados</a>
+                <a href="javascript:void(0)" onclick="navigateTo('publications')" class="hover:text-green-600">Publicações</a>
+                <a href="javascript:void(0)" onclick="navigateTo('projects')" class="hover:text-green-600">Projetos</a>
+                <a href="javascript:void(0)" onclick="navigateTo('team')" class="hover:text-green-600">Equipe</a>
             </div>
             <button class="md:hidden text-green-800 relative z-[3100]" onclick="toggleMenu()">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -138,189 +37,25 @@
         <button class="self-end text-white text-3xl mb-10" onclick="toggleMenu()">✕</button>
         <nav class="flex flex-col space-y-6 text-white text-xl font-bold uppercase tracking-wide">
             <a href="javascript:void(0)" onclick="navigateTo('home')">Início</a>
-            <a href="javascript:void(0)" onclick="navigateTo('banco-dados')">Banco de Dados</a>
-            <a href="javascript:void(0)" onclick="navigateTo('publicacoes')">Publicações</a>
-            <a href="javascript:void(0)" onclick="navigateTo('projetos')">Projetos</a>
-            <a href="javascript:void(0)" onclick="navigateTo('equipe')">Equipe</a>
+            <a href="javascript:void(0)" onclick="navigateTo('database')">Banco de Dados</a>
+            <a href="javascript:void(0)" onclick="navigateTo('publications')">Publicações</a>
+            <a href="javascript:void(0)" onclick="navigateTo('projects')">Projetos</a>
+            <a href="javascript:void(0)" onclick="navigateTo('team')">Equipe</a>
         </nav>
     </aside>
 
-    <main id="page-home" class="page-content active !p-0">
-        <div class="snap-container">
-            <section class="snap-section bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000')] bg-cover bg-center text-white text-center">
-                <div class="max-w-4xl mx-auto px-6">
-                    <h2 class="text-6xl md:text-8xl font-black mb-4">POAM</h2>
-                    <p class="text-xl md:text-3xl text-green-300 font-light italic">Políticas Ambientais na Amazônia</p>
-                    <div class="w-24 h-1 bg-green-500 mx-auto mt-8"></div>
-                </div>
-            </section>
-
-            <section class="snap-section bg-white px-6">
-                <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                    <div class="text-left">
-                        <h2 class="text-5xl font-extrabold text-green-900 mb-6 uppercase tracking-tighter">Objetivo</h2>
-                        <p class="text-gray-600 text-xl leading-relaxed mb-10">
-                            Investigar o impacto das políticas ambientais e o comportamento político na região amazônica através de análise técnica e científica de alto nível.
-                        </p>
-                        <div class="bg-green-900 rounded-[2rem] p-10 text-white shadow-2xl">
-                            <h3 class="text-xl font-bold italic mb-4">Foco POAM</h3>
-                            <p class="opacity-80">Sistematização de dados para o desenvolvimento sustentável e governança regional.</p>
-                        </div>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="diamond-grid">
-                            <div class="diamond d1"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600"></div>
-                            <div class="diamond d2"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=600"></div>
-                            <div class="diamond d3"><img src="https://images.unsplash.com/photo-1532996122724-e3c3c5d2811b?q=80&w=600"></div>
-                            <div class="diamond d4"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=600"></div>
-                            <div class="diamond d5"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="snap-section bg-gray-50 px-6 overflow-y-auto">
-                <div class="max-w-5xl mx-auto text-center py-20">
-                    <h2 class="text-4xl font-extrabold text-green-900 mb-16 uppercase tracking-tighter">Corpo Científico</h2>
-                    <h3 class="text-xl font-bold text-green-700 mb-8 uppercase text-left border-l-4 border-green-600 pl-4">Coordenação</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-16">
-                        <div class="researcher-card bg-white p-6 rounded-3xl shadow-sm" onclick="toggleCard(this)">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-4"><div class="photo-circle">MD</div><div class="text-left"><h4 class="font-bold text-gray-800">Dra. Maria Dolores</h4><p class="text-xs text-green-600 font-bold uppercase">Coordenadora</p></div></div>
-                                <span class="toggle-icon">+</span>
-                            </div>
-                            <div class="details-content text-left text-sm pt-4"><p>Doutora em Ciência Política. Especialista em gestão pública amazônica.</p></div>
-                        </div>
-                        <div class="researcher-card bg-white p-6 rounded-3xl shadow-sm" onclick="toggleCard(this)">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-4"><div class="photo-circle">ED</div><div class="text-left"><h4 class="font-bold text-gray-800">Dra. Eugênia Rosa Cabral</h4><p class="text-xs text-green-600 font-bold uppercase">Coordenadora Adjunta</p></div></div>
-                                <span class="toggle-icon">+</span>
-                            </div>
-                            <div class="details-content text-left text-sm pt-4"><p>Doutora e pesquisadora em Políticas de Sustentabilidade.</p></div>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-green-700 mb-8 uppercase text-left border-l-4 border-green-600 pl-4">Demais Pesquisadores</h3>
-                    <div class="grid md:grid-cols-2 gap-6" id="home-researchers"></div>
-                </div>
-            </section>
-
-            <section class="snap-section bg-white px-6">
-                <div class="max-w-6xl mx-auto w-full text-center">
-                    <h2 class="text-3xl font-extrabold text-green-900 mb-8 uppercase">Localização</h2>
-                    <div class="h-[60vh] rounded-[2rem] overflow-hidden border-8 border-green-50 shadow-inner">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.4982836614226!2d-48.4562516!3d-1.4738933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a48d95794105ab%3A0x8f69ac5945bbdc02!2sInstituto%20de%20Filosofia%20e%20Ci%C3%AAncias%20Humanas%20(IFCH)!5e0!3m2!1spt-BR!2sbr!4v1771007856680!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-            </section>
-
-            <footer class="snap-footer py-12">
-                <div class="max-w-7xl mx-auto px-6 text-center">
-                    <div class="flex justify-center space-x-10 mb-8 font-black text-xs tracking-widest text-green-900">
-                        <a href="https://www.instagram.com/poam.ufpa/" class="hover:text-green-500 transition" target="_blank">INSTAGRAM</a>
-                    </div>
-                    <p class="text-gray-400 text-sm italic">© 2026 POAM - Belém, Pará - Brasil • UFPA</p>
-                    <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link">Desenvolvido por Ramon Castro Barbosa</a>
-                </div>
-            </footer>
-        </div>
-    </main>
-
-    <main id="page-banco-dados" class="page-content">
-        <div class="max-w-7xl mx-auto px-6 pb-20 text-center">
-            <h2 class="text-5xl font-black text-green-900 uppercase mb-16">Banco de Dados</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                <div class="bg-white p-8 rounded-3xl border shadow-sm hover:shadow-md transition">
-                    <div class="flex justify-between mb-4"><span class="bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Legislativo</span></div>
-                    <h4 class="text-xl font-bold text-gray-800 mb-2">Leis Ambientais por Município (PA)</h4>
-                    <p class="text-sm text-gray-500 mb-8">Levantamento das aprovações de leis ambientais nos 144 municípios do Pará.</p>
-                    <div class="flex gap-3"><a href="#" class="flex-1 text-center bg-gray-800 text-white font-bold text-[10px] py-3 rounded-xl uppercase">Download CSV</a></div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <main id="page-publicacoes" class="page-content">
-        <div class="max-w-5xl mx-auto px-6 pb-20">
-            <div class="article-banner mb-12 shadow-2xl relative"><div class="article-track" id="bannerTrack"></div></div>
-            <h3 class="text-2xl font-bold text-green-900 mb-8 border-b-2 border-green-100 pb-2 italic">Histórico de Publicações</h3>
-            <div id="pub-list" class="space-y-6"></div>
-        </div>
-    </main>
-
-    <main id="page-equipe" class="page-content">
-        <div class="max-w-5xl mx-auto px-6 pb-20 text-center">
-            <h2 class="text-5xl font-black text-green-900 mb-12 uppercase">Nosso Corpo Científico</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="full-team"></div>
-        </div>
-    </main>
+    <main id="content-area"></main>
 
     <footer id="global-footer" style="display:none;" class="bg-white py-12 border-t">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="flex justify-center space-x-10 mb-8 font-black text-xs tracking-widest text-green-900">
-                <a href="#" class="hover:text-green-500 transition">INSTAGRAM</a>
+                <a href="https://www.instagram.com/poam.ufpa/" class="hover:text-green-500 transition" target="_blank">INSTAGRAM</a>
             </div>
             <p class="text-gray-400 text-sm italic">© 2026 POAM - Belém, Pará - Brasil • UFPA</p>
             <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link">Desenvolvido por Ramon Castro Barbosa</a>
         </div>
     </footer>
 
-    <script>
-        const teamData = [
-            { i: 'MD', n: 'Dra. Maria Dolores', r: 'Coordenadora', d: 'Ciência Política' },
-            { i: 'ED', n: 'Dra. Eugênia Rosa Cabral', r: 'Coordenadora Adjunta', d: 'Políticas de Sustentabilidade' },
-            { i: 'DN', n: 'Dâina Naíny Cunha', r: 'Pesquisadora Principal', d: 'Ciências Sociais' },
-            { i: 'RB', n: 'Ricardo Bezerra', r: 'Pesquisador', d: 'Ecologia' },
-            { i: 'AS', n: 'Aline Silva', r: 'Pesquisadora', d: 'Direito Ambiental' },
-            { i: 'JM', n: 'João Mendes', r: 'Pesquisador', d: 'Geoprocessamento' }
-        ];
-
-        function navigateTo(pId) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById('page-' + pId);
-            if(target) target.classList.add('active');
-            window.scrollTo(0,0);
-            const globalFooter = document.getElementById('global-footer');
-            globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
-            if(pId === 'equipe' || pId === 'home') renderTeam();
-            if(document.getElementById('mobile-menu').classList.contains('open')) toggleMenu();
-        }
-
-        function toggleMenu() {
-            document.getElementById('mobile-menu').classList.toggle('open');
-            document.getElementById('menu-overlay').classList.toggle('active');
-        }
-
-        function toggleCard(el) {
-            const isActive = el.classList.contains('active');
-            document.querySelectorAll('.researcher-card').forEach(c => c.classList.remove('active'));
-            if(!isActive) el.classList.add('active');
-        }
-
-        function renderTeam() {
-            const fullTeam = document.getElementById('full-team');
-            const homeTeam = document.getElementById('home-researchers');
-            const cardHtml = (m) => `
-                <div class="researcher-card bg-white p-6 rounded-3xl shadow-sm border" onclick="toggleCard(this)">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4"><div class="photo-circle">${m.i}</div><div><h4 class="font-bold text-gray-800">${m.n}</h4><p class="text-xs text-green-600 font-bold uppercase">${m.r}</p></div></div>
-                        <span class="toggle-icon">+</span>
-                    </div>
-                    <div class="details-content text-left text-sm pt-4"><p class="mb-4">${m.d}</p><a href="http://lattes.cnpq.br/" target="_blank" class="text-green-600 font-bold">LATTES</a></div>
-                </div>`;
-            if(fullTeam) fullTeam.innerHTML = teamData.map(cardHtml).join('');
-            if(homeTeam) homeTeam.innerHTML = teamData.slice(2).map(cardHtml).join('');
-        }
-
-        const pubs = Array.from({length: 40}, (_, i) => ({ id: 40-i, title: `Estudo POAM #${40-i}`, date: `Fev 2026`, link: `#` }));
-        function renderPubs() {
-            const list = document.getElementById('pub-list');
-            if(list) list.innerHTML = pubs.slice(0,5).map(p => `<div class="bg-white p-8 rounded-3xl border shadow-sm"><span class="text-xs font-bold text-green-600 uppercase tracking-widest">${p.date}</span><h4 class="text-xl font-bold text-gray-800 mt-1 mb-4 italic">${p.title}</h4><a href="${p.link}" target="_blank" class="text-green-700 font-bold text-xs underline">Acessar →</a></div>`).join('');
-            const track = document.getElementById('bannerTrack');
-            if(track) track.innerHTML = pubs.slice(0,5).map(p => `<div class="article-slide" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1200'); background-size: cover;"><h2 class="text-white text-3xl font-black italic">${p.title}</h2></div>`).join('');
-        }
-
-        renderPubs();
-        navigateTo('home');
-    </script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
