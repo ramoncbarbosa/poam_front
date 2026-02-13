@@ -17,112 +17,69 @@ const teamData = [
 
 // --- DADOS DE PUBLICAÇÕES CIENTÍFICAS ---
 const pubData = [
-  {
-    id: 0,
-    t: "Governança Ambiental na Amazônia",
-    orientador: "Dra. Maria Dolores",
-    pesquisadores: ["Dâina Naíny Cunha", "Ricardo Bezerra"],
-    d: "15 de Outubro, 2023",
-    c: "Análise sobre as novas políticas de conservação e o papel das instituições locais no monitoramento da biodiversidade.",
-    textoCompleto: "Este estudo detalha as métricas de governança aplicadas no período de 2020-2023, demonstrando como a participação local reduz em 20% os índices de desmatamento ilegal em áreas protegidas.",
-    link: "http://lattes.cnpq.br/"
-  },
-  {
-    id: 1,
-    t: "Dinâmicas Territoriais e Conflitos",
-    orientador: "Ricardo Bezerra",
-    pesquisadores: ["Aline Silva", "João Mendes"],
-    d: "20 de Agosto, 2023",
-    c: "Estudo focado no sudeste paraense e as transformações no uso do solo.",
-    textoCompleto: "A pesquisa mapeia os conflitos fundiários através de dados geoprocessados, oferecendo uma nova perspectiva sobre a expansão da fronteira agrícola amazônica.",
-    link: "http://lattes.cnpq.br/"
-  },
-  {
-    id: 2,
-    t: "Sustentabilidade em Áreas Urbanas",
-    orientador: "Dra. Eugênia Rosa Cabral",
-    pesquisadores: ["Lucas Costa", "Dâina Naíny Cunha"],
-    d: "12 de Maio, 2023",
-    c: "Políticas públicas para cidades resilientes no contexto amazônico.",
-    textoCompleto: "O artigo foca na urbanização de Belém e Manaus, sugerindo modelos de drenagem sustentável baseados em soluções baseadas na natureza (SbN).",
-    link: "http://lattes.cnpq.br/"
-  }
+  { id: 0, t: "Governança Ambiental na Amazônia", orientadorId: "MD", pesquisadoresIds: ["DN", "RB"], d: "15 Out 2023", c: "Análise sobre as novas políticas de conservação.", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000" },
+  { id: 1, t: "Dinâmicas Territoriais e Conflitos", orientadorId: "RB", pesquisadoresIds: ["AS", "JM"], d: "20 Ago 2023", c: "Estudo focado no sudeste paraense.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" },
+  { id: 2, t: "Sustentabilidade em Áreas Urbanas", orientadorId: "ED", pesquisadoresIds: ["LC", "DN"], d: "12 Mai 2023", c: "Políticas públicas para cidades resilientes.", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" },
+  { id: 3, t: "Uso do Solo e Fronteira Agrícola", orientadorId: "MD", pesquisadoresIds: ["RB"], d: "05 Abr 2023", c: "Impactos do agronegócio na floresta primária.", image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2000" },
+  { id: 4, t: "Hidrografia e Ribeirinhos", orientadorId: "ED", pesquisadoresIds: ["AS"], d: "18 Mar 2023", c: "A gestão das águas e comunidades tradicionais.", image: "https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?q=80&w=2000" },
+  { id: 5, t: "Bioeconomia Amazônica", orientadorId: "MD", pesquisadoresIds: ["JM"], d: "10 Fev 2023", c: "Cadeias produtivas sustentáveis e inovação.", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" },
+  { id: 6, t: "Mineração em Terras Indígenas", orientadorId: "ED", pesquisadoresIds: ["DN", "LC"], d: "25 Jan 2023", c: "Conflitos e impactos ambientais.", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000" },
+  { id: 7, t: "Climatologia Regional", orientadorId: "MD", pesquisadoresIds: ["RB"], d: "12 Dez 2022", c: "Mudanças microclimáticas em zonas desmatadas.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" },
+  { id: 8, t: "Legislação Ambiental e Gestão", orientadorId: "ED", pesquisadoresIds: ["AS", "JM"], d: "30 Nov 2022", c: "O papel dos municípios na fiscalização.", image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2000" },
+  { id: 9, t: "Fauna Silvestre e Tráfico", orientadorId: "MD", pesquisadoresIds: ["LC"], d: "15 Out 2022", c: "Estratégias de combate ao comércio ilegal.", image: "https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?q=80&w=2000" },
+  { id: 10, t: "Ecologia de Paisagem", orientadorId: "ED", pesquisadoresIds: ["DN"], d: "05 Set 2022", c: "Conectividade de fragmentos florestais.", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000" },
+  { id: 11, t: "Políticas de Reflorestamento", orientadorId: "MD", pesquisadoresIds: ["RB", "JM"], d: "22 Ago 2022", c: "Análise de projetos de recuperação de áreas degradas.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" },
+  { id: 12, t: "Sociologia Rural Amazônica", orientadorId: "ED", pesquisadoresIds: ["AS"], d: "10 Jul 2022", c: "Identidade e resistência no campo.", image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2000" },
+  { id: 13, t: "Sistemas Agroflorestais", orientadorId: "MD", pesquisadoresIds: ["LC", "DN"], d: "02 Jun 2022", c: "Produtividade e conservação integradas.", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" },
+  { id: 14, t: "Geoprocessamento Aplicado", orientadorId: "ED", pesquisadoresIds: ["JM"], d: "20 Mai 2022", c: "Novas tecnologias no mapeamento da Amazônia.", image: "https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?q=80&w=2000" },
+  { id: 15, t: "Educação Ambiental Escolar", orientadorId: "MD", pesquisadoresIds: ["AS", "LC"], d: "10 Abr 2022", c: "Conscientização nas escolas da rede pública.", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000" },
+  { id: 16, t: "Turismo Sustentável", orientadorId: "ED", pesquisadoresIds: ["RB"], d: "15 Mar 2022", c: "Potencial econômico da floresta em pé.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" },
+  { id: 17, t: "Saúde Única e Amazônia", orientadorId: "MD", pesquisadoresIds: ["DN"], d: "28 Fev 2022", c: "A relação entre desmatamento e zoonoses.", image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2000" }
 ];
 
 // --- VARIÁVEIS DE ESTADO GLOBAL ---
-let htCurrentIndex = 0;           // Índice atual do carrossel da Home
+let htCurrentIndex = 0;
 let lastWindowWidth = window.innerWidth;
-let currentPubB = 0;              // Índice do banner de publicações
+let currentPubB = 0;
+let currentPubPage = 1;
+const pubsPerPage = 5;
 
-// --- 1. SISTEMA DE NAVEGAÇÃO SPA (SINGLE PAGE APPLICATION) ---
+// --- 1. SISTEMA DE NAVEGAÇÃO SPA ---
 
-/**
- * Carrega o menu lateral mobile
- */
 async function loadMenu() {
   const menuAside = document.getElementById('mobile-menu');
   try {
     const response = await fetch('pages/menu.html');
     if (response.ok) menuAside.innerHTML = await response.text();
-  } catch (e) {
-    console.error("Erro ao carregar o menu lateral:", e);
-  }
+  } catch (e) { console.error("Erro menu lateral:", e); }
 }
 
-/**
- * Gerencia a troca de páginas e inicializa as funções específicas de cada uma
- * @param {string} pId - ID da página (nome do arquivo .html em /pages)
- * @param {any} extraData - Dados adicionais (ex: ID da publicação para detalhes)
- */
 async function navigateTo(pId, extraData = null) {
   const contentArea = document.getElementById('content-area');
   const globalFooter = document.getElementById('global-footer');
 
   try {
     const response = await fetch(`pages/${pId}.html`);
-    if (!response.ok) throw new Error('Falha ao carregar a página solicitada.');
+    if (!response.ok) throw new Error('Falha ao carregar a página.');
 
     contentArea.innerHTML = await response.text();
+    if (globalFooter) globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
 
-    // Footer global visível em todas as páginas exceto na Home (que tem footer próprio)
-    if (globalFooter) {
-      globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
-    }
-
-    // Roteamento de Funções de Inicialização
     switch (pId) {
-      case 'home':
-        await loadHomeTeamSection();
-        break;
-      case 'publications':
-        renderPublications();
-        break;
-      case 'team':
-        renderFullTeamPage();
-        break;
-      case 'pubdetail':
-        // Se houver extraData, renderiza o detalhe específico
-        if (typeof renderPubDetail === 'function') {
-          renderPubDetail(extraData);
-        }
-        break;
+      case 'home': await loadHomeTeamSection(); break;
+      case 'publications': renderPublications(); break;
+      case 'team': renderFullTeamPage(); break;
+      case 'pubdetail': renderPubDetail(extraData); break;
     }
 
-    // Reset de scroll e interface
     window.scrollTo(0, 0);
     const menu = document.getElementById('mobile-menu');
     if (menu && menu.classList.contains('open')) toggleMenu();
-
-  } catch (error) {
-    console.error("Erro de navegação:", error);
-  }
+  } catch (error) { console.error("Erro de navegação:", error); }
 }
 
-// --- 2. COMPONENTE CORPO CIENTÍFICO (HOME & TEAM) ---
+// --- 2. COMPONENTE CORPO CIENTÍFICO (CARDS) ---
 
-/**
- * Busca e injeta a seção de equipe na Home
- */
 async function loadHomeTeamSection() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
@@ -132,15 +89,9 @@ async function loadHomeTeamSection() {
       injectionPoint.innerHTML = await resp.text();
       initHomeCarousel();
     }
-  } catch (e) {
-    console.error("Erro ao carregar componente Home-Team:", e);
-  }
+  } catch (e) { console.error("Erro Home-Team:", e); }
 }
 
-/**
- * Gera o HTML padrão para os cards científicos (usado em múltiplos lugares)
- * @param {object} m - Objeto de dados do membro da equipe
- */
 function createHtCard(m) {
   return `
     <div class="ht-card" onclick="htToggleCard(event, this)">
@@ -161,219 +112,160 @@ function createHtCard(m) {
     </div>`;
 }
 
-/**
- * Renderiza todos os membros na página de equipe completa
- */
 function renderFullTeamPage() {
   const container = document.getElementById('full-team');
-  if (!container) return;
-  container.innerHTML = teamData.map(m => createHtCard(m)).join('');
+  if (container) container.innerHTML = teamData.map(m => createHtCard(m)).join('');
 }
 
-/**
- * Inicializa a lógica do carrossel na Home (Coordenação + Pesquisadores)
- */
 function initHomeCarousel() {
   const coordTarget = document.getElementById('home-coord-target');
   const track = document.getElementById('home-research-track');
   const dotsContainer = document.getElementById('carouselDots');
-
   if (!track || !coordTarget) return;
 
-  // 1. Renderiza os Coordenadores (fixos no topo da seção)
   coordTarget.innerHTML = teamData.slice(0, 2).map(createHtCard).join('');
-
-  // 2. Organiza Pesquisadores em grupos conforme o tamanho da tela
   const researchers = teamData.slice(2);
   const itemsPerSlide = getHtItemsPerSlide();
   const groups = [];
-
   for (let i = 0; i < researchers.length; i += itemsPerSlide) {
     groups.push(researchers.slice(i, i + itemsPerSlide));
   }
-
-  // 3. Injeta os slides no trilho (track)
   track.innerHTML = groups.map(g => `<div class="ht-slide">${g.map(createHtCard).join('')}</div>`).join('');
-
-  // 4. Gera as bolinhas (dots) de navegação
   if (dotsContainer) {
-    dotsContainer.innerHTML = groups.map((_, idx) =>
-      `<div class="ht-dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`
-    ).join('');
+    dotsContainer.innerHTML = groups.map((_, idx) => `<div class="ht-dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`).join('');
   }
-
   htCurrentIndex = 0;
   track.style.transform = `translateX(0)`;
   updateNavButtons();
 }
 
-// --- 3. COMPONENTE DE PUBLICAÇÕES ---
+// --- 3. COMPONENTE DE PUBLICAÇÕES (BANNER & PAGINAÇÃO) ---
 
-/**
- * Renderiza a lista e o banner de publicações
- */
 function renderPublications() {
   const list = document.getElementById('pub-list');
   const track = document.getElementById('bannerTrack');
   if (!list || !track) return;
 
-  // Banner Superior (Slides)
-  track.innerHTML = pubData.map(p => `
-        <div class="article-slide p-12 flex flex-col justify-center text-white bg-green-900 w-full flex-shrink-0 cursor-pointer" onclick="navigateTo('pubdetail', ${p.id})">
-            <span class="text-green-400 font-bold uppercase text-xs mb-2">Destaque</span>
-            <h2 class="text-3xl font-black mb-4 leading-tight">${p.t}</h2>
-            <p class="opacity-80">${p.c}</p>
+  const latestPubs = pubData.slice(0, 5);
+  track.innerHTML = latestPubs.map(p => `
+    <div class="article-slide flex flex-col justify-end p-12 text-white w-full flex-shrink-0 cursor-pointer relative" 
+         style="background: linear-gradient(to top, rgba(6,78,59,0.95), transparent), url('${p.image}') center/cover no-repeat;"
+         onclick="navigateTo('pubdetail', ${p.id})">
+        <div class="relative z-10">
+            <span class="bg-green-500 text-white font-bold uppercase text-[10px] px-3 py-1 rounded-full mb-3 inline-block">Destaque</span>
+            <h2 class="text-4xl font-black mb-2 leading-none uppercase italic">${p.t}</h2>
+            <p class="opacity-90 line-clamp-2 max-w-2xl">${p.c}</p>
         </div>
-    `).join('');
+    </div>`).join('');
 
-  // Lista Inferior (Histórico)
-  list.innerHTML = pubData.map(p => `
-        <div class="p-6 bg-white border-l-4 border-green-600 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="navigateTo('pubdetail', ${p.id})">
-            <h4 class="text-xl font-bold text-green-900">${p.t}</h4>
-            <p class="text-sm text-gray-500 mb-2">${p.a} • ${p.d}</p>
-            <p class="text-gray-600">${p.c}</p>
-        </div>
-    `).join('');
-
-  moveB(0); // Centraliza banner inicial
+  renderPubPage(1);
 }
 
-/**
- * Move o banner de publicações
- */
+function renderPubPage(page) {
+  const list = document.getElementById('pub-list');
+  const container = document.getElementById('pub-pagination');
+  if (!list || !container) return;
+
+  currentPubPage = page;
+  const start = (page - 1) * pubsPerPage;
+  const paginatedItems = pubData.slice(start, start + pubsPerPage);
+  const totalPages = Math.ceil(pubData.length / pubsPerPage);
+
+  list.innerHTML = paginatedItems.map(p => `
+        <div class="p-6 bg-white border-l-4 border-green-600 shadow-sm hover:shadow-md transition-all cursor-pointer mb-4" onclick="navigateTo('pubdetail', ${p.id})">
+            <h4 class="text-xl font-bold text-green-900">${p.t}</h4>
+            <p class="text-sm text-gray-500 mb-2">${p.d}</p>
+            <p class="text-gray-600 line-clamp-2">${p.c}</p>
+        </div>`).join('');
+
+  container.innerHTML = `
+        <div class="flex items-center justify-center gap-4 mt-10">
+            <button onclick="renderPubPage(${currentPubPage - 1})" class="pub-page-btn" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
+            <span class="font-bold text-green-900 uppercase text-[10px] tracking-widest">Página ${currentPubPage} de ${totalPages}</span>
+            <button onclick="renderPubPage(${currentPubPage + 1})" class="pub-page-btn" ${currentPubPage === totalPages ? 'disabled' : ''}>Próxima →</button>
+        </div>`;
+}
+
 function moveB(dir) {
   const track = document.getElementById('bannerTrack');
   if (!track) return;
-  currentPubB = (currentPubB + dir + pubData.length) % pubData.length;
+  currentPubB = (currentPubB + dir + 5) % 5;
   track.style.transform = `translateX(-${currentPubB * 100}%)`;
 }
 
-/**
- * Renderiza o detalhe de uma publicação específica com layout de artigo
- * @param {number} id - ID da publicação
- */
 function renderPubDetail(id) {
   const container = document.getElementById('detail-content');
   const pub = pubData.find(p => p.id === parseInt(id));
   if (!container || !pub) return;
 
+  const orientador = teamData.find(t => t.i === pub.orientadorId);
+  const orientadorNome = (orientador && orientador.r.toLowerCase().includes('coordenador')) ? orientador.n : "Coordenação Geral POAM";
+  const pesquisadores = (pub.pesquisadoresIds || []).map(pid => teamData.find(t => t.i === pid)).filter(Boolean);
+
   container.innerHTML = `
-      <div class="pub-hero-banner">
-          <p class="pub-date-tag">${pub.d}</p>
-          <h1 class="pub-hero-title">${pub.t}</h1>
-          <div class="pub-divider"></div>
-      </div>
-
-      <div class="pub-team-grid">
-          <div class="pub-team-block">
-              <span class="pub-team-label">Orientação</span>
-              <span class="pub-member-name">${pub.orientador}</span>
-          </div>
-          <div class="pub-team-block">
-              <span class="pub-team-label">Pesquisadores</span>
-              <span class="pub-member-name">${pub.pesquisadores.join(', ')}</span>
+      <div class="pub-banner-hero shadow-2xl" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${pub.image}');">
+          <div class="pub-hero-inner">
+              <span class="pub-type-tag">Destaque Científico</span>
+              <h1 class="pub-hero-title">${pub.t}</h1>
+              <p class="text-green-300 font-bold tracking-widest uppercase text-sm">${pub.d}</p>
           </div>
       </div>
 
-      <div class="pub-body-text">
-          <p class="pub-abstract">${pub.c}</p>
-          <div class="pub-main-content">
-              <p>${pub.textoCompleto}</p>
-              <p>O POAM reafirma seu compromisso com a sistematização de dados para o desenvolvimento sustentável e governança regional através desta linha de pesquisa.</p>
+      <div class="pub-content-layout">
+          <aside class="pub-sidebar">
+              <div class="pub-sidebar-block">
+                  <h4 class="pub-sidebar-label">Orientação</h4>
+                  <p class="pub-sidebar-name">${orientadorNome}</p>
+              </div>
+              <div class="pub-sidebar-block">
+                  <h4 class="pub-sidebar-label">Pesquisadores</h4>
+                  <ul class="pub-sidebar-list">
+                      ${pesquisadores.map(p => `<li>${p.n}</li>`).join('')}
+                  </ul>
+              </div>
+          </aside>
+
+          <div class="pub-main-column">
+              <div class="pub-lead-text">${pub.c}</div>
+              <div class="pub-full-text">
+                  <h2 class="text-3xl font-black text-green-900 mb-6 uppercase">Análise de Resultados</h2>
+                  <p class="mb-6">${pub.textoCompleto || "Conteúdo técnico em fase de revisão final pelo Laboratório POAM."}</p>
+              </div>
+              <div class="pub-footer-action">
+                  <a href="${pub.link}" target="_blank" class="pub-btn-green">Acessar PDF Completo</a>
+              </div>
           </div>
-          
-          <a href="${pub.link}" target="_blank" class="pub-external-btn">
-              Ler Publicação na Íntegra
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-          </a>
-      </div>
-  `;
+      </div>`;
 }
 
 // --- 4. CONTROLES DE INTERAÇÃO E UI ---
 
-/**
- * Gerencia a expansão (toggle) dos cards científicos
- */
 function htToggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
-
-  // Fecha outros cards abertos
   document.querySelectorAll('.ht-card.active').forEach(card => {
     if (card !== el) {
       card.classList.remove('active');
-      const icon = card.querySelector('.ht-toggle');
-      if (icon) icon.innerText = '+';
+      card.querySelector('.ht-toggle').innerText = '+';
     }
   });
-
-  // Abre ou fecha o card atual
   if (!isActive) {
     el.classList.add('active');
-    const icon = el.querySelector('.ht-toggle');
-    if (icon) icon.innerText = '-';
+    el.querySelector('.ht-toggle').innerText = '-';
   } else {
     el.classList.remove('active');
-    const icon = el.querySelector('.ht-toggle');
-    if (icon) icon.innerText = '+';
+    el.querySelector('.ht-toggle').innerText = '+';
   }
 }
 
-/**
- * Move o carrossel para um índice específico
- */
 function moveResearchTo(idx) {
   htCurrentIndex = idx;
   const track = document.getElementById('home-research-track');
   const dots = document.querySelectorAll('.ht-dot');
   if (track) track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === htCurrentIndex);
-  });
-  updateNavButtons();
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === htCurrentIndex));
 }
 
-/**
- * Move o carrossel para frente ou para trás
- */
-function moveResearch(dir) {
-  const slides = document.querySelectorAll('.ht-slide');
-  if (slides.length === 0) return;
-
-  let newIdx = htCurrentIndex + dir;
-  if (newIdx < 0) newIdx = 0;
-  if (newIdx >= slides.length) newIdx = slides.length - 1;
-
-  moveResearchTo(newIdx);
-}
-
-/**
- * Atualiza o estado dos botões de navegação e visibilidade mobile
- */
-function updateNavButtons() {
-  const prev = document.querySelector('.ht-prev');
-  const next = document.querySelector('.ht-next');
-  const slides = document.querySelectorAll('.ht-slide');
-
-  if (prev && next && slides.length > 0) {
-    prev.disabled = (htCurrentIndex === 0);
-    next.disabled = (htCurrentIndex === slides.length - 1);
-
-    // Esconde setas em telas mobile
-    prev.style.display = (window.innerWidth < 768) ? 'none' : 'flex';
-    next.style.display = (window.innerWidth < 768) ? 'none' : 'flex';
-  }
-}
-
-/**
- * Retorna o número de itens visíveis por slide conforme a largura da janela
- */
 function getHtItemsPerSlide() {
   const w = window.innerWidth;
   if (w < 768) return 1;
@@ -381,31 +273,28 @@ function getHtItemsPerSlide() {
   return 3;
 }
 
-/**
- * Alterna a visibilidade do menu mobile
- */
+function updateNavButtons() {
+  const prev = document.querySelector('.ht-prev');
+  const next = document.querySelector('.ht-next');
+  if (prev && next) {
+    prev.style.display = (window.innerWidth < 768) ? 'none' : 'flex';
+    next.style.display = (window.innerWidth < 768) ? 'none' : 'flex';
+  }
+}
+
 function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('open');
-  document.getElementById('menu-overlay').classList.toggle('active');
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('menu-overlay');
+  if (menu) menu.classList.toggle('open');
+  if (overlay) overlay.classList.toggle('active');
 }
 
 // --- 5. INICIALIZADORES E LISTENERS ---
 
-// Listener para ajuste de layout em tempo real (responsividade)
 window.addEventListener('resize', () => {
-  const currentW = window.innerWidth;
-  const oldCols = (lastWindowWidth < 768) ? 1 : (lastWindowWidth < 1150) ? 2 : 3;
-  const newCols = (currentW < 768) ? 1 : (currentW < 1150) ? 2 : 3;
-
-  if (oldCols !== newCols) {
-    if (document.getElementById('home-research-track')) {
-      initHomeCarousel();
-    }
-  }
-  lastWindowWidth = currentW;
+  if (document.getElementById('home-research-track')) initHomeCarousel();
 });
 
-// Inicialização ao carregar o documento
 document.addEventListener('DOMContentLoaded', () => {
   loadMenu();
   navigateTo('home');
