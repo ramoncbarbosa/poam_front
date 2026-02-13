@@ -4,10 +4,20 @@ const teamData = [
   { i: 'DN', n: 'Dâina Naíny Cunha', r: 'Pesquisadora Principal', d: 'Ciências Sociais e análise de políticas públicas.' },
   { i: 'RB', n: 'Ricardo Bezerra', r: 'Pesquisador', d: 'Ecologia e legislação ambiental amazônica.' },
   { i: 'AS', n: 'Aline Silva', r: 'Pesquisadora', d: 'Direito Ambiental e governança de terras.' },
-  { i: 'JM', n: 'João Mendes', r: 'Pesquisador', d: 'Geoprocessamento e mineração de dados políticos.' }
+  { i: 'JM', n: 'João Mendes', r: 'Pesquisador', d: 'Geoprocessamento e mineração de dados políticos.' },
+  { i: 'LC', n: 'Lucas Costa', r: 'Pesquisador', d: 'Análise de dados territoriais.' }
 ];
 
 let currentResearchIdx = 0;
+
+async function loadMenu() {
+  const menuAside = document.getElementById('mobile-menu');
+  try {
+    const response = await fetch('pages/menu.html');
+    const html = await response.text();
+    menuAside.innerHTML = html;
+  } catch (e) { console.error("Erro ao carregar menu:", e); }
+}
 
 async function navigateTo(pId) {
   const contentArea = document.getElementById('content-area');
@@ -25,7 +35,8 @@ async function navigateTo(pId) {
     if (pId === 'publications') renderPublications();
 
     window.scrollTo(0, 0);
-    if (document.getElementById('mobile-menu').classList.contains('open')) toggleMenu();
+    const menu = document.getElementById('mobile-menu');
+    if (menu && menu.classList.contains('open')) toggleMenu();
 
   } catch (error) {
     console.error("Erro na navegação:", error);
@@ -37,20 +48,16 @@ function toggleMenu() {
   document.getElementById('menu-overlay').classList.toggle('active');
 }
 
-// Lógica de abertura/fechamento de cards
 function toggleCard(event, el) {
-  event.stopPropagation(); // Impede que o clique no card dispare o fechamento global
-
+  event.stopPropagation();
   const isActive = el.classList.contains('active');
 
-  // Fecha todos os outros cards abertos
   document.querySelectorAll('.researcher-card').forEach(card => {
     card.classList.remove('active');
     const icon = card.querySelector('.toggle-icon');
     if (icon) icon.innerText = '+';
   });
 
-  // Se o card clicado não estava ativo, abre ele e muda o ícone para '-'
   if (!isActive) {
     el.classList.add('active');
     const icon = el.querySelector('.toggle-icon');
@@ -58,7 +65,6 @@ function toggleCard(event, el) {
   }
 }
 
-// Fecha cards ao clicar em qualquer lugar fora deles
 document.addEventListener('click', () => {
   document.querySelectorAll('.researcher-card').forEach(card => {
     card.classList.remove('active');
@@ -74,11 +80,11 @@ function renderTeam(pId) {
                 <div class="flex items-center space-x-5">
                     <div class="photo-circle">${m.i}</div>
                     <div class="text-left">
-                        <h4 class="researcher-name text-gray-800">${m.n}</h4>
+                        <h4 class="researcher-name">${m.n}</h4>
                         <p class="researcher-role uppercase">${m.r}</p>
                     </div>
                 </div>
-                <span class="toggle-icon text-3xl font-light text-green-700 transition-colors duration-300">+</span>
+                <span class="toggle-icon text-3xl font-light text-green-700">+</span>
             </div>
             <div class="details-content text-left text-sm pt-4">
                 <p class="mb-4 text-base opacity-90">${m.d}</p>
@@ -87,56 +93,80 @@ function renderTeam(pId) {
         </div>`;
 
   if (pId === 'home') {
-    const homeCoord = document.getElementById('home-coord');
-    const researchTrack = document.getElementById('researchTrack');
+    const coord = document.getElementById('home-coord');
+    const track = document.getElementById('researchTrack');
+    const dotsContainer = document.getElementById('carouselDots');
 
-    if (homeCoord) homeCoord.innerHTML = teamData.slice(0, 2).map(cardHtml).join('');
+    if (coord) coord.innerHTML = teamData.slice(0, 2).map(cardHtml).join('');
 
-    if (researchTrack) {
+    if (track) {
       const researchers = teamData.slice(2);
-      const isMobile = window.innerWidth < 768;
+      const groups = [];
+      const itemsPerSlide = 3;
 
-      if (isMobile) {
-        researchTrack.innerHTML = `<div class="research-slide">${researchers.map(cardHtml).join('')}</div>`;
-      } else {
-        const groups = [];
-        for (let i = 0; i < researchers.length; i += 3) groups.push(researchers.slice(i, i + 3));
-        researchTrack.innerHTML = groups.map(g => `<div class="research-slide">${g.map(cardHtml).join('')}</div>`).join('');
-        currentResearchIdx = 0;
-        updateNavButtons();
+      for (let i = 0; i < researchers.length; i += itemsPerSlide) {
+        groups.push(researchers.slice(i, i + itemsPerSlide));
       }
+
+      track.innerHTML = groups.map(g => `<div class="research-slide">${g.map(cardHtml).join('')}</div>`).join('');
+
+      // Gerar os pontos (dots) dinamicamente
+      if (dotsContainer) {
+        dotsContainer.innerHTML = groups.map((_, idx) =>
+          `<div class="dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`
+        ).join('');
+      }
+
+      const navBtns = document.querySelectorAll('.nav-btn');
+      const showArrows = groups.length > 1;
+      navBtns.forEach(btn => btn.style.display = showArrows ? 'flex' : 'none');
+
+      currentResearchIdx = 0;
+      updateNavButtons();
     }
   } else {
-    const fullTeam = document.getElementById('full-team');
-    if (fullTeam) fullTeam.innerHTML = teamData.map(cardHtml).join('');
+    const full = document.getElementById('full-team');
+    if (full) full.innerHTML = teamData.map(cardHtml).join('');
+  }
+}
+
+// Navegação direta pelos pontos (dots)
+function moveResearchTo(idx) {
+  currentResearchIdx = idx;
+  const track = document.getElementById('researchTrack');
+  if (track) {
+    track.style.transform = `translateX(-${currentResearchIdx * 100}%)`;
+    updateNavButtons();
   }
 }
 
 function moveResearch(dir) {
-  const track = document.getElementById('researchTrack');
   const slides = document.querySelectorAll('.research-slide');
-  if (!track || slides.length === 0) return;
-
+  if (slides.length === 0) return;
   currentResearchIdx = Math.max(0, Math.min(currentResearchIdx + dir, slides.length - 1));
-  track.style.transform = `translateX(-${currentResearchIdx * 100}%)`;
-  updateNavButtons();
+  moveResearchTo(currentResearchIdx);
 }
 
 function updateNavButtons() {
   const prev = document.querySelector('.prev-btn');
   const next = document.querySelector('.next-btn');
+  const dots = document.querySelectorAll('.dot');
   const slides = document.querySelectorAll('.research-slide');
+
   if (prev && next) {
     prev.disabled = currentResearchIdx === 0;
     next.disabled = currentResearchIdx === (slides.length - 1);
   }
+
+  // Atualiza classe ativa dos dots
+  dots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentResearchIdx);
+  });
 }
 
 function renderPublications() {
   const list = document.getElementById('pub-list');
-  const track = document.getElementById('bannerTrack');
   const dummyPubs = Array.from({ length: 5 }, (_, i) => ({ title: `Estudo POAM #${5 - i}`, date: 'Fev 2026' }));
-
   if (list) {
     list.innerHTML = dummyPubs.map(p => `
             <div class="bg-white p-8 rounded-3xl border shadow-sm">
@@ -145,20 +175,9 @@ function renderPublications() {
                 <a href="#" class="text-green-700 font-bold text-xs underline uppercase">Acessar documento completo →</a>
             </div>`).join('');
   }
-
-  if (track) {
-    track.innerHTML = dummyPubs.map(p => `
-            <div class="article-slide" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1200'); background-size: cover;">
-                <h2 class="text-white text-3xl font-black italic text-left">${p.title}</h2>
-            </div>`).join('');
-  }
 }
 
-let bIdx = 0;
-function moveB(d) {
-  const t = document.getElementById('bannerTrack');
-  bIdx = (bIdx + d + 5) % 5;
-  if (t) t.style.transform = `translateX(-${bIdx * 100}%)`;
-}
-
-document.addEventListener('DOMContentLoaded', () => navigateTo('home'));
+document.addEventListener('DOMContentLoaded', () => {
+  loadMenu();
+  navigateTo('home');
+});
