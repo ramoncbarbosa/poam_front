@@ -110,7 +110,6 @@ function renderTeam(pId) {
 
       track.innerHTML = groups.map(g => `<div class="research-slide">${g.map(cardHtml).join('')}</div>`).join('');
 
-      // Gerar os pontos (dots) dinamicamente
       if (dotsContainer) {
         dotsContainer.innerHTML = groups.map((_, idx) =>
           `<div class="dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`
@@ -130,7 +129,6 @@ function renderTeam(pId) {
   }
 }
 
-// Navegação direta pelos pontos (dots)
 function moveResearchTo(idx) {
   currentResearchIdx = idx;
   const track = document.getElementById('researchTrack');
@@ -151,14 +149,12 @@ function updateNavButtons() {
   const prev = document.querySelector('.prev-btn');
   const next = document.querySelector('.next-btn');
   const dots = document.querySelectorAll('.dot');
-  const slides = document.querySelectorAll('.research-slide');
 
   if (prev && next) {
     prev.disabled = currentResearchIdx === 0;
-    next.disabled = currentResearchIdx === (slides.length - 1);
+    next.disabled = currentResearchIdx === (Math.ceil((teamData.length - 2) / 3) - 1);
   }
 
-  // Atualiza classe ativa dos dots
   dots.forEach((dot, idx) => {
     dot.classList.toggle('active', idx === currentResearchIdx);
   });
