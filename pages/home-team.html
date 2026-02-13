@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="styles/home-team.css">
+
+<div class="ht-wrapper">
+    <h2 class="ht-title">Corpo Científico</h2>
+    
+    <div class="ht-section-header">
+        <h3 class="ht-subtitle">Coordenação</h3>
+    </div>
+    
+    <div class="ht-coord-grid" id="home-coord-target"></div>
+    
+    <div class="ht-section-header">
+        <h3 class="ht-subtitle">Demais Pesquisadores</h3>
+    </div>
+    
+    <div class="ht-carousel-container">
+        <button class="ht-nav-btn ht-prev" onclick="moveResearch(-1)">←</button>
+        
+        <div class="ht-carousel-window">
+            <div class="ht-carousel-track" id="home-research-track"></div>
+        </div>
+        
+        <button class="ht-nav-btn ht-next" onclick="moveResearch(1)">→</button>
+    </div>
+    
+    <div class="ht-dots" id="carouselDots"></div>
+</div>

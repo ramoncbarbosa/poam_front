@@ -9,14 +9,15 @@ const teamData = [
 ];
 
 let currentResearchIdx = 0;
+let lastWindowWidth = window.innerWidth;
 
+// --- SISTEMA DE NAVEGAÇÃO ---
 async function loadMenu() {
   const menuAside = document.getElementById('mobile-menu');
   try {
     const response = await fetch('pages/menu.html');
-    const html = await response.text();
-    menuAside.innerHTML = html;
-  } catch (e) { console.error("Erro ao carregar menu:", e); }
+    menuAside.innerHTML = await response.text();
+  } catch (e) { console.error("Erro menu:", e); }
 }
 
 async function navigateTo(pId) {
@@ -25,24 +26,109 @@ async function navigateTo(pId) {
 
   try {
     const response = await fetch(`pages/${pId}.html`);
-    if (!response.ok) throw new Error('Falha ao carregar');
-    const html = await response.text();
-    contentArea.innerHTML = html;
+    if (!response.ok) throw new Error('Falha ao carregar página');
+    contentArea.innerHTML = await response.text();
 
-    globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
+    if (globalFooter) globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
 
-    if (pId === 'home' || pId === 'team') renderTeam(pId);
-    if (pId === 'publications') renderPublications();
+    if (pId === 'home') {
+      // Carrega o componente separado e AGUARDA terminar antes de iniciar o carrossel
+      await loadHomeTeamSection();
+    }
+    else if (pId === 'team') {
+      // Lógica da página de equipe se necessário
+    }
 
     window.scrollTo(0, 0);
     const menu = document.getElementById('mobile-menu');
     if (menu && menu.classList.contains('open')) toggleMenu();
 
-  } catch (error) {
-    console.error("Erro na navegação:", error);
-  }
+  } catch (error) { console.error("Erro navegação:", error); }
 }
 
+// --- CARREGAMENTO DO COMPONENTE HOME-TEAM ---
+async function loadHomeTeamSection() {
+  const injectionPoint = document.getElementById('home-team-injection-point');
+  if (!injectionPoint) return;
+
+  try {
+    const resp = await fetch('pages/home-team.html'); // Ajuste o caminho se necessário (ex: pages/components/home-team.html)
+    if (!resp.ok) throw new Error('Componente home-team não encontrado');
+
+    const html = await resp.text();
+    injectionPoint.innerHTML = html;
+
+    // Renderiza os dados apenas após o HTML estar no DOM
+    initHomeCarousel();
+  } catch (e) { console.error("Erro componente team:", e); }
+}
+
+// --- LÓGICA DE ITENS POR SLIDE (Sincronizada com CSS 1150px) ---
+function getItemsPerSlide() {
+  const w = window.innerWidth;
+  if (w < 768) return 1;    // Mobile
+  if (w < 1150) return 2;   // Tablet (768 - 1149)
+  return 3;                 // Desktop (>= 1150)
+}
+
+function initHomeCarousel() {
+  const coordTarget = document.getElementById('home-coord-target');
+  const track = document.getElementById('home-research-track');
+  const dotsContainer = document.getElementById('carouselDots');
+
+  // Se os elementos não existirem (HTML não carregou), para aqui.
+  if (!track || !coordTarget) return;
+
+  const cardHtml = (m) => `
+        <div class="researcher-card" onclick="toggleCard(event, this)">
+            <div class="flex items-center justify-between mb-4 w-full">
+                <div class="flex items-center space-x-4">
+                    <div class="photo-circle shadow-md">${m.i}</div>
+                    <div class="text-left">
+                        <h4 class="researcher-name">${m.n}</h4>
+                        <p class="researcher-role">${m.r}</p>
+                    </div>
+                </div>
+                <span class="toggle-icon text-2xl font-light text-green-700">+</span>
+            </div>
+            <div class="details-content text-left text-sm">
+                <p class="mb-4 text-gray-600 leading-relaxed">${m.d}</p>
+                <a href="#" class="text-green-600 font-bold uppercase underline text-xs tracking-wider">Currículo Lattes</a>
+            </div>
+        </div>`;
+
+  // 1. Renderiza Coordenação
+  coordTarget.innerHTML = teamData.slice(0, 2).map(cardHtml).join('');
+
+  // 2. Renderiza Carrossel
+  const researchers = teamData.slice(2);
+  const groups = [];
+  const itemsPerSlide = getItemsPerSlide();
+
+  for (let i = 0; i < researchers.length; i += itemsPerSlide) {
+    groups.push(researchers.slice(i, i + itemsPerSlide));
+  }
+
+  track.innerHTML = groups.map(g => `<div class="research-slide">${g.map(cardHtml).join('')}</div>`).join('');
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = groups.map((_, idx) =>
+      `<div class="dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`
+    ).join('');
+  }
+
+  currentResearchIdx = 0;
+  track.style.transform = `translateX(0)`;
+  updateNavButtons();
+
+  // Controle de visibilidade das setas (Só Desktop)
+  const navBtns = document.querySelectorAll('.nav-btn');
+  navBtns.forEach(btn => {
+    btn.style.display = (groups.length > 1 && window.innerWidth >= 1150) ? 'flex' : 'none';
+  });
+}
+
+// --- FUNÇÕES DE CONTROLE ---
 function toggleMenu() {
   document.getElementById('mobile-menu').classList.toggle('open');
   document.getElementById('menu-overlay').classList.toggle('active');
@@ -51,13 +137,11 @@ function toggleMenu() {
 function toggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
-
   document.querySelectorAll('.researcher-card').forEach(card => {
     card.classList.remove('active');
     const icon = card.querySelector('.toggle-icon');
     if (icon) icon.innerText = '+';
   });
-
   if (!isActive) {
     el.classList.add('active');
     const icon = el.querySelector('.toggle-icon');
@@ -73,65 +157,9 @@ document.addEventListener('click', () => {
   });
 });
 
-function renderTeam(pId) {
-  const cardHtml = (m) => `
-        <div class="researcher-card bg-white shadow-sm border" onclick="toggleCard(event, this)">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-5">
-                    <div class="photo-circle">${m.i}</div>
-                    <div class="text-left">
-                        <h4 class="researcher-name">${m.n}</h4>
-                        <p class="researcher-role uppercase">${m.r}</p>
-                    </div>
-                </div>
-                <span class="toggle-icon text-3xl font-light text-green-700">+</span>
-            </div>
-            <div class="details-content text-left text-sm pt-4">
-                <p class="mb-4 text-base opacity-90">${m.d}</p>
-                <a href="http://lattes.cnpq.br/" target="_blank" class="text-green-600 font-bold uppercase underline text-xs">Currículo Lattes</a>
-            </div>
-        </div>`;
-
-  if (pId === 'home') {
-    const coord = document.getElementById('home-coord');
-    const track = document.getElementById('researchTrack');
-    const dotsContainer = document.getElementById('carouselDots');
-
-    if (coord) coord.innerHTML = teamData.slice(0, 2).map(cardHtml).join('');
-
-    if (track) {
-      const researchers = teamData.slice(2);
-      const groups = [];
-      const itemsPerSlide = 3;
-
-      for (let i = 0; i < researchers.length; i += itemsPerSlide) {
-        groups.push(researchers.slice(i, i + itemsPerSlide));
-      }
-
-      track.innerHTML = groups.map(g => `<div class="research-slide">${g.map(cardHtml).join('')}</div>`).join('');
-
-      if (dotsContainer) {
-        dotsContainer.innerHTML = groups.map((_, idx) =>
-          `<div class="dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`
-        ).join('');
-      }
-
-      const navBtns = document.querySelectorAll('.nav-btn');
-      const showArrows = groups.length > 1;
-      navBtns.forEach(btn => btn.style.display = showArrows ? 'flex' : 'none');
-
-      currentResearchIdx = 0;
-      updateNavButtons();
-    }
-  } else {
-    const full = document.getElementById('full-team');
-    if (full) full.innerHTML = teamData.map(cardHtml).join('');
-  }
-}
-
 function moveResearchTo(idx) {
   currentResearchIdx = idx;
-  const track = document.getElementById('researchTrack');
+  const track = document.getElementById('home-research-track');
   if (track) {
     track.style.transform = `translateX(-${currentResearchIdx * 100}%)`;
     updateNavButtons();
@@ -148,30 +176,30 @@ function moveResearch(dir) {
 function updateNavButtons() {
   const prev = document.querySelector('.prev-btn');
   const next = document.querySelector('.next-btn');
+  const slides = document.querySelectorAll('.research-slide');
   const dots = document.querySelectorAll('.dot');
 
-  if (prev && next) {
+  if (prev && next && slides.length > 0) {
     prev.disabled = currentResearchIdx === 0;
-    next.disabled = currentResearchIdx === (Math.ceil((teamData.length - 2) / 3) - 1);
+    next.disabled = currentResearchIdx === (slides.length - 1);
   }
-
-  dots.forEach((dot, idx) => {
-    dot.classList.toggle('active', idx === currentResearchIdx);
-  });
-}
-
-function renderPublications() {
-  const list = document.getElementById('pub-list');
-  const dummyPubs = Array.from({ length: 5 }, (_, i) => ({ title: `Estudo POAM #${5 - i}`, date: 'Fev 2026' }));
-  if (list) {
-    list.innerHTML = dummyPubs.map(p => `
-            <div class="bg-white p-8 rounded-3xl border shadow-sm">
-                <span class="text-xs font-bold text-green-600 uppercase tracking-widest">${p.date}</span>
-                <h4 class="text-xl font-bold text-gray-800 mt-1 mb-4 italic">${p.title}</h4>
-                <a href="#" class="text-green-700 font-bold text-xs underline uppercase">Acessar documento completo →</a>
-            </div>`).join('');
+  if (dots.length > 0) {
+    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentResearchIdx));
   }
 }
+
+// Listener de Redimensionamento
+window.addEventListener('resize', () => {
+  const currentW = window.innerWidth;
+  const oldItems = (lastWindowWidth < 768) ? 1 : (lastWindowWidth < 1150) ? 2 : 3;
+  const newItems = (currentW < 768) ? 1 : (currentW < 1150) ? 2 : 3;
+
+  if (oldItems !== newItems) {
+    // Se mudou a quantidade de colunas, re-renderiza o carrossel se ele existir na tela
+    if (document.getElementById('home-research-track')) initHomeCarousel();
+  }
+  lastWindowWidth = currentW;
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   loadMenu();
