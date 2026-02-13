@@ -1,11 +1,18 @@
-<div class="max-w-5xl mx-auto px-6 py-20">
-    <div class="article-banner mb-12 shadow-2xl relative overflow-hidden rounded-3xl h-[350px]">
-        <div class="article-track" id="bannerTrack"></div>
-        <div class="absolute inset-y-0 w-full flex justify-between items-center px-4 pointer-events-none">
-            <button onclick="moveB(1)" class="pointer-events-auto bg-white/20 p-2 rounded-full text-white">←</button>
-            <button onclick="moveB(-1)" class="pointer-events-auto bg-white/20 p-2 rounded-full text-white">→</button>
+<link rel="stylesheet" href="styles/publications.css">
+
+<div class="page-content">
+    <div class="max-w-5xl mx-auto px-6 py-20">
+        <div class="article-banner mb-12 shadow-2xl relative overflow-hidden rounded-3xl h-[350px]">
+            <div class="article-track" id="bannerTrack"></div>
+            
+            <div class="absolute inset-y-0 w-full flex justify-between items-center px-4 pointer-events-none">
+                <button onclick="moveB(-1)" class="pointer-events-auto bg-white/20 hover:bg-white/40 p-3 rounded-full text-white transition-all backdrop-blur-sm">←</button>
+                <button onclick="moveB(1)" class="pointer-events-auto bg-white/20 hover:bg-white/40 p-3 rounded-full text-white transition-all backdrop-blur-sm">→</button>
+            </div>
         </div>
+
+        <h3 class="text-2xl font-bold text-green-900 mb-8 border-b-2 border-green-100 pb-2 italic">Publicações Científicas</h3>
+        
+        <div id="pub-list" class="space-y-6"></div>
     </div>
-    <h3 class="text-2xl font-bold text-green-900 mb-8 border-b-2 border-green-100 pb-2 italic">Histórico de Publicações</h3>
-    <div id="pub-list" class="space-y-6"></div>
 </div>

@@ -1,0 +1,28 @@
+/* Importa a base dos cards caso não esteja no index */
+@import url('home-team.css');
+
+.team-grid {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+/* Garante que na página de equipe os cards sempre usem a grid, sem carrossel */
+#full-team {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    #full-team {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    #full-team {
+        grid-template-columns: repeat(2, 1fr); /* Mantém 2 colunas grandes para destaque */
+    }
+}

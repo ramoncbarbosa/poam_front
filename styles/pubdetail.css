@@ -1,0 +1,167 @@
+/* --- ESTILO PREMIUM POAM --- */
+
+.pub-banner-hero {
+    width: 100%;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    border-radius: 3rem !important; /* Força os cantos arredondados */
+    display: flex;
+    align-items: center;
+    padding: 5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    color: white;
+    overflow: hidden; /* Garante que o conteúdo respeite o arredondamento */
+}
+
+.pub-banner-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(75deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 78, 59, 0.6) 100%);
+    z-index: 1;
+}
+
+.pub-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+}
+
+.pub-type-tag {
+    background: #10b981;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.pub-hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+}
+
+/* --- LAYOUT DE CONTEÚDO (SIDEBAR PRIMEIRO NO MOBILE) --- */
+.pub-content-layout {
+    display: flex;
+    flex-direction: column; /* Mobile: Equipe em cima, Texto embaixo */
+    gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+    .pub-content-layout {
+        flex-direction: row-reverse; /* Desktop: Texto à esquerda, Equipe à direita */
+        justify-content: flex-end;
+        gap: 4rem;
+    }
+    .pub-main-column { flex: 1; }
+    .pub-sidebar { width: 300px; flex-shrink: 0; }
+}
+
+/* --- COLUNA LATERAL (SIDEBAR) --- */
+.pub-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.pub-sidebar-block {
+    border-left: 4px solid #059669;
+    padding-left: 1.5rem;
+}
+
+.pub-sidebar-label {
+    text-transform: uppercase;
+    color: #059669;
+    font-size: 0.75rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.pub-sidebar-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.pub-sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pub-sidebar-list li {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+/* --- TEXTO E BOTÃO --- */
+.pub-lead-text {
+    background: #064e3b;
+    color: white;
+    padding: 3rem;
+    border-radius: 2.5rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.pub-full-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #334155;
+    text-align: justify;
+}
+
+.pub-footer-action {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f1f5f9;
+    text-align: center;
+}
+
+.pub-btn-green {
+    display: inline-flex;
+    align-items: center;
+    background: #064e3b;
+    color: white;
+    padding: 1.5rem 3rem;
+    border-radius: 100px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pub-btn-green:hover {
+    background: #059669;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(6, 78, 59, 0.3);
+}
+
+@media (max-width: 768px) {
+    .pub-banner-hero { 
+        padding: 3rem 1.5rem; 
+        border-radius: 2rem !important; 
+        min-height: 350px; 
+        background-attachment: scroll; /* Melhora performance mobile */
+    }
+    .pub-lead-text { padding: 2rem; font-size: 1.2rem; }
+}
