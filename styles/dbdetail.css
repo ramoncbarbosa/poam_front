@@ -1,61 +1,85 @@
 /* --- DETALHES DA BASE DE DADOS (styles/dbdetail.css) --- */
 
-/* 1. RESET E CONTENÇÃO RADICAL */
+/* 1. CONTAINER RAIZ COM RESPIRO TOTAL */
 .db-detail-wrapper {
     background: white;
     min-height: 100vh;
     width: 100%;
-    overflow-x: hidden; /* Proíbe terminantemente o scroll lateral da página */
+    overflow-x: hidden;
     position: relative;
-    display: block; /* Voltamos para block para evitar bugs de flex horizontal */
+    display: block;
 }
 
 .db-detail-view { 
     animation: fadeIn 0.5s ease-out; 
-    width: 95%; /* Respiro lateral natural */
+    width: 92%; /* Margem de segurança lateral */
     max-width: 1200px;
-    margin: 0 auto; /* Centralização clássica e segura */
-    padding: 40px 0;
+    margin: 0 auto; 
+    padding: 20px 0 60px 0;
 }
 
-/* Título Centralizado */
+/* Título Adaptável */
 .db-detail-title { 
-    font-size: clamp(1.8rem, 6vw, 3.8rem);
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
     font-weight: 900; 
     color: #064e3b; 
-    margin: 0 auto 40px auto; 
+    margin: 20px auto 40px auto; 
     line-height: 1.1; 
     text-align: center;
-    max-width: 900px; /* Evita que o título fique muito espalhado */
 }
 
-/* 2. GRID DE CONTEÚDO */
+/* 2. GRID DE CONTEÚDO RESPONSIVO */
 .db-content-grid { 
     display: grid; 
     grid-template-columns: 1fr 350px; 
-    gap: 40px; 
+    gap: 50px; 
     width: 100%;
     margin: 0 auto;
 }
 
-/* Responsividade do Grid (Desktop -> Tablet/Mobile) */
 @media (max-width: 1100px) {
     .db-content-grid { 
-        grid-template-columns: 100%; /* Força ocupação total da largura disponível */
+        grid-template-columns: 100%; 
+        gap: 40px;
     }
 }
 
-/* 3. A TABELA (O PONTO DE QUEBRA) */
+/* 3. BLOCO "SOBRE OS DADOS" (Ajustado com Respiros) */
+.db-info-main {
+    width: 100%;
+    padding: 0 10px; /* Evita que o texto encoste na borda em telas muito pequenas */
+}
+
+.db-label { 
+    font-size: 0.9rem; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    color: #94a3b8; 
+    margin-bottom: 15px; 
+    display: block;
+    letter-spacing: 1px;
+}
+
+.db-text { 
+    font-size: clamp(1rem, 4vw, 1.2rem); 
+    color: #475569; 
+    line-height: 1.8; /* Aumenta o espaço entre linhas para leitura */
+    margin-bottom: 50px;
+    text-align: justify; /* Melhora o alinhamento do bloco de texto */
+    hyphens: auto; /* Evita buracos no texto justificado */
+}
+
+/* 4. A TABELA (Contida e com Scroll) */
 .db-table-container { 
     background: #f8fafc; 
     border-radius: 1.5rem; 
     border: 1px solid #e2e8f0; 
-    overflow: auto; /* Scroll nos dois sentidos */
+    overflow: auto; 
     max-height: 500px; 
-    width: 100%; /* Ocupa apenas o que o pai (grid) permitir */
-    max-width: 100%; 
+    width: 100%; 
     box-sizing: border-box;
     margin-bottom: 40px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .data-table { 
@@ -83,55 +107,31 @@
     white-space: nowrap; 
 }
 
-/* 4. SIDEBAR E CARDS */
+/* 5. SIDEBAR E CARDS (Respiro Interno) */
 .db-sidebar {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .db-citation-card, .db-contact-card {
-    padding: 35px;
+    padding: clamp(25px, 5vw, 40px); /* Respiro interno generoso e fluido */
     border-radius: 2.5rem;
     width: 100%;
-    box-sizing: border-box; /* Crucial para o padding não empurrar o card pra fora */
+    box-sizing: border-box;
     text-align: center;
 }
 
-/* Card Citação */
-.db-citation-card {
-    background: #976a4b;
-    color: #ffffff;
-}
-
-.db-citation-card .db-label-light {
-    font-size: 1.1rem;
-    font-weight: 900;
-    margin-bottom: 20px;
-    display: block;
-    color: #fff;
-}
+.db-citation-card { background: #976a4b; color: #ffffff; }
+.db-contact-card { background: #064e3b; color: white; }
 
 .db-citation-box {
     font-size: 1rem; 
     line-height: 1.6;
     margin-bottom: 30px;
     font-style: italic;
-    word-wrap: break-word; /* Força quebra de palavras se necessário */
-}
-
-/* Card Contato */
-.db-contact-card { 
-    background: #064e3b; 
-    color: white; 
-}
-
-.db-contact-card .db-label-light {
-    font-size: 1.1rem;
-    font-weight: 900;
-    margin-bottom: 20px;
-    display: block;
+    word-wrap: break-word;
 }
 
 .db-name { 
@@ -140,7 +140,7 @@
     margin-bottom: 20px; 
 }
 
-/* 5. BOTÕES */
+/* 6. BOTÕES */
 .btn-copy, .btn-request {
     display: block;
     width: 100%;
@@ -152,29 +152,32 @@
     text-transform: uppercase;
     cursor: pointer;
     text-align: center;
-    text-decoration: none;
     transition: 0.3s;
 }
 
 .btn-copy { background: #7a5236; color: white; }
 .btn-request { background: #10b981; color: white; }
 
-/* 6. BOTÃO VOLTAR CENTRALIZADO NO MOBILE */
+/* 7. BOTÃO VOLTAR */
 .btn-back { 
     background: none; 
     border: none; 
     font-weight: 900; 
     color: #10b981; 
     cursor: pointer; 
-    margin: 0 auto 30px auto; 
+    margin: 0 auto 30px 0; 
     display: flex; 
     align-items: center; 
     gap: 8px; 
+    font-size: 11px;
+    text-transform: uppercase;
 }
 
+/* 8. AJUSTES MOBILE EXTREMO (< 600px) */
 @media (max-width: 600px) {
-    .db-detail-title { text-align: center; }
-    .db-text { text-align: center; font-size: 1rem; }
+    .db-detail-view { width: 90%; }
+    .db-text { text-align: left; } /* Texto justificado em telas muito pequenas fica ruim */
+    .db-citation-card, .db-contact-card { padding: 25px 20px; }
 }
 
 @keyframes fadeIn { 
