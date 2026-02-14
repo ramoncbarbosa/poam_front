@@ -1,0 +1,5 @@
+Região,N_Conflitos,Severidade,Fonte,Data
+Sudeste Paraense,12,Alta,CPT,Jan/2026
+Baixo Amazonas,05,Média,Iterpa,Fev/2026
+Marajó,08,Crítica,Comunidade,Jan/2026
+Xingu,15,Alta,Sema,Mar/2026

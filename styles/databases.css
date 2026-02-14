@@ -1,0 +1,74 @@
+/* --- BASE DE DADOS: VISUAL LIMPO --- */
+
+.db-wrapper { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+.db-header { text-align: center; margin-bottom: 60px; }
+.db-main-title { font-size: 3.5rem; font-weight: 900; color: #064e3b; text-transform: uppercase; }
+
+/* Cards da Listagem Principal */
+.db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+
+.db-card {
+    background: white;
+    border-radius: 2rem;
+    padding: 2.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.db-card:hover { transform: translateY(-10px); border-color: #10b981; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+.db-title { font-size: 1.5rem; font-weight: 900; color: #1e293b; margin: 15px 0 10px 0; line-height: 1.2; }
+.db-desc { font-size: 0.9rem; color: #64748b; margin-bottom: 20px; line-height: 1.6; }
+.db-link { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #064e3b; letter-spacing: 1px; }
+
+/* Página de Detalhes */
+.db-detail-view { animation: fadeIn 0.5s ease-out; }
+.db-detail-title { font-size: 3rem; font-weight: 900; color: #064e3b; margin-bottom: 40px; line-height: 1; }
+.db-content-grid { display: grid; grid-template-columns: 1fr 350px; gap: 60px; }
+
+.db-label { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; display: block; }
+.db-text { font-size: 1.2rem; color: #475569; line-height: 1.8; margin-bottom: 40px; }
+
+/* A TABELA TÉCNICA (Montada via JS) */
+.db-table-container { 
+    background: #f8fafc; 
+    border-radius: 1.5rem; 
+    border: 1px solid #e2e8f0; 
+    overflow-x: auto; 
+    margin-bottom: 50px;
+}
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+.data-table th { background: #f1f5f9; padding: 15px; color: #064e3b; font-weight: 800; border-bottom: 2px solid #e2e8f0; }
+.data-table td { padding: 12px 15px; border-bottom: 1px solid #f1f5f9; color: #64748b; }
+
+/* Sidebar de Contato */
+.db-contact-card { background: #064e3b; padding: 40px; border-radius: 2rem; color: white; position: sticky; top: 100px; }
+.db-label-light { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; font-weight: 900; margin-bottom: 8px; }
+.db-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
+.db-contact-info { font-size: 0.9rem; opacity: 0.7; margin-bottom: 30px; line-height: 1.5; }
+
+.btn-request { 
+    display: block; 
+    background: #10b981; 
+    color: white; 
+    text-align: center; 
+    padding: 15px; 
+    border-radius: 12px; 
+    text-decoration: none; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    font-size: 11px;
+}
+
+.btn-back { background: none; border: none; font-weight: 900; text-transform: uppercase; color: #10b981; cursor: pointer; font-size: 11px; margin-bottom: 20px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 1000px) {
+    .db-content-grid { grid-template-columns: 1fr; }
+    .db-contact-card { position: static; }
+    .db-detail-title { font-size: 2.2rem; }
+}

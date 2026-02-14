@@ -1,12 +1,13 @@
 import { teamData } from '../database/users.js';
 import { pubData } from '../database/publications.js';
 import { initHomeTeam } from './home-team.js';
+import { dbData } from '../database/databases.js';
 
 // --- CONFIGURAÇÕES E ESTADO GLOBAL ---
 let currentPubB = 0;
 let currentPubPage = 1;
 const pubsPerPage = 5;
-let bannerInterval; // Controle do autoplay do banner
+let bannerInterval; 
 
 // --- 1. SISTEMA DE NAVEGAÇÃO SPA ---
 async function loadMenu() {
@@ -19,13 +20,12 @@ async function loadMenu() {
 }
 
 async function navigateTo(pId, extraData = null) {
-    const allowedPages = ['home', 'publications', 'database', 'team', 'pubdetail'];
+    const allowedPages = ['home', 'publications', 'database', 'team', 'pubdetail', 'dbdetail'];
     if (!allowedPages.includes(pId)) pId = 'home';
 
     const contentArea = document.getElementById('content-area');
     const globalFooter = document.getElementById('global-footer');
 
-    // Limpa o timer do banner ao sair da página de publicações
     if (pId !== 'publications' && bannerInterval) {
         clearInterval(bannerInterval);
     }
@@ -38,18 +38,12 @@ async function navigateTo(pId, extraData = null) {
         if (globalFooter) globalFooter.style.display = (pId === 'home') ? 'none' : 'block';
 
         switch (pId) {
-            case 'home': 
-                await initHomeTeam(); 
-                break;
-            case 'publications': 
-                renderPublications(); 
-                break;
-            case 'team': 
-                renderFullTeamPage(); 
-                break;
-            case 'pubdetail': 
-                renderPubDetail(extraData); 
-                break;
+            case 'home': await initHomeTeam(); break;
+            case 'database': renderDatabases(); break;
+            case 'dbdetail': renderDbDetail(extraData); break;
+            case 'publications': renderPublications(); break;
+            case 'team': renderFullTeamPage(); break;
+            case 'pubdetail': renderPubDetail(extraData); break;
         }
 
         window.scrollTo(0, 0);
@@ -57,19 +51,105 @@ async function navigateTo(pId, extraData = null) {
     } catch (error) { console.error("Erro na navegação:", error); }
 }
 
-// --- 2. PÁGINA DE EQUIPE COMPLETA ---
-// Mantido aqui pois usa a lógica de listagem simples sem carrossel
+// --- 2. LÓGICA DA BASE DE DADOS (DATABASE) ---
+
+// LISTAGEM: Apenas os cards limpos
+function renderDatabases() {
+    const grid = document.getElementById('database-grid');
+    if (!grid) return;
+
+    grid.innerHTML = dbData.map(db => `
+        <div class="db-card" onclick="navigateTo('dbdetail', ${db.id})">
+            <div class="db-card-content">
+                <span class="db-tag ${db.tipo}">${db.categoria}</span>
+                <h3 class="db-title">${db.titulo}</h3>
+                <p class="db-desc">${db.descricao}</p>
+                <span class="db-link">Conhecer Pesquisa →</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// DETALHES: Onde a tabela é montada via HTML Tags
+function renderDbDetail(id) {
+    const container = document.getElementById('db-detail-content');
+    const db = dbData.find(d => d.id === parseInt(id));
+    if (!container || !db) return;
+
+    container.innerHTML = `
+        <div class="db-detail-view">            
+            <span class="db-tag ${db.tipo}">${db.categoria}</span>
+            <h1 class="db-detail-title">${db.titulo}</h1>
+            
+            <div class="db-content-grid">
+                <div class="db-info-main">
+                    <h4 class="db-label">Sobre o Projeto</h4>
+                    <p class="db-text">${db.resumoCompleto || db.descricao}</p>
+                    
+                    <h4 class="db-label">Estrutura de Dados (Amostra)</h4>
+                    <div class="db-table-container" id="preview-table-container">
+                        <p class="loading-text">Gerando visualização técnica...</p>
+                    </div>
+                </div>
+
+                <div class="db-sidebar">
+                    <div class="db-contact-card">
+                        <h4 class="db-label-light">Responsável</h4>
+                        <p class="db-name">${db.responsavel || "Corpo Científico POAM"}</p>
+                        <p class="db-contact-info">Para acesso aos dados brutos e metodologia completa, solicite via canal oficial.</p>
+                        <a href="mailto:poam@ufpa.br?subject=Dados: ${db.titulo}" class="btn-request">Solicitar Acesso</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Chama a função que lê o arquivo e monta a tabela HTML
+    fetchAndBuildTable(db.previewSource, 'preview-table-container');
+}
+
+// FUNÇÃO QUE MONTA A TABELA COM TAGS HTML (Forçando o HTML com base no arquivo)
+async function fetchAndBuildTable(url, containerId) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error();
+        const text = await response.text();
+        
+        const separator = text.includes(';') ? ';' : ',';
+        const rows = text.split('\n').filter(r => r.trim() !== "").slice(0, 8);
+
+        let tableHtml = '<table class="data-table"><thead><tr>';
+        
+        // Monta o Header (th)
+        rows[0].split(separator).forEach(h => {
+            tableHtml += `<th>${h.trim()}</th>`;
+        });
+        tableHtml += '</tr></thead><tbody>';
+
+        // Monta o Corpo (td)
+        rows.slice(1).forEach(row => {
+            tableHtml += '<tr>';
+            row.split(separator).forEach(cell => {
+                tableHtml += `<td>${cell.trim()}</td>`;
+            });
+            tableHtml += '</tr>';
+        });
+
+        tableHtml += '</tbody></table>';
+        document.getElementById(containerId).innerHTML = tableHtml;
+    } catch (e) {
+        document.getElementById(containerId).innerHTML = '<p class="error-msg">Amostra de dados temporariamente indisponível.</p>';
+    }
+}
+
+// --- 3. PÁGINA DE EQUIPE COMPLETA ---
 function renderFullTeamPage() {
     const container = document.getElementById('full-team');
     if (!container) return;
-    
-    // Usa a função de criação de card que deve estar disponível globalmente ou importada
-    // Se você moveu a createHtCard para o home-team.js, lembre-se de exportá-la e importá-la aqui
     container.innerHTML = teamData.map(m => {
         const fotoContent = m.foto 
             ? `<img src="${m.foto}" alt="${m.nome}" class="w-full h-full object-cover rounded-full">`
             : `<div class="w-full h-full rounded-full bg-green-800 flex items-center justify-center text-white font-bold">${m.nome.charAt(0)}</div>`;
-
         return `
         <div class="ht-card bg-white border border-gray-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all cursor-pointer group" onclick="htToggleCard(event, this)">
             <div class="ht-card-header flex items-center justify-between">
@@ -95,13 +175,11 @@ function renderFullTeamPage() {
     }).join('');
 }
 
-// --- 3. COMPONENTE DE PUBLICAÇÕES ---
+// --- 4. COMPONENTE DE PUBLICAÇÕES ---
 function renderPublications() {
     const track = document.getElementById('bannerTrack');
     if (!track) return;
-
     if (bannerInterval) clearInterval(bannerInterval);
-
     const latestPubs = pubData.slice(0, 5);
     track.innerHTML = latestPubs.map(p => `
     <div class="article-slide flex flex-col justify-end p-12 text-white w-full flex-shrink-0 cursor-pointer relative min-h-[350px]" 
@@ -113,9 +191,7 @@ function renderPublications() {
             <p class="opacity-90 line-clamp-2 max-w-2xl text-sm">${p.resumo}</p>
         </div>
     </div>`).join('');
-
     renderPubPage(1);
-
     bannerInterval = setInterval(() => { window.moveB(1); }, 5000);
 }
 
@@ -123,19 +199,16 @@ function renderPubPage(page) {
     const list = document.getElementById('pub-list');
     const container = document.getElementById('pub-pagination');
     if (!list || !container) return;
-
     currentPubPage = page;
     const start = (page - 1) * pubsPerPage;
     const paginatedItems = pubData.slice(start, start + pubsPerPage);
     const totalPages = Math.ceil(pubData.length / pubsPerPage);
-
     list.innerHTML = paginatedItems.map(p => `
         <div class="p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group mb-4" onclick="navigateTo('pubdetail', ${p.id})">
             <h4 class="text-xl font-black text-gray-900 group-hover:text-green-800 transition-colors">${p.titulo}</h4>
             <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-2 mb-4">${p.data}</p>
             <p class="text-gray-500 text-sm line-clamp-2">${p.resumo}</p>
         </div>`).join('');
-
     container.innerHTML = `
         <div class="flex items-center justify-center gap-6 mt-12">
             <button onclick="renderPubPage(${currentPubPage - 1})" class="pub-page-btn" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
@@ -144,19 +217,16 @@ function renderPubPage(page) {
         </div>`;
 }
 
-// --- 4. DETALHES DA PUBLICAÇÃO ---
+// --- 5. DETALHES DA PUBLICAÇÃO ---
 function renderPubDetail(id) {
     const container = document.getElementById('detail-content');
     const pub = pubData.find(p => p.id === parseInt(id));
-
     if (!container || !pub) return;
-
     const orientadorObj = teamData.find(t => t.nome === pub.orientador);
     const pesquisadoresNomes = (pub.pesquisadores || []).map(nome => {
         const p = teamData.find(t => t.nome === nome);
         return p ? p.nome : nome;
     });
-
     container.innerHTML = `
       <div class="pub-banner-hero shadow-2xl" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${pub.imagem}');">
           <div class="pub-hero-inner">
@@ -173,9 +243,7 @@ function renderPubDetail(id) {
               </div>
               <div class="pub-sidebar-block">
                   <h4 class="pub-sidebar-label">Pesquisadores</h4>
-                  <ul class="pub-sidebar-list">
-                      ${pesquisadoresNomes.map(nome => `<li>${nome}</li>`).join('')}
-                  </ul>
+                  <ul class="pub-sidebar-list">${pesquisadoresNomes.map(nome => `<li>${nome}</li>`).join('')}</ul>
               </div>
           </aside>
           <div class="pub-main-column">
@@ -184,14 +252,11 @@ function renderPubDetail(id) {
                   <h2 class="text-3xl font-black text-green-900 mb-6 uppercase">Análise de Resultados</h2>
                   <p class="mb-6">${pub.textoCompleto || "Conteúdo em fase de revisão final."}</p>
               </div>
-              <div class="pub-footer-action">
-                  <a href="${pub.link}" target="_blank" class="pub-btn-green">Acessar PDF Completo</a>
-              </div>
           </div>
       </div>`;
 }
 
-// --- 5. EXPOSIÇÃO GLOBAL E UTILITÁRIOS ---
+// --- 6. EXPOSIÇÃO GLOBAL E UTILITÁRIOS ---
 window.navigateTo = navigateTo;
 window.renderPubPage = renderPubPage;
 
