@@ -46,7 +46,7 @@
 
 /* Sidebar de Contato */
 .db-contact-card { background: #064e3b; padding: 40px; border-radius: 2rem; color: white; position: sticky; top: 100px; }
-.db-label-light { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; font-weight: 900; margin-bottom: 8px; }
+.db-label-light { color: rgb(255, 255, 255); font-size: 10px; text-transform: uppercase; font-weight: 900; margin-bottom: 8px; }
 .db-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
 .db-contact-info { font-size: 0.9rem; opacity: 0.7; margin-bottom: 30px; line-height: 1.5; }
 
