@@ -47,7 +47,7 @@
 .db-info-main {
     width: 100%;
     padding: 0 10px;
-    text-align: left; /* Garante alinhamento à esquerda na quebra de linha */
+    text-align: left;
 }
 
 .db-label { 
@@ -66,10 +66,10 @@
     color: #475569; 
     line-height: 1.8; 
     margin-bottom: 50px;
-    text-align: left; /* Alinhamento à esquerda conforme solicitado */
+    text-align: left; 
 }
 
-/* 4. A TABELA ROBUSTA (Texto maior e mais espaçosa) */
+/* 4. A TABELA ROBUSTA */
 .db-table-container { 
     background: #f8fafc; 
     border-radius: 1.5rem; 
@@ -86,7 +86,7 @@
     width: 100%; 
     border-collapse: separate; 
     border-spacing: 0;
-    font-size: 15px; /* Aumentado de 13px para 15px */
+    font-size: 15px; 
 }
 
 .data-table th { 
@@ -94,27 +94,22 @@
     top: 0;
     z-index: 10;
     background: #f1f5f9; 
-    padding: 20px 25px; /* Mais respiro nos títulos */
+    padding: 20px 25px; 
     color: #064e3b; 
     font-weight: 900; 
     border-bottom: 3px solid #e2e8f0; 
     white-space: nowrap; 
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .data-table td { 
-    padding: 16px 25px; /* Mais respiro nos dados */
+    padding: 16px 25px; 
     border-bottom: 1px solid #f1f5f9; 
-    color: #334155; /* Texto um pouco mais escuro para contraste */
+    color: #334155; 
     white-space: nowrap; 
 }
 
-.data-table tbody tr:hover {
-    background-color: #f1f5f9;
-}
-
-/* 5. SIDEBAR E CARDS (Texto alinhado à esquerda) */
+/* 5. SIDEBAR E CARDS (Padrão de Respiro Uniforme) */
 .db-sidebar {
     width: 100%;
     display: flex;
@@ -123,10 +118,14 @@
 }
 
 .db-citation-card, .db-contact-card {
-    padding: clamp(25px, 5vw, 40px); 
+    /* PADRÃO DE RESPIRO UNIFORME: 40px em todos os lados */
+    padding: 40px; 
     border-radius: 2.5rem;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
 }
 
 .db-citation-card { background: #976a4b; color: #ffffff; }
@@ -135,25 +134,33 @@
 .db-citation-card .db-label-light, .db-contact-card .db-label-light {
     font-size: 1rem;
     font-weight: 900;
-    margin-bottom: 20px;
+    margin-bottom: 25px; /* Respiro vertical entre título e texto */
     display: block;
-    text-align: left; /* Alinhado à esquerda */
+    text-align: left;
 }
 
 .db-citation-box {
     font-size: 1.1rem; 
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 40px; /* Respiro vertical entre texto e botão */
     font-style: italic;
     word-wrap: break-word;
-    text-align: left; /* Alinhado à esquerda */
+    text-align: left;
 }
 
 .db-name { 
     font-size: 1.6rem; 
     font-weight: 800; 
-    margin-bottom: 20px; 
+    margin-bottom: 10px; 
     text-align: left;
+}
+
+.db-contact-info {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 40px; /* Respiro vertical entre texto e botão */
+    text-align: left;
+    opacity: 0.8;
 }
 
 /* 6. BOTÕES */
@@ -191,9 +198,8 @@
 
 /* 8. AJUSTES MOBILE EXTREMO */
 @media (max-width: 600px) {
+    .db-citation-card, .db-contact-card { padding: 30px; } /* Redução leve para telas muito pequenas */
     .data-table { font-size: 14px; }
-    .db-name { font-size: 1.3rem; }
-    .db-citation-box { font-size: 1rem; }
 }
 
 @keyframes fadeIn { 
