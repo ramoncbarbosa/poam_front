@@ -4,6 +4,7 @@ export const archive2 = {
         titulo: "Indicadores de Conflitos Territoriais",
         descricao: "Dados sobre percepção de segurança jurídica e conflitos em áreas protegidas.",
         previewSource: "database/data/conflitos.txt",
+        citationSource: "database/citacao/desafios_socio_ambientais_de_hidroletricas_na_amazonia.txt",
         responsavel: "Ramon Castro Barbosa",
         resumoCompleto: "O estudo foca no mapeamento de áreas críticas de conflitos fundiários na Amazônia Paraense, utilizando indicadores de percepção de segurança jurídica das comunidades tradicionais e análise de sobreposição de áreas protegidas."
     }

@@ -1,10 +1,13 @@
-<link rel="stylesheet" href="styles/databases.css">
+<link rel="stylesheet" href="styles/dbdetail.css">
 
 <div class="db-detail-wrapper pt-24">
-    <div class="max-w-4xl mx-auto px-6 pb-20">
-        <button onclick="navigateTo('database')" class="mb-8 text-green-800 font-bold uppercase text-xs">← Voltar para a Base</button>
+    <div class="max-w-6xl mx-auto px-6 pb-20">
+        <button onclick="navigateTo('database')" class="btn-back">
+            <span class="back-icon">←</span> Voltar para a Base
+        </button>
         
         <div id="db-detail-content">
-            </div>
+            <p class="loading-text">Carregando detalhes da pesquisa...</p>
+        </div>
     </div>
 </div>

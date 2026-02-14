@@ -53,7 +53,6 @@ async function navigateTo(pId, extraData = null) {
 
 // --- 2. LÓGICA DA BASE DE DADOS (DATABASE) ---
 
-// LISTAGEM: Apenas os cards limpos
 function renderDatabases() {
     const grid = document.getElementById('database-grid');
     if (!grid) return;
@@ -70,7 +69,6 @@ function renderDatabases() {
     `).join('');
 }
 
-// DETALHES: Onde a tabela é montada via HTML Tags
 function renderDbDetail(id) {
     const container = document.getElementById('db-detail-content');
     const db = dbData.find(d => d.id === parseInt(id));
@@ -85,7 +83,6 @@ function renderDbDetail(id) {
                 <div class="db-info-main">
                     <h4 class="db-label">Sobre os Dados</h4>
                     <p class="db-text">${db.resumoCompleto || db.descricao}</p>
-                    
                     <h4 class="db-label">Estrutura de Dados (Amostra)</h4>
                     <div class="db-table-container" id="preview-table-container">
                         <p class="loading-text">Gerando visualização técnica...</p>
@@ -93,26 +90,37 @@ function renderDbDetail(id) {
                 </div>
 
                 <div class="db-sidebar">
+                    <div class="db-citation-card">
+                        <h4 class="db-label-light">Como citar</h4>
+                        <div class="db-citation-box" id="citation-text">Carregando citação...</div>
+                        <button class="btn-copy" onclick="copyCitation()">Copiar Citação</button>
+                    </div>
+
                     <div class="db-contact-card">
                         <h4 class="db-label-light">Responsável</h4>
-                        <p class="db-name">${db.responsavel || "Corpo Científico POAM"}</p>
+                        <p class="db-name">${db.responsavel}</p>
                         <p class="db-contact-info">Para acesso aos dados brutos e metodologia completa, solicite via canal oficial.</p>
-                        <a href="https://docs.google.com/forms/d/e/SEU_ID_DO_FORM/viewform?entry.123456789=${encodeURIComponent(db.titulo)}" 
-                          target="_blank" 
-                          class="btn-request">
-                          Preencher Formulário de Acesso
-                        </a>
+                        <a href="${db.linkForms || '#'}" target="_blank" class="btn-request">Solicitar Acesso</a>
                     </div>
                 </div>
             </div>
         </div>
     `;
 
-    // Chama a função que lê o arquivo e monta a tabela HTML
     fetchAndBuildTable(db.previewSource, 'preview-table-container');
+    fetchCitation(db.citationSource, 'citation-text');
 }
 
-// FUNÇÃO QUE MONTA A TABELA COM TAGS HTML (Forçando o HTML com base no arquivo)
+async function fetchCitation(url, containerId) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        document.getElementById(containerId).innerText = text.trim();
+    } catch (e) {
+        document.getElementById(containerId).innerText = "Erro ao carregar citação.";
+    }
+}
+
 async function fetchAndBuildTable(url, containerId) {
     try {
         const response = await fetch(url);
@@ -123,14 +131,11 @@ async function fetchAndBuildTable(url, containerId) {
         const rows = text.split('\n').filter(r => r.trim() !== "").slice(0, 8);
 
         let tableHtml = '<table class="data-table"><thead><tr>';
-        
-        // Monta o Header (th)
         rows[0].split(separator).forEach(h => {
             tableHtml += `<th>${h.trim()}</th>`;
         });
         tableHtml += '</tr></thead><tbody>';
 
-        // Monta o Corpo (td)
         rows.slice(1).forEach(row => {
             tableHtml += '<tr>';
             row.split(separator).forEach(cell => {
@@ -145,6 +150,16 @@ async function fetchAndBuildTable(url, containerId) {
         document.getElementById(containerId).innerHTML = '<p class="error-msg">Amostra de dados temporariamente indisponível.</p>';
     }
 }
+
+window.copyCitation = () => {
+    const text = document.getElementById('citation-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.btn-copy');
+        const originalText = btn.innerText;
+        btn.innerText = "Copiado!";
+        setTimeout(() => { btn.innerText = originalText; }, 2000);
+    });
+};
 
 // --- 3. PÁGINA DE EQUIPE COMPLETA ---
 function renderFullTeamPage() {

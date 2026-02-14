@@ -127,6 +127,19 @@ header {
     padding: 10px;
 }
 
+.db-tag {
+    display: inline-flex;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.db-tag.legislativo { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.db-tag.socioambiental { background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; }
+.db-tag.social { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+
 .custom-coord-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 
 /* Breakpoints */
