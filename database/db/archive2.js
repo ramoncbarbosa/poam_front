@@ -1,5 +1,4 @@
 export const archive2 = {
-        id: 2,
         categoria: "Socioambiental",
         tipo: "socioambiental",
         titulo: "Indicadores de Conflitos Territoriais",

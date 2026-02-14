@@ -83,7 +83,7 @@ function renderDbDetail(id) {
             
             <div class="db-content-grid">
                 <div class="db-info-main">
-                    <h4 class="db-label">Sobre o Projeto</h4>
+                    <h4 class="db-label">Sobre os Dados</h4>
                     <p class="db-text">${db.resumoCompleto || db.descricao}</p>
                     
                     <h4 class="db-label">Estrutura de Dados (Amostra)</h4>
@@ -97,7 +97,11 @@ function renderDbDetail(id) {
                         <h4 class="db-label-light">Responsável</h4>
                         <p class="db-name">${db.responsavel || "Corpo Científico POAM"}</p>
                         <p class="db-contact-info">Para acesso aos dados brutos e metodologia completa, solicite via canal oficial.</p>
-                        <a href="mailto:poam@ufpa.br?subject=Dados: ${db.titulo}" class="btn-request">Solicitar Acesso</a>
+                        <a href="https://docs.google.com/forms/d/e/SEU_ID_DO_FORM/viewform?entry.123456789=${encodeURIComponent(db.titulo)}" 
+                          target="_blank" 
+                          class="btn-request">
+                          Preencher Formulário de Acesso
+                        </a>
                     </div>
                 </div>
             </div>
