@@ -1,6 +1,6 @@
 /* --- DETALHES DA BASE DE DADOS (styles/dbdetail.css) --- */
 
-/* 1. CONTAINER RAIZ COM RESPIRO TOTAL */
+/* 1. CONTAINER RAIZ: ESTABILIDADE E CENTRALIZAÇÃO */
 .db-detail-wrapper {
     background: white;
     min-height: 100vh;
@@ -12,10 +12,10 @@
 
 .db-detail-view { 
     animation: fadeIn 0.5s ease-out; 
-    width: 92%; /* Margem de segurança lateral */
+    width: 92%;
     max-width: 1200px;
     margin: 0 auto; 
-    padding: 20px 0 60px 0;
+    padding: 20px 0 80px 0;
 }
 
 /* Título Adaptável */
@@ -28,13 +28,12 @@
     text-align: center;
 }
 
-/* 2. GRID DE CONTEÚDO RESPONSIVO */
+/* 2. GRID DE CONTEÚDO */
 .db-content-grid { 
     display: grid; 
     grid-template-columns: 1fr 350px; 
     gap: 50px; 
     width: 100%;
-    margin: 0 auto;
 }
 
 @media (max-width: 1100px) {
@@ -44,10 +43,11 @@
     }
 }
 
-/* 3. BLOCO "SOBRE OS DADOS" (Ajustado com Respiros) */
+/* 3. BLOCO "SOBRE OS DADOS" */
 .db-info-main {
     width: 100%;
-    padding: 0 10px; /* Evita que o texto encoste na borda em telas muito pequenas */
+    padding: 0 10px;
+    text-align: left; /* Garante alinhamento à esquerda na quebra de linha */
 }
 
 .db-label { 
@@ -58,35 +58,35 @@
     margin-bottom: 15px; 
     display: block;
     letter-spacing: 1px;
+    text-align: left;
 }
 
 .db-text { 
-    font-size: clamp(1rem, 4vw, 1.2rem); 
+    font-size: clamp(1.05rem, 4vw, 1.25rem); 
     color: #475569; 
-    line-height: 1.8; /* Aumenta o espaço entre linhas para leitura */
+    line-height: 1.8; 
     margin-bottom: 50px;
-    text-align: justify; /* Melhora o alinhamento do bloco de texto */
-    hyphens: auto; /* Evita buracos no texto justificado */
+    text-align: left; /* Alinhamento à esquerda conforme solicitado */
 }
 
-/* 4. A TABELA (Contida e com Scroll) */
+/* 4. A TABELA ROBUSTA (Texto maior e mais espaçosa) */
 .db-table-container { 
     background: #f8fafc; 
     border-radius: 1.5rem; 
     border: 1px solid #e2e8f0; 
     overflow: auto; 
-    max-height: 500px; 
+    max-height: 550px; 
     width: 100%; 
     box-sizing: border-box;
     margin-bottom: 40px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 .data-table { 
     width: 100%; 
     border-collapse: separate; 
     border-spacing: 0;
-    font-size: 13px; 
+    font-size: 15px; /* Aumentado de 13px para 15px */
 }
 
 .data-table th { 
@@ -94,20 +94,27 @@
     top: 0;
     z-index: 10;
     background: #f1f5f9; 
-    padding: 15px 20px; 
+    padding: 20px 25px; /* Mais respiro nos títulos */
     color: #064e3b; 
-    border-bottom: 2px solid #e2e8f0; 
+    font-weight: 900; 
+    border-bottom: 3px solid #e2e8f0; 
     white-space: nowrap; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .data-table td { 
-    padding: 12px 20px; 
+    padding: 16px 25px; /* Mais respiro nos dados */
     border-bottom: 1px solid #f1f5f9; 
-    color: #64748b; 
+    color: #334155; /* Texto um pouco mais escuro para contraste */
     white-space: nowrap; 
 }
 
-/* 5. SIDEBAR E CARDS (Respiro Interno) */
+.data-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* 5. SIDEBAR E CARDS (Texto alinhado à esquerda) */
 .db-sidebar {
     width: 100%;
     display: flex;
@@ -116,28 +123,37 @@
 }
 
 .db-citation-card, .db-contact-card {
-    padding: clamp(25px, 5vw, 40px); /* Respiro interno generoso e fluido */
+    padding: clamp(25px, 5vw, 40px); 
     border-radius: 2.5rem;
     width: 100%;
     box-sizing: border-box;
-    text-align: center;
 }
 
 .db-citation-card { background: #976a4b; color: #ffffff; }
 .db-contact-card { background: #064e3b; color: white; }
 
+.db-citation-card .db-label-light, .db-contact-card .db-label-light {
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    display: block;
+    text-align: left; /* Alinhado à esquerda */
+}
+
 .db-citation-box {
-    font-size: 1rem; 
+    font-size: 1.1rem; 
     line-height: 1.6;
     margin-bottom: 30px;
     font-style: italic;
     word-wrap: break-word;
+    text-align: left; /* Alinhado à esquerda */
 }
 
 .db-name { 
-    font-size: 1.5rem; 
+    font-size: 1.6rem; 
     font-weight: 800; 
     margin-bottom: 20px; 
+    text-align: left;
 }
 
 /* 6. BOTÕES */
@@ -173,11 +189,11 @@
     text-transform: uppercase;
 }
 
-/* 8. AJUSTES MOBILE EXTREMO (< 600px) */
+/* 8. AJUSTES MOBILE EXTREMO */
 @media (max-width: 600px) {
-    .db-detail-view { width: 90%; }
-    .db-text { text-align: left; } /* Texto justificado em telas muito pequenas fica ruim */
-    .db-citation-card, .db-contact-card { padding: 25px 20px; }
+    .data-table { font-size: 14px; }
+    .db-name { font-size: 1.3rem; }
+    .db-citation-box { font-size: 1rem; }
 }
 
 @keyframes fadeIn { 
