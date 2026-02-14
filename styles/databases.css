@@ -28,7 +28,7 @@
 .db-detail-title { font-size: 3rem; font-weight: 900; color: #064e3b; margin-bottom: 40px; line-height: 1; }
 .db-content-grid { display: grid; grid-template-columns: 1fr 350px; gap: 60px; }
 
-.db-label { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; display: block; }
+.db-label { font-size: 1rem; font-weight: 900; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; display: block; }
 .db-text { font-size: 1.2rem; color: #475569; line-height: 1.8; margin-bottom: 40px; }
 
 /* A TABELA TÉCNICA (Montada via JS) */

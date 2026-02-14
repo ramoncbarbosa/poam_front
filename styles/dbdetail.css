@@ -1,121 +1,149 @@
 /* --- DETALHES DA BASE DE DADOS (styles/dbdetail.css) --- */
 
+/* 1. RESET E CONTENÇÃO RADICAL */
 .db-detail-wrapper {
     background: white;
     min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden; /* Proíbe terminantemente o scroll lateral da página */
+    position: relative;
+    display: block; /* Voltamos para block para evitar bugs de flex horizontal */
 }
 
 .db-detail-view { 
     animation: fadeIn 0.5s ease-out; 
+    width: 95%; /* Respiro lateral natural */
+    max-width: 1200px;
+    margin: 0 auto; /* Centralização clássica e segura */
+    padding: 40px 0;
 }
 
-/* Título principal bem grande e imponente */
+/* Título Centralizado */
 .db-detail-title { 
-    font-size: 3.8rem; /* Aumentado significativamente */
+    font-size: clamp(1.8rem, 6vw, 3.8rem);
     font-weight: 900; 
     color: #064e3b; 
-    margin-bottom: 40px; 
-    line-height: 1.05; 
-    letter-spacing: -1px;
+    margin: 0 auto 40px auto; 
+    line-height: 1.1; 
+    text-align: center;
+    max-width: 900px; /* Evita que o título fique muito espalhado */
 }
 
-/* Grid Principal */
+/* 2. GRID DE CONTEÚDO */
 .db-content-grid { 
     display: grid; 
     grid-template-columns: 1fr 350px; 
-    gap: 60px; 
-    align-items: start;
+    gap: 40px; 
+    width: 100%;
+    margin: 0 auto;
 }
 
-/* Rótulos e Textos */
-.db-label { 
-    font-size: 11px; 
-    font-weight: 900; 
-    text-transform: uppercase; 
-    color: #94a3b8; 
-    margin-bottom: 12px; 
-    display: block; 
-    letter-spacing: 1px;
+/* Responsividade do Grid (Desktop -> Tablet/Mobile) */
+@media (max-width: 1100px) {
+    .db-content-grid { 
+        grid-template-columns: 100%; /* Força ocupação total da largura disponível */
+    }
 }
 
-.db-text { 
-    font-size: 1.25rem; 
-    color: #475569; 
-    line-height: 1.8; 
-    margin-bottom: 40px; 
-}
-
-/* --- A TABELA TÉCNICA DINÂMICA --- */
+/* 3. A TABELA (O PONTO DE QUEBRA) */
 .db-table-container { 
     background: #f8fafc; 
     border-radius: 1.5rem; 
     border: 1px solid #e2e8f0; 
-    overflow-x: auto; 
-    margin-top: 10px;
-    margin-bottom: 50px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    overflow: auto; /* Scroll nos dois sentidos */
+    max-height: 500px; 
+    width: 100%; /* Ocupa apenas o que o pai (grid) permitir */
+    max-width: 100%; 
+    box-sizing: border-box;
+    margin-bottom: 40px;
 }
 
 .data-table { 
     width: 100%; 
-    border-collapse: collapse; 
+    border-collapse: separate; 
+    border-spacing: 0;
     font-size: 13px; 
-    text-align: left; 
 }
 
 .data-table th { 
+    position: sticky;
+    top: 0;
+    z-index: 10;
     background: #f1f5f9; 
-    padding: 18px 20px; 
+    padding: 15px 20px; 
     color: #064e3b; 
-    font-weight: 800; 
     border-bottom: 2px solid #e2e8f0; 
     white-space: nowrap; 
 }
 
 .data-table td { 
-    padding: 14px 20px; 
+    padding: 12px 20px; 
     border-bottom: 1px solid #f1f5f9; 
     color: #64748b; 
     white-space: nowrap; 
 }
 
-.data-table tbody tr:hover {
-    background-color: #f1f5f9;
+/* 4. SIDEBAR E CARDS */
+.db-sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* --- SIDEBAR: QUADRADOS DE CITAÇÃO E CONTATO --- */
+.db-citation-card, .db-contact-card {
+    padding: 35px;
+    border-radius: 2.5rem;
+    width: 100%;
+    box-sizing: border-box; /* Crucial para o padding não empurrar o card pra fora */
+    text-align: center;
+}
 
-/* 1. Card de Citação (Marrom Terra) */
+/* Card Citação */
 .db-citation-card {
     background: #976a4b;
-    padding: 40px;
-    border-radius: 2.5rem;
     color: #ffffff;
-    margin-bottom: 20px;
 }
 
-/* Título do Card de Citação Maior */
 .db-citation-card .db-label-light {
-    font-size: 1.2rem; /* Título interno maior */
-    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 900;
     margin-bottom: 20px;
+    display: block;
+    color: #fff;
 }
 
 .db-citation-box {
-    font-size: 1.15rem; 
+    font-size: 1rem; 
     line-height: 1.6;
     margin-bottom: 30px;
-    color: #ffffff; 
     font-style: italic;
-    word-break: break-word;
+    word-wrap: break-word; /* Força quebra de palavras se necessário */
 }
 
-/* Botão em tom de Marrom diferente (mais escuro/intenso) */
-.btn-copy {
+/* Card Contato */
+.db-contact-card { 
+    background: #064e3b; 
+    color: white; 
+}
+
+.db-contact-card .db-label-light {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.db-name { 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    margin-bottom: 20px; 
+}
+
+/* 5. BOTÕES */
+.btn-copy, .btn-request {
     display: block;
     width: 100%;
-    background: #7a5236; /* Tom de marrom diferente do card */
-    color: #ffffff;
     border: none;
     padding: 18px;
     border-radius: 14px;
@@ -123,90 +151,33 @@
     font-weight: 900;
     text-transform: uppercase;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-copy:hover { 
-    background: #5d3f2a;
-    transform: translateY(-2px);
-}
-
-/* 2. Card de Contato (Verde POAM) */
-.db-contact-card { 
-    background: #064e3b; 
-    padding: 40px; 
-    border-radius: 2.5rem; 
-    color: white; 
-}
-
-/* Título do Card de Contato Maior */
-.db-contact-card .db-label-light { 
-    font-size: 1.2rem; /* Título interno maior */
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.db-name { 
-    font-size: 1.6rem; 
-    font-weight: 800; 
-    margin-bottom: 20px; 
-}
-
-.db-contact-info { 
-    font-size: 0.95rem; 
-    opacity: 0.8; 
-    margin-bottom: 30px; 
-    line-height: 1.5; 
-}
-
-/* Botão em tom de Verde diferente */
-.btn-request {
-    display: block;
-    background: #10b981; /* Tom de verde diferente do fundo do card */
-    color: white;
     text-align: center;
-    padding: 18px;
-    border-radius: 14px;
     text-decoration: none;
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 11px;
     transition: 0.3s;
 }
 
-.btn-request:hover {
-    background: #059669;
-    transform: translateY(-2px);
-}
+.btn-copy { background: #7a5236; color: white; }
+.btn-request { background: #10b981; color: white; }
 
-/* Botão Voltar */
+/* 6. BOTÃO VOLTAR CENTRALIZADO NO MOBILE */
 .btn-back { 
     background: none; 
     border: none; 
     font-weight: 900; 
-    text-transform: uppercase; 
     color: #10b981; 
     cursor: pointer; 
-    font-size: 11px; 
-    margin-bottom: 30px; 
+    margin: 0 auto 30px auto; 
     display: flex; 
     align-items: center; 
     gap: 8px; 
 }
 
-.btn-back:hover { opacity: 0.7; }
-
-/* Mensagens de Feedback */
-.loading-text { padding: 40px; text-align: center; color: #94a3b8; font-style: italic; }
-.error-msg { padding: 20px; color: #ef4444; text-align: center; font-weight: bold; }
+@media (max-width: 600px) {
+    .db-detail-title { text-align: center; }
+    .db-text { text-align: center; font-size: 1rem; }
+}
 
 @keyframes fadeIn { 
     from { opacity: 0; transform: translateY(10px); } 
     to { opacity: 1; transform: translateY(0); } 
-}
-
-/* Responsividade */
-@media (max-width: 1024px) {
-    .db-content-grid { grid-template-columns: 1fr; }
-    .db-detail-title { font-size: 2.8rem; }
 }
