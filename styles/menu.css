@@ -1,0 +1,159 @@
+/* --- MENU MOBILE (styles/menu.css) --- */
+
+/* 1. Container Principal do Menu */
+#mobile-menu { 
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    height: 100vh; 
+    height: 100dvh; /* Altura dinâmica para mobile */
+    z-index: 3000; 
+    background: #064e3b; 
+    width: 75%; 
+    max-width: 320px; 
+    transform: translateX(100%); 
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    
+    /* Padding lateral e inferior, removido o topo para alinhar via header */
+    padding: 0 2rem 2rem 2rem; 
+    
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+}
+
+/* Estado Aberto */
+#mobile-menu.open { 
+    transform: translateX(0); 
+}
+
+/* 2. Estrutura Interna */
+#mobile-menu-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* 3. Cabeçalho do Menu (Alinhado com o Header do site) */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Altura ajustada para bater com o py-4 do seu index.html */
+    height: 80px; 
+    margin-bottom: 1rem;
+}
+
+.menu-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* 4. Botão de Fechar (Alinhado visualmente) */
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.2rem; /* Aumentado levemente para facilitar o toque */
+    line-height: 1;
+    cursor: pointer;
+    padding: 0; 
+    margin-right: -0.4rem; /* Ajuste fino para alinhar à borda direita */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.close-btn:hover {
+    color: #10b981;
+    transform: rotate(90deg) scale(1.1);
+}
+
+.close-btn:active {
+    transform: scale(0.9);
+}
+
+/* 5. Navegação (Links subindo) */
+.menu-nav {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha no topo */
+    padding-top: 2rem;           /* Respiro após o header */
+    gap: 1.8rem;
+}
+
+.menu-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.menu-nav a:hover {
+    color: #10b981;
+    padding-left: 10px;
+    opacity: 1;
+}
+
+/* 6. Rodapé do Menu (Instagram na base) */
+.menu-footer {
+    margin-top: auto; 
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-label {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.instagram-link {
+    color: white;
+    font-weight: 900;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.instagram-link:hover {
+    color: #10b981;
+}
+
+/* 7. Overlay de Fundo */
+#menu-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 2500; 
+    display: none; 
+    backdrop-filter: blur(3px);
+}
+
+#menu-overlay.active { 
+    display: block; 
+}
+
+/* 8. Animação de Entrada dos Links */
+#mobile-menu.open .menu-nav a {
+    animation: slideIn 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}

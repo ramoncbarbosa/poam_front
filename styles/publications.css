@@ -1,4 +1,4 @@
-/* Banner de Publicações - BUG FIX: Preenchimento Total */
+/* Banner de Publicações */
 .article-banner {
     border-radius: 3.5rem !important;
     background: #064e3b;
@@ -10,16 +10,19 @@
 .article-track {
     display: flex;
     height: 100%;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    /* cubic-bezier deixa a transição mais elegante/orgânica */
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .article-slide {
     min-width: 100%;
     height: 100%;
-    /* O background agora é injetado pelo JS via inline style para ser dinâmico */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-/* Botões de Paginação */
+/* Estilo dos botões de paginação lá embaixo */
 .pub-page-btn {
     background: #f1f5f9;
     color: #064e3b;
@@ -28,35 +31,29 @@
     font-weight: 900;
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     transition: all 0.3s ease;
     border: 1px solid #e2e8f0;
-    cursor: pointer;
 }
 
 .pub-page-btn:hover:not(:disabled) {
     background: #064e3b;
     color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(6, 78, 59, 0.2);
+    transform: translateY(-2px);
 }
 
 .pub-page-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-    filter: grayscale(1);
 }
 
-/* Ajuste Responsivo */
+/* Ajuste Mobile */
 @media (max-width: 768px) {
     .article-banner {
         height: 350px;
-        border-radius: 2.5rem !important;
-    }
-    .article-slide {
-        padding: 2rem !important;
+        border-radius: 2rem !important;
     }
     .article-slide h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem !important;
+        line-height: 1.2;
     }
 }
