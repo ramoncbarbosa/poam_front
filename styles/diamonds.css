@@ -5,8 +5,6 @@
     display: none; 
     justify-content: center;
     align-items: center;
-    /* Adicionado para garantir que o grid não escape */
-    overflow: visible; 
 }
 
 .diamond {
@@ -14,32 +12,28 @@
     width: 200px;
     height: 200px;
     overflow: hidden;
-    /* Transform único e fixo aqui */
-    transform: rotate(45deg); 
+    transform: rotate(45deg);
     border: 6px solid white;
     box-shadow: 15px 15px 40px rgba(0,0,0,0.15);
     background: #f3f3f3;
-    /* Centralização absoluta da imagem */
+    /* Centralização garantida */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .diamond img {
-    /* 150% garante cobertura total da diagonal (raiz de 2) */
-    width: 150%;
-    height: 150%;
+    min-width: 145%;
+    min-height: 145%;
     object-fit: cover;
-    /* Desfaz a rotação do pai para a imagem ficar reta */
-    transform: rotate(-45deg);
+    transform: rotate(-45deg); 
     flex-shrink: 0;
 }
 
-/* Posicionamento usando margens para não conflitar com o rotate(45deg) */
-.d1 { margin-left: -150px; } /* Esquerda */
-.d2 { margin-top: -150px; }  /* Topo */
-.d3 { margin-left: 150px; border-color: #064e3b; z-index: 10; } /* Direita */
-.d4 { margin-top: 150px; }   /* Baixo */
+.d1 { top: 50%; left: calc(50% - 150px); transform: translate(-50%, -50%) rotate(45deg); }
+.d2 { top: calc(50% - 150px); left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+.d3 { top: 50%; left: calc(50% + 150px); transform: translate(-50%, -50%) rotate(45deg); border-color: #064e3b; z-index: 10; }
+.d4 { top: calc(50% + 150px); left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
 
 @media (min-width: 1084px) {
     .diamond-grid { display: flex; }
