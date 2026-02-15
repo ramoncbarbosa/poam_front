@@ -25,8 +25,8 @@ export async function initHomeTeam() {
       injectionPoint.innerHTML = await resp.text();
       renderCarousel();
 
-      // Adiciona listener para recalcular se a tela mudar de tamanho
-      window.removeEventListener('resize', renderCarousel); // Evita duplicados
+      // Recalcula ao redimensionar a tela
+      window.removeEventListener('resize', renderCarousel);
       window.addEventListener('resize', renderCarousel);
     }
   } catch (e) { console.error("Erro home-team component:", e); }
@@ -41,16 +41,13 @@ export function renderFullTeamPage() {
 
   if (!coordContainer || !researchContainer) return;
 
-  // Os 2 primeiros são sempre a coordenação (conforme padrão do seu banco)
   const coordData = teamData.slice(0, 2);
   const researchData = teamData.slice(2);
 
-  // Renderiza a Coordenação (2 colunas)
   coordContainer.innerHTML = coordData.map(m => createHtCard(m)).join('');
-
-  // Renderiza os Pesquisadores (Grid de 3 colunas em telas grandes)
   researchContainer.innerHTML = researchData.map(m => createHtCard(m)).join('');
 }
+
 /**
  * Move o carrossel circularmente
  */
@@ -75,12 +72,14 @@ export function moveResearchTo(idx) {
   });
 }
 
+/**
+ * Expande/Contrai o card e alterna símbolo +/-
+ */
 export function htToggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
-  const toggleIcon = el.querySelector('.ht-toggle');
 
-  // Fecha outros cards e reseta os ícones deles
+  // Fecha outros cards e reseta ícones
   document.querySelectorAll('.ht-card.active').forEach(card => {
     if (card !== el) {
       card.classList.remove('active');
@@ -89,26 +88,30 @@ export function htToggleCard(event, el) {
     }
   });
 
-  // Alterna o estado do card atual e troca o ícone
+  // Alterna o atual
   el.classList.toggle('active', !isActive);
+  const toggleIcon = el.querySelector('.ht-toggle');
   if (toggleIcon) {
     toggleIcon.innerText = isActive ? '+' : '-';
   }
 }
 
 /**
- * Lógica de montagem do carrossel (Agora com suporte a 3, 2, 1 itens)
+ * Montagem do carrossel com lógica de visibilidade das setas
  */
 function renderCarousel() {
   const coordTarget = document.getElementById('home-coord-target');
   const track = document.getElementById('home-research-track');
   const dotsContainer = document.getElementById('carouselDots');
+
+  // Seleção das setas
+  const prevBtn = document.querySelector('.ht-nav-btn.prev');
+  const nextBtn = document.querySelector('.ht-nav-btn.next');
+
   if (!track || !coordTarget) return;
 
-  // Renderiza Coordenação
   coordTarget.innerHTML = teamData.slice(0, 2).map(createHtCard).join('');
 
-  // Renderiza Pesquisadores com lógica responsiva
   const researchers = teamData.slice(2);
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -117,22 +120,28 @@ function renderCarousel() {
     groups.push(researchers.slice(i, i + itemsPerSlide));
   }
 
+  // LÓGICA DE VISIBILIDADE: Só mostra setas se houver mais de uma página
+  const showNav = groups.length > 1;
+  if (prevBtn) prevBtn.style.display = showNav ? 'flex' : 'none';
+  if (nextBtn) nextBtn.style.display = showNav ? 'flex' : 'none';
+
   track.innerHTML = groups.map(g => `
-        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem;">
+        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem; align-items: start;">
             ${g.map(m => createHtCard(m)).join('')}
         </div>
     `).join('');
 
-  // Garante que o índice atual não quebre se o número de páginas mudar
   if (htCurrentIndex >= groups.length) htCurrentIndex = 0;
   moveResearchTo(htCurrentIndex);
 
   if (dotsContainer) {
+    // Gerado aqui, visibilidade controlada pelo CSS (Media Query)
     dotsContainer.innerHTML = groups.map((_, idx) => `
             <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
         `).join('');
   }
 }
+
 function createHtCard(m) {
   const foto = m.foto
     ? `<img src="${m.foto}" class="w-full h-full object-cover">`
