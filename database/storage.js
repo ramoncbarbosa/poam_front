@@ -3,7 +3,7 @@ import { filesInFolder } from './files.js';
 async function parseFileData(fileName) {
     try {
         // CORREÇÃO: Usando caminho relativo para funcionar no GitHub Pages
-        const response = await fetch(`./data/${fileName}`);
+        const response = await fetch(`data/${fileName}`);
         if (!response.ok) throw new Error(`404: ${fileName}`);
 
         const text = await response.text();
