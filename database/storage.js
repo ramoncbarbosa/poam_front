@@ -2,17 +2,15 @@ import { filesInFolder } from './files.js';
 
 async function parseFileData(fileName) {
     try {
-        // const response = await fetch(`/database/data/${fileName}`);
+        // CORREÇÃO: Usando caminho relativo para funcionar no GitHub Pages
         const response = await fetch(`./data/${fileName}`);
         if (!response.ok) throw new Error(`404: ${fileName}`);
 
         const text = await response.text();
         const lines = text.split('\n').filter(l => l.trim() !== "");
 
-        // Função inteligente: identifica se a linha usa ; ou ,
         const getValue = (line) => {
             if (!line) return "";
-            // Tenta dar split por ; primeiro, se encontrar mais de uma parte, assume ;
             const separator = line.includes(';') ? ';' : ',';
             const parts = line.split(separator);
             return parts.slice(1).join(separator).trim();
@@ -27,7 +25,7 @@ async function parseFileData(fileName) {
             citacao: getValue(lines[4]),
             descricao: getValue(lines[5]),
             resumoCompleto: getValue(lines[6]),
-            rawRows: lines.slice(7), // Mantém as linhas brutas para a tabela
+            rawRows: lines.slice(7),
             tipo: getValue(lines[1]).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
         };
     } catch (error) {
@@ -45,9 +43,7 @@ export const dbData = await Promise.all(
                 return parsed;
             }
             return null;
-        } catch (e) {
-            return null;
-        }
+        } catch (e) { return null; }
     })
 ).then(data => {
     const validData = data.filter(d => d !== null);

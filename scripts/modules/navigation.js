@@ -9,7 +9,8 @@ export async function navigateTo(pId, extraData = null) {
   const contentArea = document.getElementById('content-area');
 
   try {
-    const response = await fetch(`pages/${pId}.html`);
+    // const response = await fetch(`pages/${pId}.html`);
+    const response = await fetch(`./pages/${pId}.html`);
     if (!response.ok) throw new Error('Falha ao carregar página.');
 
     const html = await response.text();
