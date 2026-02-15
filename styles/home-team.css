@@ -1,5 +1,4 @@
 /* --- ISOLAMENTO TOTAL DA SEÇÃO --- */
-
 .ht-wrapper {
     width: 100%;
     max-width: 1280px;
@@ -41,6 +40,7 @@
     gap: 1.5rem;
     margin-bottom: 4rem;
     width: 100%;
+    align-items: start; /* CORREÇÃO: Impede que o vizinho estique */
 }
 
 .ht-carousel-container {
@@ -69,9 +69,10 @@
     display: grid;
     gap: 1.5rem;
     width: 100%;
+    align-items: start; /* CORREÇÃO: Para o carrossel */
 }
 
-/* --- ESTILO DOS CARDS COM TRANSIÇÃO SUAVE --- */
+/* --- ESTILO DOS CARDS --- */
 .ht-card {
     background: white;
     border: 1px solid #e2e8f0;
@@ -83,7 +84,6 @@
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    min-height: 110px;
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -91,7 +91,7 @@
 
 .ht-card:hover { border-color: #10b981; transform: translateY(-3px); }
 
-/* Estado Ativo (Expandido) */
+/* ESTADO ATIVO */
 .ht-card.active {
     background: #064e3b;
     border-color: #064e3b;
@@ -102,6 +102,53 @@
 .ht-card.active .ht-toggle { color: white; }
 .ht-card.active .ht-role { color: #34d399; }
 .ht-card.active .ht-photo { background: white; color: #064e3b; }
+
+.ht-card.active .ht-details {
+    color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    padding-top: 2rem;
+    max-height: 600px;
+    opacity: 1;
+}
+
+/* TÍTULOS VERDES EM CIMA */
+.ht-card.active .ht-details strong {
+    color: #34d399;
+    display: block; 
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+/* DESCRIÇÃO EMBAIXO COM RESPIRO */
+.ht-card.active .ht-details p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #f1f5f9;
+}
+
+/* LINK LATTES COM DESTAQUE */
+.ht-lattes-link {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none; 
+    color: #10b981;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.ht-card.active .ht-lattes-link {
+    color: #34d399;
+    margin-top: 1rem;
+}
+
+.ht-card.active .ht-lattes-link:hover {
+    color: white;
+}
 
 .ht-card-header {
     display: flex;
@@ -117,7 +164,6 @@
     text-align: left;
 }
 
-/* Foto/Iniciais */
 .ht-photo {
     width: 65px;
     height: 65px;
@@ -130,94 +176,47 @@
     font-weight: 800;
     font-size: 1.2rem;
     flex-shrink: 0;
-    transition: background 0.3s ease, color 0.3s ease;
+    overflow: hidden;
 }
 
 .ht-name { font-size: 1.15rem; font-weight: 800; color: #1f2937; margin: 0; line-height: 1.2; }
 .ht-role { font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase; margin-top: 4px; }
-.ht-toggle { font-size: 1.8rem; color: #059669; font-weight: 300; transition: color 0.3s ease; }
+.ht-toggle { font-size: 1.8rem; color: #059669; font-weight: 300; width: 30px; text-align: center; }
 
-/* --- A MÁGICA DA EXPANSÃO SUAVE --- */
 .ht-details {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: left;
 }
 
-.ht-card.active .ht-details {
-    max-height: 400px;
-    opacity: 1;
-    margin-top: 1.25rem;
-}
-
-.ht-desc-text {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.ht-lattes-link {
-    color: #10b981;
-    font-weight: 800;
-    text-transform: uppercase;
-    text-decoration: underline;
-    font-size: 0.75rem;
-    display: inline-block;
-}
-
 /* --- NAVEGAÇÃO --- */
-.ht-nav-btn {
-    background: #064e3b;
-    color: white;
-    border: none;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.ht-nav-btn:hover { background: #047857; }
-.ht-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-.ht-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 2rem;
-}
-
-.ht-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.ht-dot.active {
-    background: #064e3b;
-    transform: scale(1.3);
-}
+.ht-dots { display: flex; justify-content: center; gap: 8px; margin-top: 2rem; }
+.ht-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: 0.3s; }
+.ht-dot.active { background: #064e3b; transform: scale(1.3); }
 
 /* --- BREAKPOINTS --- */
 @media (max-width: 767px) {
-    .ht-coord-grid { grid-template-columns: 1fr; }
-    .ht-slide { grid-template-columns: 1fr; }
-    .ht-nav-btn { display: none; }
+    .ht-coord-grid, .ht-slide { grid-template-columns: 1fr; }
 }
 
 @media (min-width: 768px) {
-    .ht-coord-grid { grid-template-columns: 1fr 1fr; }
-    .ht-slide { grid-template-columns: 1fr 1fr; }
-    .ht-dots { display: none; }
+    .ht-coord-grid, .ht-slide { grid-template-columns: 1fr 1fr; }
 }
 
 @media (min-width: 1150px) {
     .ht-slide { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* GRIDS DA PÁGINA EQUIPE */
+#coord-team { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+#research-team { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+
+@media (min-width: 768px) {
+    #coord-team { grid-template-columns: repeat(2, 1fr); }
+    #research-team { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    #research-team { grid-template-columns: repeat(3, 1fr); }
 }

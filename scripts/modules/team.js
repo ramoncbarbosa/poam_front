@@ -36,10 +36,21 @@ export async function initHomeTeam() {
  * Renderiza a página de Equipe Completa
  */
 export function renderFullTeamPage() {
-  const container = document.getElementById('full-team');
-  if (container) container.innerHTML = teamData.map(m => createHtCard(m)).join('');
-}
+  const coordContainer = document.getElementById('coord-team');
+  const researchContainer = document.getElementById('research-team');
 
+  if (!coordContainer || !researchContainer) return;
+
+  // Os 2 primeiros são sempre a coordenação (conforme padrão do seu banco)
+  const coordData = teamData.slice(0, 2);
+  const researchData = teamData.slice(2);
+
+  // Renderiza a Coordenação (2 colunas)
+  coordContainer.innerHTML = coordData.map(m => createHtCard(m)).join('');
+
+  // Renderiza os Pesquisadores (Grid de 3 colunas em telas grandes)
+  researchContainer.innerHTML = researchData.map(m => createHtCard(m)).join('');
+}
 /**
  * Move o carrossel circularmente
  */
@@ -67,10 +78,22 @@ export function moveResearchTo(idx) {
 export function htToggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
+  const toggleIcon = el.querySelector('.ht-toggle');
+
+  // Fecha outros cards e reseta os ícones deles
   document.querySelectorAll('.ht-card.active').forEach(card => {
-    if (card !== el) card.classList.remove('active');
+    if (card !== el) {
+      card.classList.remove('active');
+      const icon = card.querySelector('.ht-toggle');
+      if (icon) icon.innerText = '+';
+    }
   });
+
+  // Alterna o estado do card atual e troca o ícone
   el.classList.toggle('active', !isActive);
+  if (toggleIcon) {
+    toggleIcon.innerText = isActive ? '+' : '-';
+  }
 }
 
 /**
@@ -110,27 +133,29 @@ function renderCarousel() {
         `).join('');
   }
 }
-
 function createHtCard(m) {
   const foto = m.foto
     ? `<img src="${m.foto}" class="w-full h-full object-cover">`
-    : `<div class="w-full h-full bg-green-800 flex items-center justify-center text-white font-bold">${m.nome.charAt(0)}</div>`;
+    : `<div class="w-full h-full flex items-center justify-center font-bold">${m.nome.charAt(0)}</div>`;
 
   return `
     <div class="ht-card" onclick="htToggleCard(event, this)">
-        <div class="ht-card-header flex items-center justify-between w-full">
-            <div class="ht-info flex items-center gap-4">
-                <div class="ht-photo w-14 h-14 rounded-full overflow-hidden border-2 border-green-50">${foto}</div>
-                <div><h4 class="ht-name font-black">${m.nome}</h4><p class="ht-role">${m.cargo}</p></div>
+        <div class="ht-card-header">
+            <div class="ht-info">
+                <div class="ht-photo">${foto}</div>
+                <div>
+                    <h4 class="ht-name">${m.nome}</h4>
+                    <p class="ht-role">${m.cargo}</p>
+                </div>
             </div>
             <span class="ht-toggle">+</span>
         </div>
         <div class="ht-details">
-            <p class="text-sm mt-4 text-gray-400 font-bold uppercase">Titulação</p>
-            <p class="text-sm text-gray-700 font-bold">${m.titulo || 'N/A'}</p>
-            <p class="text-sm mt-2 text-gray-400 font-bold uppercase">Área</p>
-            <p class="text-sm text-gray-600">${m.areaPesquisa}</p>
-            <a href="http://lattes.cnpq.br/" target="_blank" class="ht-lattes-link">Lattes</a>
+          <p><strong>Titulação</strong> ${m.titulo || 'N/A'}</p>
+          <p><strong>Área de Atuação</strong> ${m.areaPesquisa}</p>
+          <a href="${m.lattes || '#'}" target="_blank" class="ht-lattes-link">
+              Ver Currículo Lattes →
+          </a>
         </div>
     </div>`;
 }
