@@ -27,8 +27,13 @@
     align-items: center;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1084px) {
     .custom-objective-grid {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+.custom-objective-grid > div:first-child {
+    width: 100%;
+    max-width: 100%;
 }
