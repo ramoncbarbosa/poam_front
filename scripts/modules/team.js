@@ -121,12 +121,13 @@ function renderCarousel() {
   }
 
   // LÓGICA DE VISIBILIDADE: Só mostra setas se houver mais de uma página
+  // O CSS cuida de esconder no Mobile via Media Query
   const showNav = groups.length > 1;
   if (prevBtn) prevBtn.style.display = showNav ? 'flex' : 'none';
   if (nextBtn) nextBtn.style.display = showNav ? 'flex' : 'none';
 
   track.innerHTML = groups.map(g => `
-        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem; align-items: start;">
+        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem;">
             ${g.map(m => createHtCard(m)).join('')}
         </div>
     `).join('');
