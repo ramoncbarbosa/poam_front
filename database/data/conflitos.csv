@@ -1,0 +1,10 @@
+titulo, Indicadores de Conflitos Territoriais
+categoria, Socioambiental
+responsavel, Ramon Castro Barbosa
+data_publicacao, 2026-01-10
+citacao, Barbosa, R. C. (2026). Mapeamento de Conflitos Fundiários na Amazônia Paraense. Revista POAM.
+descricao, Dados sobre percepção de segurança jurídica e conflitos em áreas protegidas.
+resumo, O estudo foca no mapeamento de áreas críticas de conflitos fundiários na Amazônia Paraense.
+id,data,regiao,tipo_conflito,intensidade
+1,10/01/2026,Marajó,Territorial,Alta
+2,12/01/2026,Baixo Amazonas,Uso de Solo,Média

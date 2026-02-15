@@ -1,6 +1,10 @@
-Município;Lei Ordinária;Ano;Status;Impacto
-Belém;1.234/26;2026;Aprovada;Alto
-Santarém;552/25;2025;Em Análise;Médio
-Breves;889/26;2026;Aprovada;Alto
-Marabá;112/24;2024;Vigente;Baixo
-Ananindeua;443/25;2025;Arquivada;Nulo
+titulo, Leis Ambientais por Município (PA)
+categoria, Legislativo
+responsavel, Dra. Waldicleia Castro
+data_publicacao, 2026-02-15
+citacao: Castro, W. (2026). Levantamento Legislativo Ambiental do Estado do Pará. Belém: POAM/UFPA.
+descricao, Levantamento das aprovações de leis ambientais nos 144 municípios do Pará.
+resumo, Esta pesquisa sistematiza dados coletados diretamente nas câmaras municipais...
+id,municipio,lei,ano,status
+1,Breves,001/2024,2024,Aprovada
+2,Anajás,045/2023,2023,Em tramitação
