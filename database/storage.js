@@ -2,7 +2,8 @@ import { filesInFolder } from './files.js';
 
 async function parseFileData(fileName) {
     try {
-        const response = await fetch(`/database/data/${fileName}`);
+        // const response = await fetch(`/database/data/${fileName}`);
+        const response = await fetch(`./data/${fileName}`);
         if (!response.ok) throw new Error(`404: ${fileName}`);
 
         const text = await response.text();
