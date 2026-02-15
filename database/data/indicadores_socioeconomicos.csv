@@ -1,0 +1,18 @@
+titulo; Indicadores de Desenvolvimento Socioambiental - Marajó
+categoria; Socioambiental
+responsavel; Ramon Castro Barbosa
+data_publicacao; 2026-02-10
+citacao; Barbosa, R. C. (2026). Indicadores de Vulnerabilidade em Comunidades Ribeirinhas. POAM/UFPA.
+descricao; Coleta de dados primários sobre acesso a saneamento, energia e renda.
+resumo; Pesquisa realizada com 500 famílias em 5 municípios do arquipélago do Marajó para identificar o impacto de políticas públicas ambientais na qualidade de vida local e na segurança alimentar de comunidades tradicionais.
+id;comunidade;municipio;acesso_energia;renda_media;seguranca_juridica
+1;Rio Jaburu;Breves;Solar;R$ 650,00;Baixa
+2;Vila do Conde;Pontas de Pedras;Rede;R$ 890,00;Média
+3;Reserva Extrativista;Curralinho;Inexistente;R$ 420,00;Alta
+4;Comunidade Santo Amaro;Bagre;Diesel;R$ 550,00;Baixa
+5;Ribeira do Marajó;Anajás;Solar;R$ 480,00;Média
+6;Canal do Norte;Breves;Rede;R$ 920,00;Média
+7;Ilha das Araras;Melgaço;Solar;R$ 510,00;Alta
+8;Foz do Anapu;Portel;Inexistente;R$ 380,00;Baixa
+9;Quilombo Santa Luzia;Salvaterra;Rede;R$ 1.100,00;Alta
+10;Comunidade da Praia;Soure;Rede;R$ 1.250,00;Média

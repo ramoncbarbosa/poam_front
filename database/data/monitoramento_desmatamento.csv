@@ -1,0 +1,18 @@
+titulo; Monitoramento de Alertas de Desmatamento (PA)
+categoria; Ambiental
+responsavel; Laboratório de Geoprocessamento - POAM
+data_publicacao; 2026-02-15
+citacao; POAM. (2026). Relatório Trimestral de Monitoramento de Cobertura Vegetal. UFPA.
+descricao; Dados consolidados de alertas de desmatamento detectados via satélite.
+resumo; Este banco de dados sistematiza os alertas emitidos entre 2024 e 2026, categorizando-os por área (hectares), tipo de vegetação atingida e proximidade com Unidades de Conservação ou Terras Indígenas no estado do Pará.
+id;municipio;area_ha;tipo_vegetacao;data_alerta;proximidade_uc
+1;Altamira;450,5;Floresta Densa;12/01/2026;Sim
+2;São Félix do Xingu;1.200,3;Transição;15/01/2026;Não
+3;Breves;85,2;Várzea;18/01/2026;Sim
+4;Portel;310,8;Floresta Densa;20/01/2026;Sim
+5;Pacajá;150,0;Secundária;22/01/2026;Não
+6;Uruará;210,5;Floresta Densa;25/01/2026;Não
+7;Anajás;42,1;Várzea;01/02/2026;Sim
+8;Novo Progresso;890,4;Transição;05/02/2026;Não
+9;Itaituba;560,2;Floresta Densa;08/02/2026;Sim
+10;Trairão;125,7;Secundária;10/02/2026;Não

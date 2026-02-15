@@ -8,10 +8,13 @@ async function parseFileData(fileName) {
         const text = await response.text();
         const lines = text.split('\n').filter(l => l.trim() !== "");
 
+        // Função inteligente: identifica se a linha usa ; ou ,
         const getValue = (line) => {
             if (!line) return "";
-            const parts = line.split(',');
-            return parts.slice(1).join(',').trim();
+            // Tenta dar split por ; primeiro, se encontrar mais de uma parte, assume ;
+            const separator = line.includes(';') ? ';' : ',';
+            const parts = line.split(separator);
+            return parts.slice(1).join(separator).trim();
         };
 
         return {
@@ -23,7 +26,7 @@ async function parseFileData(fileName) {
             citacao: getValue(lines[4]),
             descricao: getValue(lines[5]),
             resumoCompleto: getValue(lines[6]),
-            rawRows: lines.slice(7),
+            rawRows: lines.slice(7), // Mantém as linhas brutas para a tabela
             tipo: getValue(lines[1]).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
         };
     } catch (error) {
@@ -42,14 +45,10 @@ export const dbData = await Promise.all(
             }
             return null;
         } catch (e) {
-            console.error(`Erro no arquivo: ${file}`, e);
             return null;
         }
     })
 ).then(data => {
     const validData = data.filter(d => d !== null);
     return validData.sort((a, b) => new Date(b.data) - new Date(a.data));
-}).catch(err => {
-    console.error("Erro crítico no banco de dados:", err);
-    return [];
-});
+}).catch(err => []);

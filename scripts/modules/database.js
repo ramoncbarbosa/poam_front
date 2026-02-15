@@ -37,16 +37,15 @@ export function renderDbDetail(id) {
             </div>
 
             <div class="db-sidebar">
-                <div class="db-citation-card">
-                    <h4 class="db-label-light">Como citar</h4>
-                    <div class="db-citation-box" id="citation-text">${db.citacao}</div> 
-                    <button class="btn-copy" onclick="copyCitation()">Copiar Citação</button>
-                </div>
-
                 <div class="db-contact-card">
                     <h4 class="db-label-light">Responsável</h4>
                     <div class="db-name-box">${db.responsavel}</div>
                     <a href="#" class="btn-request">Solicitar Acesso</a>
+                </div>
+                <div class="db-citation-card">
+                    <h4 class="db-label-light">Como citar</h4>
+                    <div class="db-citation-box" id="citation-text">${db.citacao}</div> 
+                    <button class="btn-copy" onclick="copyCitation()">Copiar Citação</button>
                 </div>
             </div>
         </div>
@@ -57,9 +56,11 @@ export function renderDbDetail(id) {
 function generateTableHTML(rows) {
   if (!rows || rows.length === 0) return "<p>Dados indisponíveis.</p>";
 
-  const separator = ',';
+  // Detecta o separador da tabela baseado na primeira linha (cabeçalho)
+  const separator = rows[0].includes(';') ? ';' : ',';
+
   const headers = rows[0].split(separator);
-  const dataRows = rows.slice(1, 8); // Pega 7 linhas de exemplo
+  const dataRows = rows.slice(1, 8); // Amostra de 7 linhas
 
   return `
     <table class="data-table">
