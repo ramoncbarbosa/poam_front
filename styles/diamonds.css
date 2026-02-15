@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     height: 600px;
-    display: none; /* Exibido apenas via breakpoint no main style ou aqui */
+    display: none; 
     justify-content: center;
     align-items: center;
 }
@@ -16,16 +16,17 @@
     border: 6px solid white;
     box-shadow: 15px 15px 40px rgba(0,0,0,0.15);
     background: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .diamond img {
-    width: 150%;
-    height: 150%;
+    min-width: 145%;
+    min-height: 145%;
     object-fit: cover;
-    transform: rotate(-45deg) scale(1.2);
-    position: absolute;
-    top: -25%;
-    left: -25%;
+    transform: rotate(-45deg); 
+    flex-shrink: 0;
 }
 
 .d1 { top: 50%; left: calc(50% - 150px); transform: translate(-50%, -50%) rotate(45deg); }
