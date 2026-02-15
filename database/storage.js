@@ -2,9 +2,14 @@ import { filesInFolder } from './files.js';
 
 async function parseFileData(fileName) {
     try {
-        // CORREÇÃO: Usando caminho relativo para funcionar no GitHub Pages
-        const response = await fetch(`data/${fileName}`);
-        if (!response.ok) throw new Error(`404: ${fileName}`);
+        // CORREÇÃO FINAL: Monta o caminho absoluto baseado na URL do GitHub
+        const isGitHub = window.location.hostname.includes('github.io');
+        const repoPath = isGitHub ? '/poam_front' : '';
+        const url = `${window.location.origin}${repoPath}/database/data/${fileName}`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`Status: ${response.status} em ${url}`);
 
         const text = await response.text();
         const lines = text.split('\n').filter(l => l.trim() !== "");
@@ -29,7 +34,7 @@ async function parseFileData(fileName) {
             tipo: getValue(lines[1]).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
         };
     } catch (error) {
-        console.error("Erro ao processar arquivo:", error);
+        console.error("❌ Erro no processamento:", error);
         return null;
     }
 }
