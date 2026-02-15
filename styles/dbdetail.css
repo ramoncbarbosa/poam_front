@@ -1,53 +1,41 @@
-/* --- DETALHES DA BASE DE DADOS (styles/dbdetail.css) --- */
+/* --- REPOSITÓRIO: DETALHES TÉCNICOS --- */
 
-/* 1. CONTAINER RAIZ: ESTABILIDADE E CENTRALIZAÇÃO */
-.db-detail-wrapper {
-    background: white;
-    min-height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    position: relative;
-    display: block;
+.db-detail-wrapper { 
+    background: white; 
+    min-height: 100vh; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 .db-detail-view { 
     animation: fadeIn 0.5s ease-out; 
-    width: 92%;
-    max-width: 1200px;
+    max-width: 1200px; 
     margin: 0 auto; 
-    padding: 20px 0 80px 0;
+    padding: 40px 20px; 
+    box-sizing: border-box;
 }
 
-/* Título Adaptável */
 .db-detail-title { 
-    font-size: clamp(1.8rem, 6vw, 3.5rem);
+    font-size: clamp(2rem, 5vw, 3.5rem); 
     font-weight: 900; 
     color: #064e3b; 
-    margin: 20px auto 40px auto; 
+    margin-bottom: 40px; 
     line-height: 1.1; 
-    text-align: center;
 }
 
-/* 2. GRID DE CONTEÚDO */
+/* Grid Principal: 1fr para o texto (flexível) e 350px fixo para a sidebar */
 .db-content-grid { 
     display: grid; 
     grid-template-columns: 1fr 350px; 
-    gap: 50px; 
+    gap: 60px; 
     width: 100%;
+    align-items: start;
 }
 
-@media (max-width: 1100px) {
-    .db-content-grid { 
-        grid-template-columns: 100%; 
-        gap: 40px;
-    }
-}
+/* --- COLUNA DE CONTEÚDO (RESUMO E TABELA) --- */
 
-/* 3. BLOCO "SOBRE OS DADOS" */
 .db-info-main {
-    width: 100%;
-    padding: 0 10px;
-    text-align: left;
+    min-width: 0; /* Importante: permite que o container filho encolha se necessário */
 }
 
 .db-label { 
@@ -58,112 +46,94 @@
     margin-bottom: 15px; 
     display: block;
     letter-spacing: 1px;
-    text-align: left;
 }
 
 .db-text { 
-    font-size: clamp(1.05rem, 4vw, 1.25rem); 
+    font-size: 1.2rem; 
     color: #475569; 
     line-height: 1.8; 
     margin-bottom: 50px;
-    text-align: left; 
+    text-align: justify;
 }
 
-/* 4. A TABELA ROBUSTA */
+/* Container da Planilha: Blindagem total contra quebra lateral */
 .db-table-container { 
     background: #f8fafc; 
     border-radius: 1.5rem; 
     border: 1px solid #e2e8f0; 
-    overflow: auto; 
-    max-height: 550px; 
-    width: 100%; 
-    box-sizing: border-box;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    overflow-x: auto; /* Scroll horizontal apenas aqui dentro */
+    margin-bottom: 50px;
+    width: 100%;
+    max-width: 100%; 
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .data-table { 
     width: 100%; 
-    border-collapse: separate; 
-    border-spacing: 0;
-    font-size: 15px; 
+    border-collapse: collapse; 
+    font-size: 14px; 
+    min-width: 600px; /* Garante que a tabela não esmague o texto em telas médias */
 }
 
 .data-table th { 
-    position: sticky;
-    top: 0;
-    z-index: 10;
     background: #f1f5f9; 
-    padding: 20px 25px; 
+    padding: 18px; 
     color: #064e3b; 
     font-weight: 900; 
-    border-bottom: 3px solid #e2e8f0; 
-    white-space: nowrap; 
-    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
 }
 
 .data-table td { 
-    padding: 16px 25px; 
+    padding: 14px 18px; 
     border-bottom: 1px solid #f1f5f9; 
-    color: #334155; 
-    white-space: nowrap; 
+    color: #475569; 
+    white-space: nowrap;
 }
 
-/* 5. SIDEBAR E CARDS (Padrão de Respiro Uniforme) */
-.db-sidebar {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+/* --- SIDEBAR: CARDS GÊMEOS --- */
+
+.db-sidebar { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 25px; 
 }
 
 .db-citation-card, .db-contact-card {
-    /* PADRÃO DE RESPIRO UNIFORME: 40px em todos os lados */
     padding: 40px; 
     border-radius: 2.5rem;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    min-height: 320px;
 }
 
 .db-citation-card { background: #976a4b; color: #ffffff; }
-.db-contact-card { background: #064e3b; color: white; }
+.db-contact-card { background: #064e3b; color: #ffffff; }
 
-.db-citation-card .db-label-light, .db-contact-card .db-label-light {
-    font-size: 1rem;
+.db-label-light {
+    font-size: 0.8rem;
     font-weight: 900;
-    margin-bottom: 25px; /* Respiro vertical entre título e texto */
-    display: block;
-    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    opacity: 0.7;
 }
 
-.db-citation-box {
-    font-size: 1.1rem; 
+.db-citation-box, .db-name-box {
+    font-size: 1.15rem; 
     line-height: 1.6;
-    margin-bottom: 40px; /* Respiro vertical entre texto e botão */
-    font-style: italic;
-    word-wrap: break-word;
-    text-align: left;
+    margin-bottom: 35px;
+    font-weight: 700;
+    flex-grow: 1;
 }
 
-.db-name { 
-    font-size: 1.6rem; 
-    font-weight: 800; 
-    margin-bottom: 10px; 
-    text-align: left;
-}
+.db-citation-box { font-style: italic; font-weight: 400; }
 
-.db-contact-info {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 40px; /* Respiro vertical entre texto e botão */
-    text-align: left;
-    opacity: 0.8;
-}
+/* --- BOTÕES GÊMEOS --- */
 
-/* 6. BOTÕES */
 .btn-copy, .btn-request {
     display: block;
     width: 100%;
@@ -173,36 +143,29 @@
     font-size: 11px;
     font-weight: 900;
     text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
     text-align: center;
-    transition: 0.3s;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.btn-copy { background: #7a5236; color: white; }
-.btn-request { background: #10b981; color: white; }
+.btn-copy { background: #ffffff; color: #976a4b; }
+.btn-request { background: #10b981; color: #ffffff; }
 
-/* 7. BOTÃO VOLTAR */
-.btn-back { 
-    background: none; 
-    border: none; 
-    font-weight: 900; 
-    color: #10b981; 
-    cursor: pointer; 
-    margin: 0 auto 30px 0; 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    font-size: 11px;
-    text-transform: uppercase;
+.btn-copy:hover, .btn-request:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* 8. AJUSTES MOBILE EXTREMO */
-@media (max-width: 600px) {
-    .db-citation-card, .db-contact-card { padding: 30px; } /* Redução leve para telas muito pequenas */
-    .data-table { font-size: 14px; }
+/* Responsividade */
+@media (max-width: 1024px) {
+    .db-content-grid { 
+        grid-template-columns: 100%; 
+        gap: 40px;
+    }
+    .db-sidebar { order: 2; }
+    .db-info-main { order: 1; }
 }
 
-@keyframes fadeIn { 
-    from { opacity: 0; transform: translateY(10px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

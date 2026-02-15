@@ -1,0 +1,34 @@
+/* Correção do Scroll Duplo: Home usa o scroll do navegador */
+.snap-container {
+    height: auto; 
+    overflow: visible;
+    scroll-snap-type: y proximity;
+}
+
+.snap-section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ajuste das seções automáticas */
+.snap-section.auto-height {
+    min-height: 100vh;
+    height: auto;
+}
+
+/* Garantia que o objetivo alinhe com o Diamond */
+.custom-objective-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .custom-objective-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

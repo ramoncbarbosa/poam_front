@@ -1,0 +1,66 @@
+.home-footer {
+    background-color: #ffffff;
+    padding: 4rem 0 3rem 0;
+    border-top: 1px solid #f1f5f9;
+    width: 100%;
+}
+
+.footer-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.social-link {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: #064e3b;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: #10b981;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copyright {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+.dev-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color:  #059669;;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dev-link:hover {
+    color: #059669;
+}
+
+/* Ajuste para não quebrar o scroll snap no final */
+.home-footer {
+    scroll-snap-align: end;
+}

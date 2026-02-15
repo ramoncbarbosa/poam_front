@@ -5,48 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POAM - Políticas Ambientais na Amazônia</title>
     <link rel="icon" type="image/png" href="assets/logo.jpg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-white">
+<body class="bg-white flex flex-col min-h-screen">
 
-    <header>
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
-                <img src="assets/logo.jpg" alt="Logo POAM" class="w-10 h-10 object-cover rounded-full">
-                <h1 class="font-extrabold text-green-800 text-2xl tracking-tighter">POAM</h1>
-            </div>
-            
-            <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-gray-600">
-                <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-green-600 transition-colors">Início</a>
-                <a href="javascript:void(0)" onclick="navigateTo('publications')" class="hover:text-green-600 transition-colors">Publicações</a>
-                <a href="javascript:void(0)" onclick="navigateTo('team')" class="hover:text-green-600 transition-colors">Equipe</a>
-                <a href="javascript:void(0)" onclick="navigateTo('database')" class="hover:text-green-600 transition-colors">Base de Dados</a>
-            </div>
-            <button class="md:hidden text-green-800 relative z-[3100]" onclick="toggleMenu()">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-    </header>
+    <div id="header-injection-point"></div>
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[2500] hidden opacity-0 transition-opacity duration-300" onclick="toggleMenu()"></div>
-    
-    <aside id="mobile-menu" class="fixed top-0 right-0 h-full w-[70%] max-w-[300px] bg-[#064e3b] z-[3000] translate-x-full transition-transform duration-300 shadow-2xl flex flex-col p-8"></aside>
+    <aside id="mobile-menu" class="fixed top-0 right-0 h-full w-[75%] max-w-[320px] bg-[#064e3b] z-[3000] translate-x-full transition-transform duration-300 shadow-2xl flex flex-col"></aside>
 
-    <main id="content-area" class="overflow-x-hidden"></main>
+    <main id="content-area" class="flex-grow pt-16"></main>
 
-    <footer id="global-footer" style="display:none;" class="bg-white py-12 border-t">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-10 mb-8 font-black text-xs tracking-widest text-green-900">
-                <a href="https://www.instagram.com/poam.ufpa/" target="_blank">INSTAGRAM</a>
-            </div>
-            <p class="text-gray-400 text-sm italic">© 2026 POAM - Belém, Pará - Brasil • UFPA</p>
-            <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link block mt-4 text-[10px] uppercase font-extrabold text-gray-300 hover:text-green-600 transition-colors">Desenvolvido por Ramon Castro Barbosa</a>
-        </div>
-    </footer>
+    <div id="global-footer-root"></div>
 
     <script type="module" src="scripts/main.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </body>
 </html>

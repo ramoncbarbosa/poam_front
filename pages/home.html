@@ -1,13 +1,15 @@
+<link rel="stylesheet" href="styles/home.css">
+
 <div class="snap-container">
     <section class="snap-section bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000')] bg-cover bg-center text-white text-center">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-6xl md:text-8xl font-black mb-4 text-white">POAM</h2>
+            <h2 class="text-6xl md:text-8xl font-black mb-4">POAM</h2>
             <p class="text-xl md:text-3xl text-green-300 font-light italic">Políticas Ambientais na Amazônia</p>
             <div class="w-24 h-1 bg-green-500 mx-auto mt-8"></div>
         </div>
     </section>
 
-    <section class="snap-section bg-white px-6">
+    <section class="snap-section bg-white px-6 py-20">
         <div class="max-w-7xl mx-auto custom-objective-grid">
             <div class="text-left">
                 <h2 class="text-5xl font-extrabold text-green-900 mb-6 uppercase tracking-tighter">Objetivo</h2>
@@ -17,34 +19,11 @@
                     <p class="opacity-80">Sistematização de dados para o desenvolvimento sustentável e governança regional.</p>
                 </div>
             </div>
-            <div class="diamond-grid">
-                <div class="diamond d1"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600"></div>
-                <div class="diamond d2"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=600"></div>
-                <div class="diamond d3"><img src="https://images.unsplash.com/photo-1532996122724-e3c3c5d2811b?q=80&w=600"></div>
-                <div class="diamond d4"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=600"></div>
-            </div>
+            <div id="diamonds-injection-point"></div>
         </div>
     </section>
 
-    <section class="snap-section auto-height bg-gray-50 px-6" id="home-team-injection-point">
-        </section>
+    <section class="snap-section auto-height bg-gray-50 px-6" id="home-team-injection-point"></section>
 
-    <section class="snap-section bg-white px-6">
-        <div class="max-w-6xl mx-auto w-full text-center py-20">
-            <h2 class="text-3xl font-extrabold text-green-900 mb-8 uppercase">Localização</h2>
-            <div class="h-[60vh] rounded-[2rem] overflow-hidden border-8 border-green-50 shadow-inner">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.4982836614226!2d-48.4562516!3d-1.4738933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a48d95794105ab%3A0x8f69ac5945bbdc02!2sInstituto%20de%20Filosofia%20e%20Ci%C3%AAncias%20Humanas%20(IFCH)!5e0!3m2!1spt-BR!2sbr!4v1771007856680!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <footer class="snap-footer py-12">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-10 mb-8 font-black text-xs tracking-widest text-green-900">
-                <a href="https://www.instagram.com/poam.ufpa/" target="_blank">INSTAGRAM</a>
-            </div>
-            <p class="text-gray-400 text-sm italic">© 2026 POAM - Belém, Pará - Brasil • UFPA</p>
-            <a href="https://www.linkedin.com/in/ramon-barbosa-712273237" target="_blank" class="dev-link">Desenvolvido por Ramon Castro Barbosa</a>
-        </div>
-    </footer>
+    <div id="location-injection-point"></div>
 </div>
