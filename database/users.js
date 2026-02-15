@@ -1,52 +1,90 @@
-// scripts/users.js
 export const teamData = [
   {
-    nome: 'Dra. Maria Dolores',
-    titulo: 'Doutora em Ciência Política',
+    nome: 'Dra. Maria Dolores Lima da Silva',
+    titulo: 'Pós-Doutora em Ciência Política',
     cargo: 'Coordenadora Geral',
-    areaPesquisa: 'Especialista em gestão pública amazônica.',
-    foto: 'assets/users/maria_dolores.jpg'
+    areaPesquisa: 'Instituições Políticas e Políticas Públicas.',
+    foto: 'assets/users/mariadolores.jpg',
+    lattes: ''
   },
   {
-    nome: 'Dra. Eugênia Rosa Cabral',
-    titulo: 'Doutora em Políticas de Sustentabilidade',
+    nome: 'Dâina Naíny Cunha do Rego',
+    titulo: 'Graduada em Ciências Sociais',
     cargo: 'Coordenadora Adjunta',
-    areaPesquisa: 'Doutora e pesquisadora em Políticas de Sustentabilidade.',
-    foto: 'assets/users/eugenia_rosa.jpg'
+    areaPesquisa: 'Instituições Políticas e Políticas Públicas',
+    foto: 'assets/users/dainanainy.jpg',
+    lattes: ''
   },
   {
-    nome: 'Dâina Naíny Cunha',
-    titulo: 'Mestra em Ciências Sociais',
-    cargo: 'Pesquisadora Principal',
-    areaPesquisa: 'Ciências Sociais e análise de políticas públicas.',
-    foto: 'assets/users/daina_nainy.jpg'
+    nome: 'Ramon Castro Barbosa',
+    titulo: 'Graduado em Sistemas de Informação',
+    cargo: 'Técnico em Desenvolvimento',
+    areaPesquisa: 'Ciência de Dados e Tecnlogias Aplicadas a Educação.',
+    foto: 'assets/users/rcb.jpg',
+    lattes: ''
   },
   {
-    nome: 'Ricardo Bezerra',
-    titulo: 'Mestre em Ecologia',
-    cargo: 'Pesquisador',
-    areaPesquisa: 'Ecologia e legislação ambiental amazônica.',
-    foto: 'https://ramoncbarbosa.github.io/poam_front/assets/users/ricardo_bezerra.jpg'
+    nome: 'Ananda Ridart Ribeiro Duarte',
+    titulo: 'Mestra',
+    cargo: 'Técnica em Direito',
+    areaPesquisa: '',
+    foto: 'assets/users/dainanainy.jpg',
+    lattes: ''
   },
   {
-    nome: 'Aline Silva',
-    titulo: 'Especialista em Direito Ambiental',
+    nome: 'Dra. Eugênia Cabral',
+    titulo: 'Pós-Doutora',
     cargo: 'Pesquisadora',
-    areaPesquisa: 'Direito Ambiental e governança de terras.',
-    foto: 'assets/users/aline_silva.jpg'
+    areaPesquisa: 'Lobby e Políticas Públicas na Amazônia',
+    foto: 'assets/users/eugenia.jpg',
+    lattes: ''
   },
   {
-    nome: 'João Mendes',
-    titulo: 'Mestre em Geoprocessamento',
+    nome: 'Dr. Maycon Yuri Nascimento Costa',
+    titulo: 'Pós-Doutor',
     cargo: 'Pesquisador',
-    areaPesquisa: 'Geoprocessamento e mineração de dados políticos.',
-    foto: 'assets/users/joao_mendes.jpg'
+    areaPesquisa: '',
+    foto: 'assets/users/maycon.jpg',
+    lattes: ''
   },
   {
-    nome: 'Lucas Costa',
-    titulo: 'Especialista em Análise de Dados',
+    nome: 'Dr. Marcos Felipe Rodrigues de Sousa',
+    titulo: 'Doutor',
     cargo: 'Pesquisador',
-    areaPesquisa: 'Análise de dados territoriais.',
-    foto: 'assets/users/lucas_costa.jpg'
-  }
+    areaPesquisa: '',
+    foto: 'assets/users/marcos.jpg',
+    lattes: ''
+  },
+  {
+    nome: 'Laís Vieira Guimarães',
+    titulo: 'Mestra',
+    cargo: 'Pesquisador',
+    areaPesquisa: '',
+    foto: 'assets/users/lais.jpg',
+    lattes: ''
+  },
+  {
+    nome: 'Gabriel Creão de Oliveira',
+    titulo: 'Mestre',
+    cargo: 'Pesquisador',
+    areaPesquisa: '',
+    foto: 'assets/users/gabriel.jpg',
+    lattes: ''
+  },
+  {
+    nome: 'Lucas Pereira Barbosa Filho',
+    titulo: 'Mestre',
+    cargo: 'Pesquisador',
+    areaPesquisa: '',
+    foto: 'assets/users/lucas.jpg',
+    lattes: ''
+  },
+  {
+    nome: 'Tamires Lúcia Pinheiro',
+    titulo: 'Mestra',
+    cargo: 'Pesquisador',
+    areaPesquisa: '',
+    foto: 'assets/users/tamires.jpg',
+    lattes: ''
+  },
 ];
