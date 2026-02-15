@@ -2,44 +2,120 @@ import { teamData } from '../../database/users.js';
 
 let htCurrentIndex = 0;
 
+/**
+ * Detecta quantos itens devem aparecer por slide baseado na largura da tela
+ */
+function getItemsPerSlide() {
+  const w = window.innerWidth;
+  if (w < 768) return 1;    // Mobile: 1
+  if (w < 1150) return 2;   // Tablets/Laptops pequenos: 2
+  return 3;                 // Desktop: 3
+}
+
+/**
+ * Inicializa a seção de equipe na Home
+ */
 export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
+
   try {
     const resp = await fetch('components/home-team.html');
     if (resp.ok) {
       injectionPoint.innerHTML = await resp.text();
       renderCarousel();
+
+      // Adiciona listener para recalcular se a tela mudar de tamanho
+      window.removeEventListener('resize', renderCarousel); // Evita duplicados
+      window.addEventListener('resize', renderCarousel);
     }
   } catch (e) { console.error("Erro home-team component:", e); }
 }
 
+/**
+ * Renderiza a página de Equipe Completa
+ */
 export function renderFullTeamPage() {
   const container = document.getElementById('full-team');
   if (container) container.innerHTML = teamData.map(m => createHtCard(m)).join('');
 }
 
+/**
+ * Move o carrossel circularmente
+ */
+export function moveResearch(dir) {
+  const researchers = teamData.slice(2);
+  const itemsPerSlide = getItemsPerSlide();
+  const totalPages = Math.ceil(researchers.length / itemsPerSlide);
+
+  htCurrentIndex = (htCurrentIndex + dir + totalPages) % totalPages;
+  moveResearchTo(htCurrentIndex);
+}
+
+export function moveResearchTo(idx) {
+  htCurrentIndex = idx;
+  const track = document.getElementById('home-research-track');
+  if (track) {
+    track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
+  }
+
+  document.querySelectorAll('.ht-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === htCurrentIndex);
+  });
+}
+
+export function htToggleCard(event, el) {
+  event.stopPropagation();
+  const isActive = el.classList.contains('active');
+  document.querySelectorAll('.ht-card.active').forEach(card => {
+    if (card !== el) card.classList.remove('active');
+  });
+  el.classList.toggle('active', !isActive);
+}
+
+/**
+ * Lógica de montagem do carrossel (Agora com suporte a 3, 2, 1 itens)
+ */
 function renderCarousel() {
   const coordTarget = document.getElementById('home-coord-target');
   const track = document.getElementById('home-research-track');
   const dotsContainer = document.getElementById('carouselDots');
   if (!track || !coordTarget) return;
 
+  // Renderiza Coordenação
   coordTarget.innerHTML = teamData.slice(0, 2).map(createHtCard).join('');
+
+  // Renderiza Pesquisadores com lógica responsiva
   const researchers = teamData.slice(2);
-  const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1150 ? 2 : 3;
+  const itemsPerSlide = getItemsPerSlide();
   const groups = [];
+
   for (let i = 0; i < researchers.length; i += itemsPerSlide) {
     groups.push(researchers.slice(i, i + itemsPerSlide));
   }
-  track.innerHTML = groups.map(g => `<div class="ht-slide">${g.map(createHtCard).join('')}</div>`).join('');
+
+  track.innerHTML = groups.map(g => `
+        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem;">
+            ${g.map(m => createHtCard(m)).join('')}
+        </div>
+    `).join('');
+
+  // Garante que o índice atual não quebre se o número de páginas mudar
+  if (htCurrentIndex >= groups.length) htCurrentIndex = 0;
+  moveResearchTo(htCurrentIndex);
+
   if (dotsContainer) {
-    dotsContainer.innerHTML = groups.map((_, idx) => `<div class="ht-dot ${idx === 0 ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>`).join('');
+    dotsContainer.innerHTML = groups.map((_, idx) => `
+            <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
+        `).join('');
   }
 }
 
 function createHtCard(m) {
-  const foto = m.foto ? `<img src="${m.foto}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-green-800 flex items-center justify-center text-white font-bold">${m.nome.charAt(0)}</div>`;
+  const foto = m.foto
+    ? `<img src="${m.foto}" class="w-full h-full object-cover">`
+    : `<div class="w-full h-full bg-green-800 flex items-center justify-center text-white font-bold">${m.nome.charAt(0)}</div>`;
+
   return `
     <div class="ht-card" onclick="htToggleCard(event, this)">
         <div class="ht-card-header flex items-center justify-between w-full">
@@ -50,23 +126,11 @@ function createHtCard(m) {
             <span class="ht-toggle">+</span>
         </div>
         <div class="ht-details">
-            <p class="text-sm mt-4 text-gray-400 font-bold uppercase">Área</p>
+            <p class="text-sm mt-4 text-gray-400 font-bold uppercase">Titulação</p>
+            <p class="text-sm text-gray-700 font-bold">${m.titulo || 'N/A'}</p>
+            <p class="text-sm mt-2 text-gray-400 font-bold uppercase">Área</p>
             <p class="text-sm text-gray-600">${m.areaPesquisa}</p>
             <a href="http://lattes.cnpq.br/" target="_blank" class="ht-lattes-link">Lattes</a>
         </div>
     </div>`;
-}
-
-export function moveResearchTo(idx) {
-  htCurrentIndex = idx;
-  const track = document.getElementById('home-research-track');
-  if (track) track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
-  document.querySelectorAll('.ht-dot').forEach((dot, i) => dot.classList.toggle('active', i === htCurrentIndex));
-}
-
-export function htToggleCard(event, el) {
-  event.stopPropagation();
-  const isActive = el.classList.contains('active');
-  document.querySelectorAll('.ht-card.active').forEach(card => card.classList.remove('active'));
-  if (!isActive) el.classList.add('active');
 }
