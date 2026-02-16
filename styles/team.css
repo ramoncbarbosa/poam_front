@@ -19,10 +19,19 @@
 }
 
 /* --- GRIDS --- */
-#coord-team, #research-team {
+#coord-team, 
+#tech-team, 
+#research-team {
     display: grid;
     gap: 2rem;
     width: 100%;
+    /* ISSO IMPEDE O VIZINHO DE ESTICAR: */
+    align-items: start; 
+}
+
+.ht-slide {
+    display: grid !important;
+    align-items: start !important;
 }
 
 @media (min-width: 768px) { #coord-team { grid-template-columns: repeat(2, 1fr); } }

@@ -13,6 +13,15 @@ function getItemsPerSlide() {
 }
 
 /**
+ * Filtros de dados centralizados para evitar repetição
+ */
+const normalizeStr = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+const getCoords = () => teamData.filter(m => normalizeStr(m.cargo).includes('coordenador'));
+const getTechs = () => teamData.filter(m => normalizeStr(m.cargo).includes('tecnic')); // Pega 'tecnico' e 'tecnica'
+const getResearchers = () => teamData.filter(m => normalizeStr(m.cargo).includes('pesquisador'));
+
+/**
  * Inicializa a seção de equipe na Home
  */
 export async function initHomeTeam() {
@@ -25,7 +34,6 @@ export async function initHomeTeam() {
       injectionPoint.innerHTML = await resp.text();
       renderCarousel();
 
-      // Recalcula ao redimensionar a tela
       window.removeEventListener('resize', renderCarousel);
       window.addEventListener('resize', renderCarousel);
     }
@@ -33,28 +41,33 @@ export async function initHomeTeam() {
 }
 
 /**
- * Renderiza a página de Equipe Completa
+ * Renderiza a página de Equipe Completa separada por categorias
  */
 export function renderFullTeamPage() {
   const coordContainer = document.getElementById('coord-team');
+  const techContainer = document.getElementById('tech-team');
   const researchContainer = document.getElementById('research-team');
 
-  if (!coordContainer || !researchContainer) return;
+  if (coordContainer) {
+    coordContainer.innerHTML = getCoords().map(m => createHtCard(m)).join('');
+  }
 
-  const coordData = teamData.slice(0, 2);
-  const researchData = teamData.slice(2);
+  if (techContainer) {
+    techContainer.innerHTML = getTechs().map(m => createHtCard(m)).join('');
+  }
 
-  coordContainer.innerHTML = coordData.map(m => createHtCard(m)).join('');
-  researchContainer.innerHTML = researchData.map(m => createHtCard(m)).join('');
+  if (researchContainer) {
+    researchContainer.innerHTML = getResearchers().map(m => createHtCard(m)).join('');
+  }
 }
 
 /**
  * Move o carrossel circularmente
  */
 export function moveResearch(dir) {
-  const researchers = teamData.slice(2);
+  const list = [...getTechs(), ...getResearchers()];
   const itemsPerSlide = getItemsPerSlide();
-  const totalPages = Math.ceil(researchers.length / itemsPerSlide);
+  const totalPages = Math.ceil(list.length / itemsPerSlide);
 
   htCurrentIndex = (htCurrentIndex + dir + totalPages) % totalPages;
   moveResearchTo(htCurrentIndex);
@@ -79,7 +92,6 @@ export function htToggleCard(event, el) {
   event.stopPropagation();
   const isActive = el.classList.contains('active');
 
-  // Fecha outros cards e reseta ícones
   document.querySelectorAll('.ht-card.active').forEach(card => {
     if (card !== el) {
       card.classList.remove('active');
@@ -88,7 +100,6 @@ export function htToggleCard(event, el) {
     }
   });
 
-  // Alterna o atual
   el.classList.toggle('active', !isActive);
   const toggleIcon = el.querySelector('.ht-toggle');
   if (toggleIcon) {
@@ -103,31 +114,27 @@ function renderCarousel() {
   const coordTarget = document.getElementById('home-coord-target');
   const track = document.getElementById('home-research-track');
   const dotsContainer = document.getElementById('carouselDots');
-
-  // Seleção das setas
   const prevBtn = document.querySelector('.ht-nav-btn.prev');
   const nextBtn = document.querySelector('.ht-nav-btn.next');
 
   if (!track || !coordTarget) return;
 
-  coordTarget.innerHTML = teamData.slice(0, 2).map(createHtCard).join('');
+  coordTarget.innerHTML = getCoords().map(createHtCard).join('');
 
-  const researchers = teamData.slice(2);
+  const mainList = [...getTechs(), ...getResearchers()];
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
 
-  for (let i = 0; i < researchers.length; i += itemsPerSlide) {
-    groups.push(researchers.slice(i, i + itemsPerSlide));
+  for (let i = 0; i < mainList.length; i += itemsPerSlide) {
+    groups.push(mainList.slice(i, i + itemsPerSlide));
   }
 
-  // LÓGICA DE VISIBILIDADE: Só mostra setas se houver mais de uma página
-  // O CSS cuida de esconder no Mobile via Media Query
   const showNav = groups.length > 1;
   if (prevBtn) prevBtn.style.display = showNav ? 'flex' : 'none';
   if (nextBtn) nextBtn.style.display = showNav ? 'flex' : 'none';
 
   track.innerHTML = groups.map(g => `
-        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem;">
+        <div class="ht-slide" style="flex: 0 0 100%; display: grid; grid-template-columns: repeat(${g.length}, 1fr); gap: 1.5rem; align-items: start;">
             ${g.map(m => createHtCard(m)).join('')}
         </div>
     `).join('');
@@ -136,7 +143,6 @@ function renderCarousel() {
   moveResearchTo(htCurrentIndex);
 
   if (dotsContainer) {
-    // Gerado aqui, visibilidade controlada pelo CSS (Media Query)
     dotsContainer.innerHTML = groups.map((_, idx) => `
             <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
         `).join('');
@@ -145,8 +151,12 @@ function renderCarousel() {
 
 function createHtCard(m) {
   const foto = m.foto
-    ? `<img src="${m.foto}" class="w-full h-full object-cover">`
-    : `<div class="w-full h-full flex items-center justify-center font-bold">${m.nome.charAt(0)}</div>`;
+    ? `<img src="${m.foto}" class="w-full h-full object-cover" alt="${m.nome}">`
+    : `<div class="w-full h-full flex items-center justify-center font-bold bg-gray-200 text-gray-500">${m.nome.charAt(0)}</div>`;
+
+  const lattesLink = (m.lattes && m.lattes.trim() !== '')
+    ? `<a href="${m.lattes}" target="_blank" class="ht-lattes-link">Ver Currículo Lattes →</a>`
+    : `<span class="ht-lattes-none" style="font-size: 0.75rem; opacity: 0.6; font-style: italic;">Lattes não disponível</span>`;
 
   return `
     <div class="ht-card" onclick="htToggleCard(event, this)">
@@ -161,11 +171,9 @@ function createHtCard(m) {
             <span class="ht-toggle">+</span>
         </div>
         <div class="ht-details">
-          <p><strong>Titulação</strong> ${m.titulo || 'N/A'}</p>
-          <p><strong>Área de Atuação</strong> ${m.areaPesquisa}</p>
-          <a href="${m.lattes || '#'}" target="_blank" class="ht-lattes-link">
-              Ver Currículo Lattes →
-          </a>
+          <p><strong>Titulação:</strong> ${m.titulo || 'N/A'}</p>
+          <p><strong>Área de Atuação:</strong> ${m.areaPesquisa || 'Não informada'}</p>
+          <div style="margin-top: 1rem;">${lattesLink}</div>
         </div>
     </div>`;
 }
