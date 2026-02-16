@@ -1,129 +1,64 @@
-@import url('home-team.css');
+@import url('team-card.css');
 
-.page-content { background-color: #f8fafc; }
-
-/* --- HIERARQUIA DE SEÇÕES --- */
-.ht-section-header {
-    border-left: 5px solid #059669;
-    padding-left: 1.5rem;
-    margin-bottom: 2rem;
-    margin-top: 3rem;
+.team-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
 }
 
-.ht-subtitle {
-    font-size: 1.1rem;
+.page-title {
+    font-size: 2.5rem;
     font-weight: 900;
+    color: #064e3b;
+    text-align: center;
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+}
+
+.team-section {
+    margin-bottom: 4rem;
+}
+
+.section-label {
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #047857;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    border-left: 5px solid #059669;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
 }
 
-/* --- GRIDS --- */
-#coord-team, 
-#tech-team, 
-#research-team {
+/* Grid Padrão (Pesquisadores - 3 colunas) */
+.team-grid {
     display: grid;
-    gap: 2rem;
-    width: 100%;
-    /* ISSO IMPEDE O VIZINHO DE ESTICAR: */
-    align-items: start; 
+    gap: 1.5rem;
+    align-items: stretch;
+    grid-template-columns: 1fr;
 }
 
-.ht-slide {
-    display: grid !important;
-    align-items: start !important;
+/* Grid Largo (Coordenação e Técnicos - Máximo 2 colunas) */
+.grid-large {
+    display: grid;
+    gap: 1.5rem;
+    align-items: stretch;
+    grid-template-columns: 1fr;
 }
 
-@media (min-width: 768px) { #coord-team { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { #research-team { grid-template-columns: repeat(3, 1fr); } }
-
-/* --- COMPONENTE CARD: ESTADO ATIVO --- */
-
-/* Aumentamos a especificidade encadeando as classes */
-.ht-card.active {
-    background-color: #064e3b;
-    border-color: #064e3b;
-    box-shadow: 0 20px 40px rgba(6, 78, 59, 0.3);
+/* Tablet em diante */
+@media (min-width: 768px) {
+    .team-grid, .grid-large {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* Blindagem do Círculo da Foto */
-.ht-card .ht-photo {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+/* Desktop: Aqui separamos as larguras */
+@media (min-width: 1150px) {
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 cards para pesquisadores */
+    }
+    
+    .grid-large {
+        grid-template-columns: repeat(2, 1fr); /* Mantém 2 cards para ficarem longos */
+    }
 }
-
-.ht-card.active .ht-photo {
-    background-color: #ffffff;
-    color: #064e3b;
-    border: 2px solid #34d399;
-}
-
-/* Tipografia no modo Ativo */
-.ht-card.active .ht-name,
-.ht-card.active .ht-toggle {
-    color: #ffffff;
-}
-
-.ht-card.active .ht-role {
-    color: #34d399;
-}
-
-/* Detalhes Internos */
-.ht-card.active .ht-details {
-    color: #ffffff;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    max-height: 600px;
-    opacity: 1;
-}
-
-.ht-card.active .ht-details p:nth-child(odd) {
-    color: #34d399;
-    font-weight: 900;
-}
-
-.ht-card.active .ht-details p:nth-child(even) {
-    color: #f1f5f9;
-}
-
-/* Link Lattes Limpo */
-.ht-card .ht-lattes-link {
-    font-weight: 800;
-    text-transform: uppercase;
-    text-decoration: none; /* Sem riscado */
-    font-size: 0.75rem;
-    display: inline-block;
-    color: #10b981;
-}
-
-.ht-card.active .ht-lattes-link {
-    color: #34d399;
-}
-
-.ht-card.active .ht-lattes-link:hover {
-    color: #ffffff;
-}
-
-/* Ícone Toggle */
-.ht-toggle {
-    font-size: 2rem;
-    font-weight: 300;
-    width: 30px;
-    text-align: center;
-    user-select: none;
-}
-
-.ht-details {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-

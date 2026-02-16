@@ -1,0 +1,103 @@
+/* --- COMPONENTE CARD PADRÃO --- */
+.team-card-fixed {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    text-align: left;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.team-card-fixed:hover {
+    transform: translateY(-4px);
+    border-color: #059669;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+}
+
+.avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-img {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #059669;
+}
+
+.header-info h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+}
+
+.role {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #059669;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.card-content {
+    flex-grow: 1;
+}
+
+.info-group {
+    margin-top: 0.75rem;
+}
+
+.info-group label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    color: #9ca3af;
+    text-transform: uppercase;
+    display: block;
+}
+
+.info-group p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    margin: 2px 0 0 0;
+    line-height: 1.4;
+}
+
+.card-footer {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.card-footer a {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #059669;
+    text-decoration: none;
+}

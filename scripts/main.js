@@ -2,8 +2,9 @@ import { navigateTo } from './modules/navigation.js';
 import { toggleMenu, setupScrollSnap } from './modules/ui.js';
 import { moveB, renderPubPage } from './modules/publications.js';
 import { copyCitation } from './modules/database.js';
-import { moveResearchTo, htToggleCard, moveResearch } from './modules/team.js';
+import { moveResearch, moveResearchTo } from './modules/team.js';
 
+// Exposição global
 window.navigateTo = navigateTo;
 window.toggleMenu = toggleMenu;
 window.moveB = moveB;
@@ -11,7 +12,6 @@ window.renderPubPage = renderPubPage;
 window.copyCitation = copyCitation;
 window.moveResearch = moveResearch;
 window.moveResearchTo = moveResearchTo;
-window.htToggleCard = htToggleCard;
 
 window.closeMobileMenu = () => {
   const menu = document.getElementById('mobile-menu');
@@ -20,11 +20,8 @@ window.closeMobileMenu = () => {
 
 async function initApp() {
   setupScrollSnap();
-
-  // Primeiro renderiza a página
   navigateTo('home');
 
-  // Depois injeta componentes globais com caminhos relativos
   const injections = [
     { id: 'header-injection-point', file: './components/header.html' },
     { id: 'mobile-menu', file: './components/menu.html' },
