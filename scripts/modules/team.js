@@ -35,17 +35,14 @@ export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
-  // Injeta o CSS necessário para o componente
   injectTeamStyles();
 
   try {
-    // Caminho relativo para funcionar no GitHub Pages
     const resp = await fetch('./components/home-team.html');
     if (resp.ok) {
       injectionPoint.innerHTML = await resp.text();
       renderHomeCarousel();
 
-      // Recalcula o carrossel ao redimensionar a janela
       window.removeEventListener('resize', renderHomeCarousel);
       window.addEventListener('resize', renderHomeCarousel);
     }
@@ -63,7 +60,7 @@ function renderHomeCarousel() {
   // 1. Coordenação fixa
   coordTarget.innerHTML = getCoords().map(createTeamCard).join('');
 
-  // 2. Agrupamento dinâmico (3, 2 ou 1)
+  // 2. Agrupamento dinâmico
   const others = getOthers();
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -72,8 +69,9 @@ function renderHomeCarousel() {
     groups.push(others.slice(i, i + itemsPerSlide));
   }
 
+  // CORREÇÃO: Mantemos o grid-template-columns fixo no itemsPerSlide para o card não esticar
   track.innerHTML = groups.map(g => `
-    <div class="ht-slide" style="grid-template-columns: repeat(${g.length}, 1fr);">
+    <div class="ht-slide" style="grid-template-columns: repeat(${itemsPerSlide}, 1fr);">
         ${g.map(createTeamCard).join('')}
     </div>
   `).join('');
@@ -85,7 +83,6 @@ function renderHomeCarousel() {
     `).join('');
   }
 
-  // Ajusta o índice se houver menos páginas após o resize
   if (htCurrentIndex >= groups.length) htCurrentIndex = Math.max(0, groups.length - 1);
   moveResearchTo(htCurrentIndex);
 }
