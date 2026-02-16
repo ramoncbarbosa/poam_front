@@ -4,40 +4,40 @@ export const teamData = [
     titulo: 'Pós-Doutora em Ciência Política',
     cargo: 'Coordenadora Geral',
     areaPesquisa: 'Instituições Políticas e Políticas Públicas.',
-    foto: 'assets/users/mariadolores.jpg',
-    lattes: ''
+    foto: 'assets/users/mariadolores.gif',
+    lattes: 'http://lattes.cnpq.br/7277148176512169'
   },
   {
     nome: 'Dâina Naíny Cunha do Rego',
     titulo: 'Graduada em Ciências Sociais',
     cargo: 'Coordenadora Adjunta',
     areaPesquisa: 'Instituições Políticas e Políticas Públicas',
-    foto: 'assets/users/dainanainy.jpg',
-    lattes: ''
+    foto: 'assets/users/dainanainy.gif',
+    lattes: 'http://lattes.cnpq.br/2643380189996473'
   },
   {
     nome: 'Ramon Castro Barbosa',
     titulo: 'Graduado em Sistemas de Informação',
     cargo: 'Técnico em Desenvolvimento',
     areaPesquisa: 'Ciência de Dados e Tecnlogias Aplicadas a Educação.',
-    foto: 'assets/users/rcb.jpg',
-    lattes: ''
+    foto: 'assets/users/rcb.gif',
+    lattes: 'http://lattes.cnpq.br/6718025092923871'
   },
   {
     nome: 'Ananda Ridart Ribeiro Duarte',
     titulo: 'Mestra',
     cargo: 'Técnica em Direito',
     areaPesquisa: '',
-    foto: 'assets/users/dainanainy.jpg',
-    lattes: ''
+    foto: 'assets/users/ananda.gif',
+    lattes: 'http://lattes.cnpq.br/2603533033473121'
   },
   {
-    nome: 'Dra. Eugênia Cabral',
+    nome: 'Dra. Eugênia Rosa Cabral',
     titulo: 'Pós-Doutora',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Lobby e Políticas Públicas na Amazônia',
-    foto: 'assets/users/eugenia.jpg',
-    lattes: ''
+    foto: 'assets/users/eugenia.gif',
+    lattes: 'http://lattes.cnpq.br/2195250873603926'
   },
   {
     nome: 'Dr. Maycon Yuri Nascimento Costa',
