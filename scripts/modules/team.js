@@ -2,25 +2,19 @@ import { teamData } from '../../database/users.js';
 
 let htCurrentIndex = 0;
 
-// Normalização para filtro inclusivo (Captura 'Técnico' e 'Técnica')
+// Normalização para filtro inclusivo
 const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 const getCoords = () => teamData.filter(m => normalize(m.cargo).includes('coordenador'));
 const getOthers = () => teamData.filter(m => !normalize(m.cargo).includes('coordenador'));
 
-/**
- * Define a quantidade de cards por slide baseada na largura da tela
- */
 function getItemsPerSlide() {
   const w = window.innerWidth;
-  if (w < 768) return 1;    // Mobile
-  if (w < 1150) return 2;   // Tablet/Laptop pequeno
-  return 3;                 // Desktop
+  if (w < 768) return 1;
+  if (w < 1150) return 2;
+  return 3;
 }
 
-/**
- * Injeta o CSS específico se ele ainda não estiver na página
- */
 function injectTeamStyles() {
   const cssPath = './styles/home-team.css';
   if (!document.querySelector(`link[href="${cssPath}"]`)) {
@@ -57,10 +51,8 @@ function renderHomeCarousel() {
   const dotsContainer = document.getElementById('carouselDots');
   if (!track || !coordTarget) return;
 
-  // 1. Coordenação fixa
   coordTarget.innerHTML = getCoords().map(createTeamCard).join('');
 
-  // 2. Agrupamento dinâmico
   const others = getOthers();
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -69,14 +61,12 @@ function renderHomeCarousel() {
     groups.push(others.slice(i, i + itemsPerSlide));
   }
 
-  // CORREÇÃO: Mantemos o grid-template-columns fixo no itemsPerSlide para o card não esticar
   track.innerHTML = groups.map(g => `
     <div class="ht-slide" style="grid-template-columns: repeat(${itemsPerSlide}, 1fr);">
         ${g.map(createTeamCard).join('')}
     </div>
   `).join('');
 
-  // 3. Dots de navegação
   if (dotsContainer) {
     dotsContainer.innerHTML = groups.map((_, idx) => `
       <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
