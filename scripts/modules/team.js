@@ -18,12 +18,29 @@ function getItemsPerSlide() {
   return 3;                 // Desktop
 }
 
+/**
+ * Injeta o CSS específico se ele ainda não estiver na página
+ */
+function injectTeamStyles() {
+  const cssPath = './styles/home-team.css';
+  if (!document.querySelector(`link[href="${cssPath}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssPath;
+    document.head.appendChild(link);
+  }
+}
+
 export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
+  // Injeta o CSS necessário para o componente
+  injectTeamStyles();
+
   try {
-    const resp = await fetch('components/home-team.html');
+    // Caminho relativo para funcionar no GitHub Pages
+    const resp = await fetch('./components/home-team.html');
     if (resp.ok) {
       injectionPoint.innerHTML = await resp.text();
       renderHomeCarousel();
@@ -107,7 +124,7 @@ export function renderFullTeamPage() {
 export function createTeamCard(m) {
   const foto = m.foto
     ? `<img src="${m.foto}" alt="${m.nome}">`
-    : `<div class="no-img">${m.nome.charAt(0)}</div>`;
+    : `<div class="no-img" style="width: 80px; height: 80px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; color: #64748b;">${m.nome.charAt(0)}</div>`;
 
   return `
     <div class="team-card-fixed">

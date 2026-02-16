@@ -1,4 +1,5 @@
-@import url('team-card.css');
+/* Importação relativa correta para arquivos na mesma pasta */
+@import url('./team-card.css');
 
 .home-team-section {
     padding: 5rem 1.5rem;
