@@ -5,6 +5,15 @@ let currentPubPage = 1;
 const pubsPerPage = 5;
 let bannerInterval;
 
+/**
+ * Ordenação decrescente por data
+ */
+const sortedPubs = [...pubData].sort((a, b) => {
+    const dateA = new Date(a.data.split('/').reverse().join('-'));
+    const dateB = new Date(b.data.split('/').reverse().join('-'));
+    return dateB - dateA;
+});
+
 const filterEmpty = (arr) => (arr && Array.isArray(arr) ? arr.filter(item => item.trim() !== "") : []);
 const formatType = (type) => (type ? type.replace(/_/g, ' ').toUpperCase() : 'PUBLICAÇÃO');
 
@@ -12,7 +21,9 @@ export function renderPublications() {
     const track = document.getElementById('bannerTrack');
     if (!track) return;
     if (bannerInterval) clearInterval(bannerInterval);
-    const latestPubs = pubData.slice(0, 5);
+
+    const latestPubs = sortedPubs.slice(0, 5);
+
     track.innerHTML = latestPubs.map(p => `
     <div class="article-slide flex flex-col justify-end p-8 md:p-12 text-white w-full flex-shrink-0 cursor-pointer relative min-h-[400px]" 
          style="background: linear-gradient(to top, rgba(6,78,59,0.95), transparent), url('${p.imagem}') center/cover no-repeat;"
@@ -25,21 +36,20 @@ export function renderPublications() {
             <p class="opacity-90 line-clamp-2 max-w-2xl text-sm font-medium">${p.resumo}</p>
         </div>
     </div>`).join('');
+
     renderPubPage(1);
     bannerInterval = setInterval(() => moveB(1), 5000);
 }
 
-/**
- * Tag da lista ajustada para o Verde Escuro do Resumo
- */
 export function renderPubPage(page) {
     const list = document.getElementById('pub-list');
     const container = document.getElementById('pub-pagination');
     if (!list || !container) return;
+
     currentPubPage = page;
     const start = (page - 1) * pubsPerPage;
-    const paginatedItems = pubData.slice(start, start + pubsPerPage);
-    const totalPages = Math.ceil(pubData.length / pubsPerPage);
+    const paginatedItems = sortedPubs.slice(start, start + pubsPerPage);
+    const totalPages = Math.ceil(sortedPubs.length / pubsPerPage);
 
     list.innerHTML = paginatedItems.map(p => `
         <div class="p-6 md:p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group mb-4" onclick="navigateTo('pubdetail', ${p.id})">
@@ -61,6 +71,9 @@ export function renderPubPage(page) {
         </div>`;
 }
 
+/**
+ * Renderiza Detalhe da Publicação
+ */
 export function renderPubDetail(id) {
     const container = document.getElementById('detail-content');
     const pub = pubData.find(p => p.id === parseInt(id));
@@ -75,14 +88,13 @@ export function renderPubDetail(id) {
           <div class="pub-hero-inner">
               <span class="pub-type-tag" style="background-color: #064e3b;">${formatType(pub.tipo)}</span>
               <h1 class="pub-hero-title">${pub.titulo}</h1>
-              <p class="text-green-300 font-bold tracking-widest uppercase text-sm">${pub.data}</p>
+              <p class="text-white opacity-80 font-bold tracking-widest uppercase text-sm">${pub.data}</p>
           </div>
       </div>
 
       <div class="pub-content-layout container mx-auto px-4">
           <aside class="pub-sidebar flex flex-col gap-6">
-              
-              <div class="p-8 rounded-[2rem] bg-green-900 text-white shadow-2xl">
+              <div class="p-8 rounded-[2rem] bg-[#064e3b] text-white shadow-2xl">
                   ${autores.length > 0 ? `
                   <div class="mb-6">
                       <h4 class="text-white text-lg font-black uppercase tracking-tighter mb-2">Autores</h4>
@@ -108,7 +120,7 @@ export function renderPubDetail(id) {
                   </div>` : ''}
               </div>
               
-              <div class="p-8 rounded-[2rem] bg-green-900 text-white shadow-2xl flex flex-col">
+              <div class="p-8 rounded-[2rem] bg-[#064e3b] text-white shadow-2xl flex flex-col">
                   <h4 class="text-lg md:text-xl font-black uppercase tracking-tighter mb-1 text-white">
                       Como citar
                   </h4>
@@ -126,7 +138,7 @@ export function renderPubDetail(id) {
           </aside>
 
           <div class="pub-main-column">
-              <div class="bg-green-900 p-8 md:p-12 rounded-[2rem] shadow-inner flex flex-col relative min-h-[400px]"> 
+              <div class="bg-[#064e3b] p-8 md:p-12 rounded-[2rem] shadow-inner flex flex-col relative min-h-[400px]"> 
                   <h2 class="text-2xl md:text-3xl font-black text-white mb-8 uppercase tracking-tighter">
                       Resumo
                   </h2>
