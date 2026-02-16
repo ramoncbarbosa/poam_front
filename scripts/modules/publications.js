@@ -26,14 +26,13 @@ export function renderPublications() {
 
     track.innerHTML = latestPubs.map(p => `
     <div class="article-slide flex flex-col justify-end p-8 md:p-12 text-white w-full flex-shrink-0 cursor-pointer relative min-h-[400px]" 
-         style="background: linear-gradient(to top, rgba(6,78,59,0.95), transparent), url('${p.imagem}') center/cover no-repeat;"
+         style="background: linear-gradient(to top, rgba(195, 188, 188, 0.37), transparent), url('${p.imagem}') center/cover no-repeat;"
          onclick="navigateTo('pubdetail', ${p.id})">
         <div class="relative z-10">
-            <span class="bg-[#064e3b] text-white font-bold uppercase text-[10px] px-4 py-1.5 rounded-full mb-3 inline-block shadow-lg border border-green-800/50">
+            <span class="bg-[#064e3b] text-white font-bold uppercase text-[0.8rem] px-4 py-1.5 rounded-full mb-3 inline-block shadow-lg border border-green-800/50">
                 ${formatType(p.tipo)}
             </span>
-            <h2 class="text-2xl md:text-4xl font-black mb-2 leading-tight uppercase italic tracking-tighter">${p.titulo}</h2>
-            <p class="opacity-90 line-clamp-2 max-w-2xl text-sm font-medium">${p.resumo}</p>
+            <h2 class="text-[2rem] font-black mb-2 leading-tight uppercase italic tracking-tighter">${p.titulo}</h2>
         </div>
     </div>`).join('');
 
@@ -54,13 +53,13 @@ export function renderPubPage(page) {
     list.innerHTML = paginatedItems.map(p => `
         <div class="p-6 md:p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group mb-4" onclick="navigateTo('pubdetail', ${p.id})">
             <div class="flex flex-wrap gap-2 mb-3">
-                 <span class="bg-[#064e3b] text-white font-bold uppercase text-[9px] px-3 py-1 rounded-full shadow-sm">
+                 <span class="bg-[#064e3b] text-white font-bold uppercase text-[1rem] px-3 py-1 rounded-full shadow-sm">
                     ${formatType(p.tipo)}
                  </span>
             </div>
-            <h4 class="text-lg md:text-xl font-black text-gray-900 group-hover:text-green-800 transition-colors leading-tight">${p.titulo}</h4>
-            <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-2 mb-4">${p.data}</p>
-            <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">${p.resumo}</p>
+            <h4 class="text-[1.8rem] font-black text-gray-900 group-hover:text-green-800 transition-colors leading-tight">${p.titulo}</h4>
+            <p class="text-[1rem] font-extrabold text-[#000] uppercase tracking-widest mt-2 mb-4">${p.data}</p>
+
         </div>`).join('');
 
     container.innerHTML = `
@@ -84,7 +83,7 @@ export function renderPubDetail(id) {
     const pesquisadores = filterEmpty(pub.pesquisadores);
 
     container.innerHTML = `
-      <div class="pub-banner-hero shadow-2xl" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('${pub.imagem}');">
+      <div class="pub-banner-hero shadow-2xl" style="background-image: linear-gradient(to top, rgba(195, 188, 188, 0.37)), url('${pub.imagem}');">
           <div class="pub-hero-inner">
               <span class="pub-type-tag" style="background-color: #064e3b;">${formatType(pub.tipo)}</span>
               <h1 class="pub-hero-title">${pub.titulo}</h1>
@@ -94,43 +93,43 @@ export function renderPubDetail(id) {
 
       <div class="pub-content-layout container mx-auto px-4">
           <aside class="pub-sidebar flex flex-col gap-6">
-              <div class="p-8 rounded-[2rem] bg-[#064e3b] text-white shadow-2xl">
+              <div class="p-8 rounded-[2rem] border-4 border-[#064e3b] text-black shadow-2xl">
                   ${autores.length > 0 ? `
                   <div class="mb-6">
-                      <h4 class="text-white text-lg font-black uppercase tracking-tighter mb-2">Autores</h4>
-                      <ul class="text-white opacity-90 text-sm md:text-base space-y-1">
+                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Autores</h4>
+                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
                           ${autores.map(n => `<li>${n}</li>`).join('')}
                       </ul>
                   </div>` : ''}
 
                   ${orientacao.length > 0 ? `
                   <div class="mb-6">
-                      <h4 class="text-white text-lg font-black uppercase tracking-tighter mb-2">Orientação</h4>
-                      <ul class="text-white opacity-90 text-sm md:text-base space-y-1">
+                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Orientação</h4>
+                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
                           ${orientacao.map(n => `<li>${n}</li>`).join('')}
                       </ul>
                   </div>` : ''}
 
                   ${pesquisadores.length > 0 ? `
                   <div>
-                      <h4 class="text-white text-lg font-black uppercase tracking-tighter mb-2">Pesquisadores</h4>
-                      <ul class="text-white opacity-90 text-sm md:text-base space-y-1">
+                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Pesquisadores</h4>
+                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
                           ${pesquisadores.map(n => `<li>${n}</li>`).join('')}
                       </ul>
                   </div>` : ''}
               </div>
               
-              <div class="p-8 rounded-[2rem] bg-[#064e3b] text-white shadow-2xl flex flex-col">
-                  <h4 class="text-lg md:text-xl font-black uppercase tracking-tighter mb-1 text-white">
+              <div class="p-8 rounded-[2rem] border-4 border-[#064e3b] text-black flex flex-col">
+                  <h4 class="text-[1.6rem] font-black uppercase tracking-tighter mb-1 text-[#064e3b]">
                       Como citar
                   </h4>
-                  <div class="italic font-normal leading-relaxed mb-6 text-sm md:text-base text-white opacity-90" id="citation-text">
+                  <div class="text-justify italic leading-relaxed mb-6 text-[1.3rem] text-black opacity-100" id="citation-text">
                       "${pub.comocitar}"
                   </div> 
 
                   <button 
                       class="w-full border-none py-4 rounded-xl text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all duration-300 hover:-translate-y-1 active:scale-95 shadow-lg"
-                      style="background-color: #ffffff; color: #064e3b;"
+                      style="background-color: #064e3b; color: #ffffff;"
                       onclick="copyPubCitation(this, '${pub.comocitar}')">
                       Copiar Citação
                   </button>
@@ -138,17 +137,18 @@ export function renderPubDetail(id) {
           </aside>
 
           <div class="pub-main-column">
-              <div class="bg-[#064e3b] p-8 md:p-12 rounded-[2rem] shadow-inner flex flex-col relative min-h-[400px]"> 
-                  <h2 class="text-2xl md:text-3xl font-black text-white mb-8 uppercase tracking-tighter">
+              <div class="border-4 border-[#064e3b] rounded-[2rem] p-8 md:p-12 shadow-inner flex flex-col relative min-h-[400px]"> 
+                  <h2 class="text-[2rem] font-black text-[#064e3b] mb-8 uppercase tracking-tighter">
                       Resumo
                   </h2>
-                  <div class="text-white leading-relaxed text-justify text-base md:text-lg font-normal opacity-90 antialiased mb-16">
+                  <div class="text-black leading-relaxed text-justify text-[1.5rem] font-normal opacity-100 antialiased mb-16">
                       ${pub.resumo}
                   </div>
 
                   <div class="absolute bottom-8 right-8 md:bottom-12 md:right-12">
                       <a href="${pub.link}" target="_blank" 
-                         class="flex items-center gap-2 bg-white text-[#064e3b] text-[11px] font-black uppercase py-4 px-8 rounded-xl hover:-translate-y-1 transition-all shadow-xl group">
+                         class="flex items-center gap-2 bg-white text-[#064e3b] text-[11px] font-black uppercase py-4 px-8 rounded-xl hover:-translate-y-1 transition-all shadow-xl group"
+                         style="background-color: #064e3b; color: #ffffff;">
                           Acessar Completo
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
                             <line x1="7" y1="17" x2="17" y2="7"></line>

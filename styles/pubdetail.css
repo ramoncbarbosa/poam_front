@@ -5,7 +5,7 @@
     min-height: 450px;
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     border-radius: 3rem !important; /* Arredondamento conforme pedido */
     display: flex;
     align-items: center;
@@ -16,13 +16,13 @@
     overflow: hidden;
 }
 
-.pub-banner-hero::before {
+/* .pub-banner-hero::before {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(75deg, rgba(6, 78, 59, 0.9) 0%, rgba(6, 78, 59, 0.4) 100%);
     z-index: 1;
-}
+} */
 
 .pub-hero-inner {
     position: relative;

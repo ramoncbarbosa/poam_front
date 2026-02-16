@@ -6,7 +6,7 @@
     z-index: 1000;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #064e3b;
     padding: 1rem 1.5rem;
 }
 
@@ -34,7 +34,9 @@
 
 .logo-text {
     font-weight: 900;
-    color: #064e3b;
+    /* color: #064e3b; */
+    /* color: #976a4b; */
+    color: #66422b;
     font-size: 1.5rem;
     letter-spacing: -0.05em;
 }
@@ -45,16 +47,18 @@
 }
 
 .nav-link {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #4b5563;
+    /* color: #4b5563; */
+    /* color: #8f6243; */
+    color: #66422b;
     text-decoration: none;
     transition: color 0.3s;
 }
 
-.nav-link:hover { color: #059669; }
+.nav-link:hover { color: #66422b; }
 
 @media (min-width: 768px) {
     .header-nav { display: flex; }
