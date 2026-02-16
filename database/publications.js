@@ -2,6 +2,7 @@ export const pubData = [
   {
     id: 0,
     titulo: "Governança Ambiental na Amazônia",
+    autores: "",
     orientador: "Dra. Maria Dolores",
     pesquisadores: ["Dâina Naíny Cunha", "Ricardo Bezerra"],
     data: "15 Out 2023",
