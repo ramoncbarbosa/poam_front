@@ -15,8 +15,11 @@ function getItemsPerSlide() {
   return 3;
 }
 
-function injectTeamStyles() {
-  const cssPath = './styles/home-team.css';
+/**
+ * Injeta o CSS específico dependendo da página
+ */
+function injectStyles(fileName) {
+  const cssPath = `./styles/${fileName}`;
   if (!document.querySelector(`link[href="${cssPath}"]`)) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -29,7 +32,7 @@ export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
-  injectTeamStyles();
+  injectStyles('home-team.css');
 
   try {
     const resp = await fetch('./components/home-team.html');
@@ -95,7 +98,10 @@ export function moveResearchTo(idx) {
   });
 }
 
+// CORREÇÃO AQUI: Injeção do CSS da página completa de equipe
 export function renderFullTeamPage() {
+  injectStyles('team.css');
+
   const mapping = [
     { id: 'coord-team', data: getCoords() },
     { id: 'tech-team', data: teamData.filter(m => normalize(m.cargo).includes('tecnic')) },
@@ -109,9 +115,12 @@ export function renderFullTeamPage() {
 }
 
 export function createTeamCard(m) {
+  // CORREÇÃO DOS PATHS DE IMAGEM: Garante que usem o caminho relativo ao projeto
+  const fotoUrl = m.foto.startsWith('http') ? m.foto : `./${m.foto}`;
+
   const foto = m.foto
-    ? `<img src="${m.foto}" alt="${m.nome}">`
-    : `<div class="no-img" style="width: 80px; height: 80px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; color: #64748b;">${m.nome.charAt(0)}</div>`;
+    ? `<img src="${fotoUrl}" alt="${m.nome}" onerror="this.parentElement.innerHTML='<div class=\'no-img\'>${m.nome.charAt(0)}</div>'">`
+    : `<div class="no-img">${m.nome.charAt(0)}</div>`;
 
   return `
     <div class="team-card-fixed">

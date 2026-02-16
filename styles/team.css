@@ -1,4 +1,4 @@
-@import url('team-card.css');
+@import url('./team-card.css');
 
 .team-page-container {
     max-width: 1200px;
@@ -29,7 +29,7 @@
     margin-bottom: 2rem;
 }
 
-/* Grid Padrão (Pesquisadores - 3 colunas) */
+/* Grid Padrão */
 .team-grid {
     display: grid;
     gap: 1.5rem;
@@ -37,7 +37,7 @@
     grid-template-columns: 1fr;
 }
 
-/* Grid Largo (Coordenação e Técnicos - Máximo 2 colunas) */
+/* Grid Largo */
 .grid-large {
     display: grid;
     gap: 1.5rem;
@@ -45,20 +45,20 @@
     grid-template-columns: 1fr;
 }
 
-/* Tablet em diante */
+/* Tablets */
 @media (min-width: 768px) {
     .team-grid, .grid-large {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Desktop: Aqui separamos as larguras */
+/* Desktop */
 @media (min-width: 1150px) {
     .team-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 cards para pesquisadores */
+        grid-template-columns: repeat(3, 1fr);
     }
     
     .grid-large {
-        grid-template-columns: repeat(2, 1fr); /* Mantém 2 cards para ficarem longos */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
