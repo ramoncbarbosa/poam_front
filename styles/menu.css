@@ -69,11 +69,6 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.close-btn:hover {
-    color: #10b981;
-    transform: rotate(90deg) scale(1.1);
-}
-
 .close-btn:active {
     transform: scale(0.9);
 }
@@ -100,12 +95,6 @@
     opacity: 0.9;
 }
 
-.menu-nav a:hover {
-    color: #10b981;
-    padding-left: 10px;
-    opacity: 1;
-}
-
 /* 6. Rodapé do Menu (Instagram na base) */
 .menu-footer {
     margin-top: auto; 
@@ -128,10 +117,6 @@
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s ease;
-}
-
-.instagram-link:hover {
-    color: #10b981;
 }
 
 /* 7. Overlay de Fundo */
