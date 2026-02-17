@@ -65,7 +65,7 @@ export function renderPubPage(page) {
     container.innerHTML = `
         <div class="flex items-center justify-center gap-6 mt-12">
             <button onclick="renderPubPage(${currentPubPage - 1})" class="pub-page-btn" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
-            <span class="font-black text-green-900 uppercase text-[10px] tracking-widest">Página ${currentPubPage} de ${totalPages}</span>
+            <span class="font-black text-[#064e3b] uppercase text-[1rem] tracking-widest">Página ${currentPubPage} de ${totalPages}</span>
             <button onclick="renderPubPage(${currentPubPage + 1})" class="pub-page-btn" ${currentPubPage === totalPages ? 'disabled' : ''}>Próxima →</button>
         </div>`;
 }
