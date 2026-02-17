@@ -28,7 +28,7 @@
 
 .d1 { top: 50%; left: calc(50% - 150px); transform: translate(-50%, -50%) rotate(45deg); }
 .d2 { top: calc(50% - 150px); left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
-.d3 { top: 50%; left: calc(50% + 150px); transform: translate(-50%, -50%) rotate(45deg); border-color: #064e3b; z-index: 10; }
+.d3 { top: 50%; left: calc(50% + 150px); transform: translate(-50%, -50%) rotate(45deg); z-index: 10; }
 .d4 { top: calc(50% + 150px); left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
 
 @media (min-width: 1084px) {
