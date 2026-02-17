@@ -8,7 +8,7 @@
     height: 100vh; 
     height: 100dvh; /* Altura dinâmica para mobile */
     z-index: 3000; 
-    background: #064e3b; 
+    background: #fcfcfc; 
     width: 75%; 
     max-width: 320px; 
     transform: translateX(100%); 
@@ -156,4 +156,66 @@
 @keyframes slideIn {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- CONFIGURAÇÕES DO FILTRO MARROM --- */
+/* Converte o SVG para a cor #66422b */
+.icon-marrom {
+    filter: invert(30%) sepia(16%) saturate(1633%) hue-rotate(338deg) brightness(93%) contrast(88%);
+}
+
+/* --- EFEITO DE SALTAR (JUMP) --- */
+.menu-link-jump {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #66422b;
+    /* Transição suave com efeito elástico no final */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+}
+
+.menu-link-jump:hover {
+    /* Salta 15px para a direita e aumenta 5% */
+    transform: translateX(15px) scale(1.05);
+    /* Mantém a cor marrom original para não mudar para verde */
+    color: #66422b; 
+}
+
+/* Ajuste de salto para o item do Instagram (por ser flex) */
+.mt-auto .menu-link-jump:hover {
+    transform: translateX(10px);
+}
+
+/* --- ESTRUTURA BASE DO MENU --- */
+#mobile-menu { 
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    height: 100vh; 
+    height: 100dvh; 
+    z-index: 3000; 
+    background: #fcfcfc; 
+    width: 75%; 
+    max-width: 320px; 
+    transform: translateX(100%); 
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+#mobile-menu.open { 
+    transform: translateX(0); 
+}
+
+/* Overlay de fundo */
+#menu-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: 2500; 
+    display: none; 
+    backdrop-filter: blur(2px);
+}
+
+#menu-overlay.active { 
+    display: block; 
 }

@@ -1,18 +1,27 @@
 <link rel="stylesheet" href="styles/menu.css">
-<div id="mobile-menu-inner" class="flex flex-col h-full p-10">
-    <div class="flex justify-between items-center mb-12">
-        <span class="text-white/40 text-xs font-black uppercase tracking-widest">Navegação</span>
-        <button class="text-white text-3xl" onclick="toggleMenu()">✕</button>
+<div id="mobile-menu-inner" class="flex flex-col h-full p-10 bg-[#fcfcfc]">
+    
+    <div class="flex justify-between items-center pb-4 border-b border-[#66422b] mb-12">
+        <span class="text-[#66422b] text-[1.5rem] font-black uppercase tracking-widest">Navegação</span>
+        <button class="text-[#66422b] text-[2rem] leading-none hover:scale-110 transition-transform" onclick="toggleMenu()">✕</button>
     </div>
     
     <nav class="flex flex-col space-y-8">
-        <a href="javascript:void(0)" onclick="navigateTo('home')" class="text-white text-2xl font-bold uppercase hover:text-green-400">Início</a>
-        <a href="javascript:void(0)" onclick="navigateTo('publications')" class="text-white text-2xl font-bold uppercase hover:text-green-400">Publicações</a>
-        <a href="javascript:void(0)" onclick="navigateTo('team')" class="text-white text-2xl font-bold uppercase hover:text-green-400">Equipe</a>
-        <a href="javascript:void(0)" onclick="navigateTo('database')" class="text-white text-2xl font-bold uppercase hover:text-green-400">Bases de Dados</a>
+        <a href="javascript:void(0)" onclick="navigateTo('home')" 
+           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Início</a>
+        
+        <a href="javascript:void(0)" onclick="navigateTo('publications')" 
+           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Publicações</a>
+        
+        <a href="javascript:void(0)" onclick="navigateTo('team')" 
+           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Equipe</a>
     </nav>
 
-    <div class="mt-auto pt-10 border-t border-white/10">
-        <a href="https://www.instagram.com/poam.ufpa/" target="_blank" class="text-white font-black text-sm uppercase tracking-widest">INSTAGRAM</a>
+    <div class="mt-auto pt-6 border-t border-[#66422b]">
+        <a href="https://www.instagram.com/poam.ufpa/" target="_blank" 
+           class="menu-link-jump flex items-center gap-4 text-[#66422b] font-black text-[1.2rem] uppercase tracking-widest">
+            <img src="assets/icons/instagram_brown.svg" alt="Instagram" class="w-8 h-8 object-contain">
+            INSTAGRAM
+        </a>
     </div>
 </div>
