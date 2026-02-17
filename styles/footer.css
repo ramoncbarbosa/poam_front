@@ -1,66 +1,58 @@
-.home-footer {
-    background-color: #ffffff;
-    padding: 4rem 0 3rem 0;
-    border-top: 1px solid #f1f5f9;
-    width: 100%;
-}
-
 .footer-container {
     max-width: 80rem;
     margin: 0 auto;
     padding: 0 1.5rem;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o bloco inteiro no meio da página */
+}
+
+/* Criamos um wrapper para garantir que os textos comecem no mesmo ponto vertical */
+.footer-socials, .footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os ícones na mesma linha vertical */
+    width: fit-content;      /* O container só ocupa o espaço necessário */
+}
+
+.footer-info {
+    padding-bottom: 1rem;
 }
 
 .footer-socials {
-    display: flex;
-    justify-content: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.social-link {
-    font-size: 0.75rem;
+.social-link, .dev-link {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre ícone e texto */
+    font-size: 1rem;
     font-weight: 900;
     letter-spacing: 0.2em;
     color: #064e3b;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Impede que o nome do dev quebre em duas linhas */
 }
 
-.social-link:hover {
-    color: #10b981;
-}
-
-.footer-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+.footer-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0; /* Impede o ícone de amassar se o texto for grande */
+    object-fit: contain;
 }
 
 .copyright {
     color: #94a3b8;
     font-size: 0.875rem;
     font-style: italic;
+    margin-bottom: 1rem;
+    align-self: center; /* O copyright continua centralizado em relação ao bloco */
 }
 
-.dev-link {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color:  #064e3b;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.dev-link:hover {
-    color: #059669;
-}
-
-/* Ajuste para não quebrar o scroll snap no final */
-.home-footer {
-    scroll-snap-align: end;
+.social-link:hover, .dev-link:hover {
+    color: #10b981;
+    transform: translateX(5px); /* Feedback visual de deslize */
 }
