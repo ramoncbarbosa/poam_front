@@ -44,7 +44,7 @@
 }
 
 .pub-hero-title {
-    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-size: 2rem;
     font-weight: 900;
     line-height: 1.05;
     margin-bottom: 2rem;
@@ -134,7 +134,9 @@
     box-shadow: 0 15px 30px rgba(6, 78, 59, 0.2);
 }
 
-@media (max-width: 768px) {
+/* telas de no min 481px até 768px */
+@media (min-width: 481px) and (max-width: 768px) {
     .pub-banner-hero { padding: 3rem 1.5rem; border-radius: 2.5rem !important; min-height: 400px; background-attachment: scroll; }
     .pub-lead-text { padding: 2rem; font-size: 1.2rem; }
+    .pub-hero-title {font-size: 2rem;}
 }
