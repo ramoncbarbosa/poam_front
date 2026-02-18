@@ -4,9 +4,10 @@ import { teamData } from '../../database/users.js';
 // ESTADO INTERNO
 // =========================================================
 let htCurrentIndex = 0;
+let resizeHandler = null;
 
 // =========================================================
-// AUXILIARES DE NORMALIZAÇÃO E ORDENAÇÃO
+// AUXILIARES
 // =========================================================
 const normalize = (s) => s ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
 
@@ -23,26 +24,30 @@ const sortByEducation = (a, b) => {
   const weightA = getTitleWeight(a.titulo);
   const weightB = getTitleWeight(b.titulo);
   if (weightA !== weightB) return weightB - weightA;
-
   return normalize(a.nome).localeCompare(normalize(b.nome));
 };
 
-// =========================================================
-// FILTRAGEM DE DADOS
-// =========================================================
-const getCoords = () => [...teamData]
-  .filter(m => normalize(m.cargo).includes('coordenador'))
-  .sort(sortByEducation);
-
-const getOthersSorted = () => [...teamData]
-  .filter(m => !normalize(m.cargo).includes('coordenador'))
-  .sort(sortByEducation);
+const getCoords = () => [...teamData].filter(m => normalize(m.cargo).includes('coordenador')).sort(sortByEducation);
+const getOthersSorted = () => [...teamData].filter(m => !normalize(m.cargo).includes('coordenador')).sort(sortByEducation);
 
 function getItemsPerSlide() {
   const w = window.innerWidth;
   if (w < 768) return 1;
   if (w < 1150) return 2;
   return 3;
+}
+
+/**
+ * Injeta o CSS dinamicamente para evitar erro 404 no GitHub Pages
+ */
+function injectTeamCSS() {
+  if (!document.getElementById('home-team-css')) {
+    const link = document.createElement('link');
+    link.id = 'home-team-css';
+    link.rel = 'stylesheet';
+    link.href = './styles/home-team.css'; // Caminho relativo à raiz do projeto
+    document.head.appendChild(link);
+  }
 }
 
 /* =========================================================
@@ -52,6 +57,9 @@ export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
+  // Injeta o CSS antes de renderizar para evitar flash de conteúdo sem estilo
+  injectTeamCSS();
+
   try {
     const resp = await fetch('./components/home-team.html');
     if (!resp.ok) throw new Error(`Erro ao buscar componente: ${resp.status}`);
@@ -59,15 +67,15 @@ export async function initHomeTeam() {
     const html = await resp.text();
     injectionPoint.innerHTML = html;
 
-    // Exposição global das funções de controle para os botões do HTML
     window.moveResearch = moveResearch;
     window.moveResearchTo = moveResearchTo;
 
     renderHomeCarousel();
 
-    // Gerenciamento de evento de redimensionamento
-    window.removeEventListener('resize', renderHomeCarousel);
-    window.addEventListener('resize', renderHomeCarousel);
+    if (resizeHandler) window.removeEventListener('resize', resizeHandler);
+    resizeHandler = () => renderHomeCarousel();
+    window.addEventListener('resize', resizeHandler);
+
   } catch (e) {
     console.error("Erro ao inicializar Home Team:", e);
   }
@@ -80,10 +88,8 @@ function renderHomeCarousel() {
 
   if (!track || !coordTarget) return;
 
-  // Render Coordenadores (fixos no topo da seção)
   coordTarget.innerHTML = getCoords().map(createTeamCard).join('');
 
-  // Render Carrossel de Membros
   const others = getOthersSorted();
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -98,21 +104,16 @@ function renderHomeCarousel() {
         </div>
     `).join('');
 
-  // Dots de navegação
   if (dotsContainer) {
     dotsContainer.innerHTML = groups.map((_, idx) => `
             <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
         `).join('');
   }
 
-  // Ajuste de index se o resize reduzir o número de páginas
   if (htCurrentIndex >= groups.length) htCurrentIndex = Math.max(0, groups.length - 1);
   moveResearchTo(htCurrentIndex);
 }
 
-/* =========================================================
-   LÓGICA DE NAVEGAÇÃO
-   ========================================================= */
 export function moveResearch(dir) {
   const track = document.getElementById('home-research-track');
   if (!track) return;
@@ -124,46 +125,23 @@ export function moveResearch(dir) {
 export function moveResearchTo(idx) {
   htCurrentIndex = idx;
   const track = document.getElementById('home-research-track');
-  if (track) {
-    track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
-  }
+  if (track) track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
 
   document.querySelectorAll('.ht-dot').forEach((dot, i) => {
     dot.classList.toggle('active', i === htCurrentIndex);
   });
 }
 
-/* =========================================================
-   PÁGINA COMPLETA DE EQUIPE
-   ========================================================= */
-export function renderFullTeamPage() {
-  const coordContainer = document.getElementById('coord-team');
-  const othersContainer = document.getElementById('full-research-team');
-
-  if (coordContainer) {
-    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
-  }
-
-  if (othersContainer) {
-    othersContainer.innerHTML = getOthersSorted().map(createTeamCard).join('');
-  }
-}
-
-/* =========================================================
-   TEMPLATE DO CARD (UNIFICADO)
-   ========================================================= */
 export function createTeamCard(m) {
-  // Tratamento de URL de imagem (seja externa ou local)
   const fotoUrl = m.foto && m.foto.startsWith('http') ? m.foto : `./${m.foto}`;
-
-  const avatarContent = m.foto
+  const avatar = m.foto
     ? `<img src="${fotoUrl}" alt="${m.nome}" onerror="this.parentElement.innerHTML='<div class=\'no-img\'>${m.nome.charAt(0)}</div>'">`
     : `<div class="no-img">${m.nome.charAt(0)}</div>`;
 
   return `
         <div class="team-card-fixed">
             <div class="card-header">
-                <div class="avatar">${avatarContent}</div>
+                <div class="avatar">${avatar}</div>
                 <div class="header-info">
                     <h4>${m.nome}</h4>
                     <p class="role">${m.cargo}</p>
@@ -180,9 +158,7 @@ export function createTeamCard(m) {
                 </div>
             </div>
             <div class="card-footer">
-                ${m.lattes
-      ? `<a href="${m.lattes}" target="_blank">Lattes →</a>`
-      : `<span>Lattes N/D</span>`}
+                ${m.lattes ? `<a href="${m.lattes}" target="_blank">Lattes →</a>` : `<span>Lattes N/D</span>`}
             </div>
         </div>`;
 }

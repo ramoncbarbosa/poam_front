@@ -1,34 +1,24 @@
 import { navigateTo } from './modules/navigation.js';
 import { toggleMenu, setupScrollSnap } from './modules/ui.js';
-// REMOVIDO moveB da importação
 import { renderPublications, renderPubDetail } from './modules/publications.js';
-import { copyCitation } from './modules/database.js';
-import { moveResearch, moveResearchTo } from './modules/team.js';
+import { initHomeTeam, moveResearch, moveResearchTo } from './modules/team.js'; // Adicionado initHomeTeam
 
 // Exposição global
 window.navigateTo = navigateTo;
 window.toggleMenu = toggleMenu;
-
-// REMOVIDO window.moveB = moveB; (Não é mais necessário, o controle é interno)
-
-// Mapeia renderPubPage para renderPublications para manter compatibilidade
 window.renderPubPage = renderPublications;
 window.renderPubDetail = renderPubDetail;
-
-window.copyCitation = copyCitation;
 window.moveResearch = moveResearch;
 window.moveResearchTo = moveResearchTo;
-
-window.closeMobileMenu = () => {
-  const menu = document.getElementById('mobile-menu');
-  if (menu?.classList.contains('open') || menu?.classList.contains('translate-x-0')) toggleMenu();
-};
 
 async function initApp() {
   setupScrollSnap();
 
   // Inicia na home
   navigateTo('home');
+
+  // IMPORTANTE: Inicializa a equipe se estivermos na Home
+  initHomeTeam();
 
   const injections = [
     { id: 'header-injection-point', file: './components/header.html' },
