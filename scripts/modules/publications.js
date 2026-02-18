@@ -6,6 +6,7 @@ import { pubData } from '../../database/publications.js';
 let currentBannerIndex = 0;
 let currentPage = 1;
 const ITEMS_PER_PAGE = 5;
+let bannerInterval = null;
 
 // =========================================================
 // FUNÇÕES EXPORTADAS
@@ -24,6 +25,7 @@ export function renderPublications() {
     if (bannerTrack) {
         currentBannerIndex = 0;
         renderBanner(pubData, bannerTrack);
+        startBannerAutoplay(bannerTrack);
     }
 }
 
@@ -48,10 +50,8 @@ export function renderPubDetail(extraData = null) {
     }
 }
 
-// Nota: moveB foi removida. A navegação agora é feita pela função interna goToSlide clicando nos indicadores.
-
 // =========================================================
-// FUNÇÕES INTERNAS
+// FUNÇÕES INTERNAS (LISTAGEM E PAGINAÇÃO)
 // =========================================================
 
 function updatePublicationView(listContainer, paginationContainer) {
@@ -142,6 +142,10 @@ function renderPublicationList(pubs, container) {
     });
 }
 
+// =========================================================
+// FUNÇÕES DO BANNER (CARROSSEL)
+// =========================================================
+
 function renderBanner(pubs, track) {
     const sortedPubs = [...pubs].sort((a, b) => {
         const dateA = parseInt(a.data) || 0;
@@ -172,7 +176,6 @@ function renderBanner(pubs, track) {
         </div>
     `}).join('');
 
-    // CORREÇÃO: Chamando a função que cria os indicadores abaixo do banner
     setupBannerIndicators(featured.length, track);
 }
 
@@ -196,6 +199,8 @@ function setupBannerIndicators(count, track) {
         dot.className = `banner-indicator ${i === 0 ? 'active' : ''}`;
 
         dot.onclick = () => {
+            // Se o usuário clicar, paramos o autoplay para não atrapalhar a leitura
+            if (bannerInterval) clearInterval(bannerInterval);
             goToSlide(i, track, indicatorsContainer);
         };
 
@@ -213,43 +218,56 @@ function goToSlide(index, track, indicatorsContainer) {
     if (indicatorsContainer) {
         const dots = indicatorsContainer.children;
         for (let i = 0; i < dots.length; i++) {
-            if (i === currentBannerIndex) {
-                dots[i].classList.add('active');
-            } else {
-                dots[i].classList.remove('active');
-            }
+            dots[i].classList.toggle('active', i === currentBannerIndex);
         }
     }
 }
 
+function startBannerAutoplay(track) {
+    if (bannerInterval) clearInterval(bannerInterval);
+
+    bannerInterval = setInterval(() => {
+        const indicatorsContainer = document.getElementById('banner-indicators-container');
+        if (!track || !track.children.length) return;
+
+        currentBannerIndex = (currentBannerIndex + 1) % track.children.length;
+        goToSlide(currentBannerIndex, track, indicatorsContainer);
+    }, 5000); // 5 segundos
+}
+
+// =========================================================
+// FUNÇÕES DE DETALHE DA PUBLICAÇÃO
+// =========================================================
+
 function renderDetailContent(pub, container) {
     const imagePath = pub.imagem ? `../${pub.imagem}` : '';
-    const bgStyle = imagePath ? `url('${imagePath}')` : 'linear-gradient(to right, #064e3b, #047857)';
-    const tipoFormatado = (pub.tipo || 'Artigo').replace(/_/g, ' ');
+    const bgRule = imagePath ? `url('${imagePath}')` : 'linear-gradient(to bottom, #064e3b, #047857)';
+    const tipo = (pub.tipo || 'Artigo').replace(/_/g, ' ');
+    const dataPub = pub.data || '';
 
     container.innerHTML = `
-        <div class="pub-banner-hero" style="background-image: ${bgStyle};">
-            <div class="pub-hero-inner">
-                <span class="pub-type-tag">${tipoFormatado}</span>
-                <h1 class="pub-hero-title">${pub.titulo}</h1>
+        <div class="detail-banner-wrapper">
+            <div class="banner-slide-bg" style="background-image: ${bgRule};">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <div class="banner-meta">
+                        <span class="banner-tag">${tipo}</span>
+                        <span class="banner-date">${dataPub}</span>
+                    </div>
+                    <h2 class="banner-title">${pub.titulo}</h2>
+                </div>
             </div>
         </div>
 
         <div class="pub-content-layout">
             <div class="pub-main-column">
                 <div class="pub-lead-text">
+                    <h3 class="resumo-card-title">Resumo</h3>
                     <p>${pub.resumo || ''}</p>
                     
                     <a href="${pub.link || '#'}" target="_blank" class="pub-btn-contrast">
-                        Acessar Documento Original
+                        Documento Completo
                     </a>
-                </div>
-                
-                <div class="pub-full-text">
-                   <h3 class="pub-citation-title">Como Citar:</h3>
-                   <div class="pub-citation-box">
-                        <p class="pub-citation-text">${pub.comocitar || ''}</p>
-                   </div>
                 </div>
             </div>
 
@@ -260,7 +278,36 @@ function renderDetailContent(pub, container) {
                         ${(pub.autores || []).map(author => `<li>${author}</li>`).join('')}
                     </ul>
                 </div>
+
+                <div class="pub-sidebar-block">
+                    <div class="pub-sidebar-label">Como Citar</div>
+                    <div class="citation-box">
+                        <p id="citation-text">${pub.comocitar || ''}</p>
+                        <button class="copy-citation-btn" onclick="copyCitation()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copiar
+                        </button>
+                    </div>
+                </div>
             </aside>
         </div>
     `;
 }
+
+window.copyCitation = function () {
+    const text = document.getElementById('citation-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-citation-btn');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = 'Copiado!';
+        btn.classList.add('copied');
+
+        setTimeout(() => {
+            btn.innerHTML = originalContent;
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+};

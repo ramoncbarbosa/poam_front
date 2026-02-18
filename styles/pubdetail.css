@@ -1,7 +1,12 @@
+/* =========================================================
+   ARQUIVO: styles/pubdetail.css
+   ========================================================= */
+
+/* Importa os estilos base do Banner (títulos, tags, gradientes) */
 @import url('./banner.css');
 
 /* =========================================
-   PÁGINA DE DETALHES (Conteúdo e Layout)
+   ESTRUTURA DA PÁGINA
    ========================================= */
 
 .detail-page-container {
@@ -19,7 +24,10 @@
     padding-right: 1.5rem;
 }
 
-/* Botão Voltar */
+/* =========================================
+   BOTÃO VOLTAR
+   ========================================= */
+
 .back-btn-container {
     margin-bottom: 3rem;
 }
@@ -58,58 +66,33 @@
 }
 
 /* =========================================
-   HERO / BANNER DESTAQUE
+   WRAPPER DO BANNER (Estilo Lista)
    ========================================= */
-/* Ajustado para não usar !important */
-.pub-banner-hero {
+
+.detail-banner-wrapper {
     width: 100%;
-    min-height: 450px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 3rem; /* Removido !important */
-    display: flex;
-    align-items: center;
-    padding: 5rem;
-    margin-bottom: 4rem;
+    height: 400px;
+    background-color: #064e3b;
+    border-radius: 3.5rem;
     position: relative;
-    color: white;
     overflow: hidden;
+    margin-bottom: 4rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.pub-hero-inner {
-    position: relative;
-    z-index: 2;
-    max-width: 850px;
-}
-
-.pub-type-tag {
-    background: #10b981;
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border-radius: 100px;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    display: inline-block;
-    margin-bottom: 2rem;
-}
-
-.pub-hero-title {
-    font-size: 1.5rem;
-    font-weight: 900;
-    line-height: 1.05;
-    margin-bottom: 2rem;
-    letter-spacing: -0.04em;
+/* Garante que o conteúdo do banner.css ocupe o espaço */
+.detail-banner-wrapper .banner-slide-bg {
+    width: 100%;
+    height: 100%;
 }
 
 /* =========================================
-   LAYOUT DO CONTEÚDO
+   LAYOUT GERAL (Colunas)
    ========================================= */
 
 .pub-content-layout {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse; /* Inverte a ordem no mobile: Sidebar sobe, Resumo desce */
     gap: 3rem;
 }
 
@@ -117,130 +100,170 @@
     flex: 1;
 }
 
-/* Sidebar (Lateral) */
 .pub-sidebar {
     width: 100%;
 }
 
-.pub-sidebar-block {
-    border-left: 4px solid #059669;
-    padding-left: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-.pub-sidebar-label {
-    text-transform: uppercase;
-    color: #059669;
-    font-size: 0.75rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-}
-
-.pub-sidebar-name, .pub-sidebar-list li {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 0.5rem;
-}
-
-.pub-sidebar-list { 
-    list-style: none; 
-    padding: 0; 
-}
-
 /* =========================================
-   CARD RESUMO (Com botão dentro)
+   CARD DE RESUMO (Esquerda)
    ========================================= */
 
 .pub-lead-text {
     background: #064e3b;
     color: white;
-    padding: 3.5rem;
+    padding: 3rem;
     border-radius: 2.5rem;
-    font-size: 1.25rem; /* Ajustado levemente para caber melhor */
-    line-height: 1.6;
-    font-weight: 500;
-    margin-bottom: 4rem;
+    font-size: 1.15rem;
+    line-height: 1.8;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    align-items: flex-start; /* Alinha o botão à esquerda */
+    gap: 1.5rem;
+    align-items: flex-start;
+    box-shadow: 0 10px 30px -5px rgba(6, 78, 59, 0.3);
 }
 
-/* Novo estilo para o botão dentro do card verde (Contraste) */
+/* Título dentro do card verde */
+.resumo-card-title {
+    color: #10b981;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.pub-lead-text p {
+    margin: 0;
+    font-weight: 400;
+}
+
 .pub-btn-contrast {
     display: inline-block;
     background: #ffffff;
     color: #064e3b;
-    padding: 1rem 2.5rem;
+    padding: 1rem 2rem;
     border-radius: 100px;
-    font-weight: 900;
+    font-weight: 800;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
     transition: all 0.3s ease;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-top: 0.5rem;
 }
 
 .pub-btn-contrast:hover {
     background: #10b981;
     color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
 }
 
 /* =========================================
-   COMO CITAR
+   SIDEBAR (Autores e Citação)
    ========================================= */
 
-.pub-full-text {
-    font-size: 1.25rem;
-    line-height: 2;
-    color: #475569;
-    text-align: justify;
+.pub-sidebar-block {
+    border-left: 4px solid #10b981;
+    padding-left: 1.5rem;
+    margin-bottom: 3rem;
 }
 
-.pub-citation-title {
-    color: #064e3b;
+.pub-sidebar-label {
+    text-transform: uppercase;
+    color: #059669;
+    font-size: 0.8rem;
+    font-weight: 900;
     margin-bottom: 1rem;
-    font-weight: 800;
-    font-size: 1.4rem;
+    letter-spacing: 0.1em;
 }
 
-.pub-citation-box {
-    background: #f1f5f9;
-    padding: 1.5rem;
-    border-left: 4px solid #064e3b;
-    border-radius: 0 1rem 1rem 0;
-    margin-bottom: 2rem;
-}
-
-.pub-citation-text {
-    font-style: italic;
-    color: #334155;
+.pub-sidebar-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
 }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
-
-@media (min-width: 481px) and (max-width: 768px) {
-    .pub-lead-text { 
-        padding: 2rem; 
-        font-size: 1.1rem; 
-    }
+.pub-sidebar-list li {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
 }
+
+/* Caixa de Citação com Botão */
+.citation-box {
+    background: #f1f5f9;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    position: relative;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+#citation-text {
+    font-style: italic;
+    color: #334155;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.copy-citation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    align-self: flex-end;
+    background: white;
+    border: 1px solid #cbd5e1;
+    color: #064e3b;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-citation-btn:hover {
+    border-color: #064e3b;
+    background: #f8fafc;
+}
+
+.copy-citation-btn.copied {
+    background: #064e3b;
+    color: white;
+    border-color: #064e3b;
+}
+
+/* =========================================
+   RESPONSIVIDADE (Desktop)
+   ========================================= */
 
 @media (min-width: 1024px) {
     .pub-content-layout {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
+        flex-direction: row; /* Lado a lado: Resumo (esquerda), Sidebar (direita) */
         gap: 5rem;
     }
-    .pub-sidebar { 
-        width: 300px; 
-        flex-shrink: 0; 
+
+    .pub-sidebar {
+        width: 350px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-banner-wrapper {
+        height: 350px;
+        border-radius: 2rem;
+    }
+    
+    .pub-lead-text {
+        padding: 2rem;
     }
 }
