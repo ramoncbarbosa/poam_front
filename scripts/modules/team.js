@@ -1,18 +1,17 @@
 import { teamData } from '../../database/users.js';
 
+// =========================================================
+// ESTADO INTERNO
+// =========================================================
 let htCurrentIndex = 0;
 
-/**
- * Normaliza strings para comparação (remove acentos e deixa em minúsculo)
- */
-const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+// =========================================================
+// AUXILIARES DE NORMALIZAÇÃO E ORDENAÇÃO
+// =========================================================
+const normalize = (s) => s ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
 
-/**
- * Atribui pesos para a titulação acadêmica.
- * Ordem: Doutorado (4) > Mestrado (3) > Especialização (2) > Graduação (1)
- */
 const getTitleWeight = (titulo) => {
-  const t = normalize(titulo || "");
+  const t = normalize(titulo);
   if (t.includes("doutor") || t.includes("doutora")) return 4;
   if (t.includes("mestre") || t.includes("mestra")) return 3;
   if (t.includes("especialista")) return 2;
@@ -20,72 +19,57 @@ const getTitleWeight = (titulo) => {
   return 0;
 };
 
-/**
- * Função de comparação para o método .sort()
- * 1º Critério: Peso da titulação (decrescente)
- * 2º Critério: Nome (ordem alfabética A-Z)
- */
 const sortByEducation = (a, b) => {
   const weightA = getTitleWeight(a.titulo);
   const weightB = getTitleWeight(b.titulo);
+  if (weightA !== weightB) return weightB - weightA;
 
-  if (weightA !== weightB) {
-    return weightB - weightA;
-  }
-
-  const nomeA = normalize(a.nome);
-  const nomeB = normalize(b.nome);
-  return nomeA.localeCompare(nomeB);
+  return normalize(a.nome).localeCompare(normalize(b.nome));
 };
 
-/**
- * FILTROS DE DADOS
- * Utilizamos o operador spread [...] para criar cópias e não mutar o array original
- */
-const getCoords = () => {
-  return [...teamData]
-    .filter(m => normalize(m.cargo).includes('coordenador'))
-    .sort(sortByEducation);
-};
+// =========================================================
+// FILTRAGEM DE DADOS
+// =========================================================
+const getCoords = () => [...teamData]
+  .filter(m => normalize(m.cargo).includes('coordenador'))
+  .sort(sortByEducation);
 
-const getOthersSorted = () => {
-  return [...teamData]
-    .filter(m => !normalize(m.cargo).includes('coordenador'))
-    .sort(sortByEducation);
-};
+const getOthersSorted = () => [...teamData]
+  .filter(m => !normalize(m.cargo).includes('coordenador'))
+  .sort(sortByEducation);
 
-/**
- * Configuração de responsividade do carrossel
- */
 function getItemsPerSlide() {
   const w = window.innerWidth;
-  if (w < 768) return 1;  // Celular
-  if (w < 1150) return 2; // Tablet
-  return 3;               // Desktop
+  if (w < 768) return 1;
+  if (w < 1150) return 2;
+  return 3;
 }
 
-/* ==========================================================================
-   RENDERIZAÇÃO DA HOME (CARROSSEL)
-   ========================================================================== */
+/* =========================================================
+   INICIALIZAÇÃO DA HOME (CARROSSEL)
+   ========================================================= */
 export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
   try {
     const resp = await fetch('./components/home-team.html');
-    if (resp.ok) {
-      injectionPoint.innerHTML = await resp.text();
+    if (!resp.ok) throw new Error(`Erro ao buscar componente: ${resp.status}`);
 
-      // Expõe as funções para os botões inline no HTML
-      window.moveResearch = moveResearch;
-      window.moveResearchTo = moveResearchTo;
+    const html = await resp.text();
+    injectionPoint.innerHTML = html;
 
-      renderHomeCarousel();
-      window.removeEventListener('resize', renderHomeCarousel);
-      window.addEventListener('resize', renderHomeCarousel);
-    }
+    // Exposição global das funções de controle para os botões do HTML
+    window.moveResearch = moveResearch;
+    window.moveResearchTo = moveResearchTo;
+
+    renderHomeCarousel();
+
+    // Gerenciamento de evento de redimensionamento
+    window.removeEventListener('resize', renderHomeCarousel);
+    window.addEventListener('resize', renderHomeCarousel);
   } catch (e) {
-    console.error("Erro ao carregar componente Home Team:", e);
+    console.error("Erro ao inicializar Home Team:", e);
   }
 }
 
@@ -96,10 +80,10 @@ function renderHomeCarousel() {
 
   if (!track || !coordTarget) return;
 
-  // Render Coordenadores
+  // Render Coordenadores (fixos no topo da seção)
   coordTarget.innerHTML = getCoords().map(createTeamCard).join('');
 
-  // Render Outros Membros Unificados (Técnicos + Pesquisadores)
+  // Render Carrossel de Membros
   const others = getOthersSorted();
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -109,43 +93,26 @@ function renderHomeCarousel() {
   }
 
   track.innerHTML = groups.map(g => `
-        <div class="ht-slide" style="grid-template-columns: repeat(${itemsPerSlide}, 1fr);">
+        <div class="ht-slide" style="display: grid; grid-template-columns: repeat(${itemsPerSlide}, 1fr); min-width: 100%;">
             ${g.map(createTeamCard).join('')}
         </div>
     `).join('');
 
+  // Dots de navegação
   if (dotsContainer) {
     dotsContainer.innerHTML = groups.map((_, idx) => `
             <div class="ht-dot ${idx === htCurrentIndex ? 'active' : ''}" onclick="moveResearchTo(${idx})"></div>
         `).join('');
   }
 
+  // Ajuste de index se o resize reduzir o número de páginas
   if (htCurrentIndex >= groups.length) htCurrentIndex = Math.max(0, groups.length - 1);
   moveResearchTo(htCurrentIndex);
 }
 
-/* ==========================================================================
-   RENDERIZAÇÃO DA PÁGINA COMPLETA DE EQUIPE
-   ========================================================================== */
-export function renderFullTeamPage() {
-  const coordContainer = document.getElementById('coord-team');
-  // Usamos o container unificado para técnicos e pesquisadores
-  const othersContainer = document.getElementById('full-research-team');
-
-  if (coordContainer) {
-    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
-  }
-
-  if (othersContainer) {
-    // Pega a lista unificada e ordenada para a página full
-    const othersSorted = getOthersSorted();
-    othersContainer.innerHTML = othersSorted.map(createTeamCard).join('');
-  }
-}
-
-/* ==========================================================================
-   LÓGICA DO CARROSSEL
-   ========================================================================== */
+/* =========================================================
+   LÓGICA DE NAVEGAÇÃO
+   ========================================================= */
 export function moveResearch(dir) {
   const track = document.getElementById('home-research-track');
   if (!track) return;
@@ -157,26 +124,46 @@ export function moveResearch(dir) {
 export function moveResearchTo(idx) {
   htCurrentIndex = idx;
   const track = document.getElementById('home-research-track');
-  if (track) track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
+  if (track) {
+    track.style.transform = `translateX(-${htCurrentIndex * 100}%)`;
+  }
 
   document.querySelectorAll('.ht-dot').forEach((dot, i) => {
     dot.classList.toggle('active', i === htCurrentIndex);
   });
 }
 
-/* ==========================================================================
-   TEMPLATE DO CARD
-   ========================================================================== */
+/* =========================================================
+   PÁGINA COMPLETA DE EQUIPE
+   ========================================================= */
+export function renderFullTeamPage() {
+  const coordContainer = document.getElementById('coord-team');
+  const othersContainer = document.getElementById('full-research-team');
+
+  if (coordContainer) {
+    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
+  }
+
+  if (othersContainer) {
+    othersContainer.innerHTML = getOthersSorted().map(createTeamCard).join('');
+  }
+}
+
+/* =========================================================
+   TEMPLATE DO CARD (UNIFICADO)
+   ========================================================= */
 export function createTeamCard(m) {
+  // Tratamento de URL de imagem (seja externa ou local)
   const fotoUrl = m.foto && m.foto.startsWith('http') ? m.foto : `./${m.foto}`;
-  const foto = m.foto
+
+  const avatarContent = m.foto
     ? `<img src="${fotoUrl}" alt="${m.nome}" onerror="this.parentElement.innerHTML='<div class=\'no-img\'>${m.nome.charAt(0)}</div>'">`
     : `<div class="no-img">${m.nome.charAt(0)}</div>`;
 
   return `
         <div class="team-card-fixed">
             <div class="card-header">
-                <div class="avatar">${foto}</div>
+                <div class="avatar">${avatarContent}</div>
                 <div class="header-info">
                     <h4>${m.nome}</h4>
                     <p class="role">${m.cargo}</p>
@@ -193,7 +180,9 @@ export function createTeamCard(m) {
                 </div>
             </div>
             <div class="card-footer">
-                ${m.lattes ? `<a href="${m.lattes}" target="_blank">Lattes →</a>` : `<span>Lattes N/D</span>`}
+                ${m.lattes
+      ? `<a href="${m.lattes}" target="_blank">Lattes →</a>`
+      : `<span>Lattes N/D</span>`}
             </div>
         </div>`;
 }
