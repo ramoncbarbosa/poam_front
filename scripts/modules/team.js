@@ -1,14 +1,8 @@
 import { teamData } from '../../database/users.js';
 
-// =========================================================
-// ESTADO INTERNO
-// =========================================================
 let htCurrentIndex = 0;
 let resizeHandler = null;
 
-// =========================================================
-// AUXILIARES
-// =========================================================
 const normalize = (s) => s ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
 
 const getTitleWeight = (titulo) => {
@@ -38,34 +32,31 @@ function getItemsPerSlide() {
 }
 
 /**
- * Injeta o CSS dinamicamente para evitar erro 404 no GitHub Pages
+ * Gerencia a injeção de CSS para evitar erros 404 no GitHub Pages
+ * @param {string} id - ID único para o elemento link
+ * @param {string} fileName - Nome do arquivo CSS na pasta styles
  */
-function injectTeamCSS() {
-  if (!document.getElementById('home-team-css')) {
+function safeInjectCSS(id, fileName) {
+  if (!document.getElementById(id)) {
     const link = document.createElement('link');
-    link.id = 'home-team-css';
+    link.id = id;
     link.rel = 'stylesheet';
-    link.href = './styles/home-team.css';
+    link.href = `./styles/${fileName}`; // Uso do ./ é vital para o GitHub Pages
     document.head.appendChild(link);
   }
 }
 
-/* =========================================================
-   INICIALIZAÇÃO DA HOME (CARROSSEL)
-   ========================================================= */
 export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
-  injectTeamCSS();
+  safeInjectCSS('home-team-css', 'home-team.css');
 
   try {
     const resp = await fetch('./components/home-team.html');
-    if (!resp.ok) throw new Error(`Erro ao buscar componente: ${resp.status}`);
+    if (!resp.ok) throw new Error(`Erro: ${resp.status}`);
 
-    const html = await resp.text();
-    injectionPoint.innerHTML = html;
-
+    injectionPoint.innerHTML = await resp.text();
     window.moveResearch = moveResearch;
     window.moveResearchTo = moveResearchTo;
 
@@ -74,9 +65,24 @@ export async function initHomeTeam() {
     if (resizeHandler) window.removeEventListener('resize', resizeHandler);
     resizeHandler = () => renderHomeCarousel();
     window.addEventListener('resize', resizeHandler);
-
   } catch (e) {
-    console.error("Erro ao inicializar Home Team:", e);
+    console.error("Erro Home Team:", e);
+  }
+}
+
+export function renderFullTeamPage() {
+  // Injeta os estilos necessários para a página completa
+  safeInjectCSS('full-team-page-css', 'team.css');
+
+  const coordContainer = document.getElementById('coord-team');
+  const othersContainer = document.getElementById('full-research-team');
+
+  if (coordContainer) {
+    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
+  }
+
+  if (othersContainer) {
+    othersContainer.innerHTML = getOthersSorted().map(createTeamCard).join('');
   }
 }
 
@@ -88,7 +94,6 @@ function renderHomeCarousel() {
   if (!track || !coordTarget) return;
 
   coordTarget.innerHTML = getCoords().map(createTeamCard).join('');
-
   const others = getOthersSorted();
   const itemsPerSlide = getItemsPerSlide();
   const groups = [];
@@ -113,25 +118,6 @@ function renderHomeCarousel() {
   moveResearchTo(htCurrentIndex);
 }
 
-/* =========================================================
-   PÁGINA COMPLETA DE EQUIPE (A função que estava faltando!)
-   ========================================================= */
-export function renderFullTeamPage() {
-  const coordContainer = document.getElementById('coord-team');
-  const othersContainer = document.getElementById('full-research-team');
-
-  if (coordContainer) {
-    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
-  }
-
-  if (othersContainer) {
-    othersContainer.innerHTML = getOthersSorted().map(createTeamCard).join('');
-  }
-}
-
-/* =========================================================
-   LÓGICA DE NAVEGAÇÃO
-   ========================================================= */
 export function moveResearch(dir) {
   const track = document.getElementById('home-research-track');
   if (!track) return;
