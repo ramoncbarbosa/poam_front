@@ -109,6 +109,16 @@
     height: 2rem;
 }
 
+/* Quando ativo, fica verde (mesma cor do hover) */
+.nav-link.active {
+    color: #064e3b;
+}
+
+/* Mantém o sublinhado fixo quando ativo */
+.nav-link.active::after {
+    width: 100%;
+}
+
 /* =========================================
    RESPONSIVIDADE (Desktop)
    ========================================= */

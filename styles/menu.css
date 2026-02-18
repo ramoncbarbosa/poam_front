@@ -129,6 +129,13 @@
     filter: invert(24%) sepia(47%) saturate(579%) hue-rotate(339deg) brightness(96%) contrast(89%);
 }
 
+.menu-link.active {
+    color: #064e3b; /* Verde destaque */
+    /* Adiciona uma barrinha lateral e um recuo para destacar */
+    border-left: 4px solid #064e3b;
+    padding-left: 1rem; 
+}
+
 /* =========================================
    OVERLAY DE FUNDO
    ========================================= */
