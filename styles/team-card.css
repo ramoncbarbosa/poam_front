@@ -52,7 +52,7 @@
 }
 
 .header-info h4 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 900;
     color: #064e3b;
     margin: 0;
@@ -111,8 +111,9 @@
     .card-header { gap: 1rem; }
     .avatar { width: 95px; height: 95px; }
     .header-info h4 { font-size: 1.3rem; }
-    .role { font-size: 0.9rem; }
-    .info-group { margin-top: 0.75rem; }
+    .role { font-size: 1rem; }
+    .info-group { margin-top: 0.8rem; }
     .info-group label { font-size: 1rem; }
     .info-group p { font-size: 1rem; }
+    .card-footer a {font-size: 1rem;}
 }
