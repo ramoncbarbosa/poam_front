@@ -22,7 +22,7 @@
 
 @media (min-width: 768px) {
     .home-team-section { padding: 5rem 1.5rem; }
-    .ht-main-title { font-size: 3rem; margin-bottom: 4rem; }
+    .ht-main-title { font-size: 2.5rem; margin-bottom: 4rem; }
 }
 
 .ht-subtitle {
@@ -36,7 +36,7 @@
 }
 
 @media (min-width: 768px) {
-    .ht-subtitle { font-size: 1.25rem; margin-bottom: 2rem; }
+    .ht-subtitle { font-size: 1.6rem; margin-bottom: 2rem; }
 }
 
 #home-coord-target {
