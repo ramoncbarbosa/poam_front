@@ -1,6 +1,13 @@
+/* =========================================================
+   ESTILOS GLOBAIS E RESET
+   ========================================================= */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap');
 
-* { box-sizing: border-box; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
 html, body {
     width: 100%;
@@ -9,7 +16,6 @@ html, body {
     overflow-x: hidden;
 }
 
-/* Layout Flex para "Sticky Footer" */
 .app-body { 
     font-family: 'Inter', sans-serif; 
     display: flex; 
@@ -18,11 +24,19 @@ html, body {
     background-color: white;
 }
 
-/* Área de conteúdo expande para empurrar o footer */
+/* CORREÇÃO 1: Ajuste de padding responsivo para o Header 
+   O gap era causado por um padding fixo de 5.5rem enquanto o header mudava de tamanho.
+*/
 #content-area { 
     flex: 1 0 auto; 
-    padding-top: 5.5rem; /* Espaço para o Header Fixo (ajuste conforme altura do header) */
+    padding-top: 5rem; /* Altura do header no mobile */
     animation: fadeInPage 0.4s ease-in-out;
+}
+
+@media (min-width: 768px) {
+    #content-area { 
+        padding-top: 6.5rem; /* Altura do header no desktop */
+    }
 }
 
 @keyframes fadeInPage {
@@ -30,15 +44,201 @@ html, body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tags de Banco de Dados (Globais - Mantidas do seu código original) */
-.db-tag {
-    display: inline-flex;
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 10px;
+/* =========================================
+   HEADER GERAL
+   ========================================= */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #fff;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #064e3b;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.header-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-img {
+    height: 3.5rem; 
+    width: auto;
+    object-fit: contain;
+}
+
+.header-nav {
+    display: none; 
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+    color: #66422b;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
 }
-.db-tag.legislativo { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-.db-tag.socioambiental { background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; }
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #064e3b;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active { color: #064e3b; }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    color: #66422b;
+}
+
+@media (min-width: 768px) {
+    .main-header { padding: 1rem 2rem; }
+    .logo-img { height: 4.5rem; }
+    .header-nav { display: flex; }
+    .mobile-menu-btn { display: none; }
+}
+
+/* =========================================
+   ESTRUTURA DE SCROLL SNAP
+   ========================================= */
+.snap-container {
+    height: auto; 
+    overflow: visible;
+    scroll-snap-type: y proximity; 
+}
+
+/* CORREÇÃO 2: Cálculo da altura da seção 
+   Ao usar calc(100vh - header), evitamos que a seção empurre o layout para baixo.
+*/
+.snap-section {
+    min-height: calc(100vh - 5rem); 
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .snap-section {
+        min-height: calc(100vh - 6.5rem);
+    }
+}
+
+.snap-section.auto-height {
+    height: auto;
+    min-height: 100vh;
+}
+
+/* =========================================
+   HOME: HERO
+   ========================================= */
+.home-hero-section {
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://ramoncbarbosa.github.io/poam_front/assets/home/home.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+}
+
+.home-main-title {
+    font-size: clamp(3rem, 10vw, 6rem); /* Responsivo: min 3rem, max 6rem */
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.home-subtitle {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 700;
+    font-style: italic;
+    color: white;
+}
+
+/* =========================================
+   HOME: SOBRE (OBJETIVO E FOCO)
+   ========================================= */
+.home-about-section {
+    background-color: white;
+    padding: 5rem 1.5rem;
+}
+
+.home-about-wrapper {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.objective-card {
+    text-align: justify;
+    padding: 2.5rem;
+    border: 4px solid #064e3b;
+    border-radius: 2rem;
+}
+
+.section-heading {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #064e3b;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.section-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+}
+
+.focus-card {
+    background-color: #064e3b;
+    border-radius: 2rem;
+    padding: 2.5rem;
+    color: white;
+    text-align: justify;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 1024px) {
+    .home-about-wrapper { grid-template-columns: 1fr 1fr; }
+}
+
+/* =========================================
+   EQUIPE PREVIEW
+   ========================================= */
+.team-preview-section {
+    background-color: #f9fafb;
+    padding: 5rem 1.5rem;
+}
