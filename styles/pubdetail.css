@@ -1,12 +1,72 @@
-/* --- ESTILO PREMIUM POAM --- */
+/* =========================================
+   ESTILOS GERAIS (Desktop First / Base)
+   ========================================= */
+
+/* Layout da Página de Detalhe */
+.detail-page-container {
+    background-color: #f9fafb; /* bg-gray-50 */
+    min-height: 100vh;
+    padding-top: 6rem; /* pt-24 */
+    padding-bottom: 5rem; /* pb-20 */
+}
+
+.detail-content-wrapper {
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem;
+}
+
+/* Container do Botão Voltar */
+.back-btn-container {
+    margin-bottom: 3rem; /* mb-12 */
+}
+
+/* Botão Voltar (Estilo Group) */
+.back-btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem; /* gap-4 */
+    color: #064e3b; /* text-green-900 */
+    font-weight: 900; /* font-black */
+    text-transform: uppercase;
+    font-size: 0.75rem; /* text-xs */
+    letter-spacing: 0.1em; /* tracking-widest */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+/* Círculo do Ícone */
+.back-btn-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem; /* w-12 */
+    height: 3rem; /* h-12 */
+    background-color: white;
+    border-radius: 9999px; /* rounded-full */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* shadow-lg */
+    transition: all 0.3s ease;
+    color: #064e3b;
+}
+
+/* Hover Effects (Group Hover logic) */
+.back-btn-group:hover .back-btn-circle {
+    background-color: #064e3b; /* group-hover:bg-green-900 */
+    color: white; /* group-hover:text-white */
+}
+
+/* --- ESTILO PREMIUM POAM (Conteúdo Injetado) --- */
 
 .pub-banner-hero {
     width: 100%;
     min-height: 450px;
     background-size: cover;
     background-position: center;
-    /* background-attachment: fixed; */
-    border-radius: 3rem !important; /* Arredondamento conforme pedido */
+    border-radius: 3rem !important;
     display: flex;
     align-items: center;
     padding: 5rem;
@@ -15,14 +75,6 @@
     color: white;
     overflow: hidden;
 }
-
-/* .pub-banner-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(75deg, rgba(6, 78, 59, 0.9) 0%, rgba(6, 78, 59, 0.4) 100%);
-    z-index: 1;
-} */
 
 .pub-hero-inner {
     position: relative;
@@ -51,21 +103,11 @@
     letter-spacing: -0.04em;
 }
 
-/* LAYOUT COLUNAS */
+/* Layout Colunas (Mobile Default) */
 .pub-content-layout {
     display: flex;
-    flex-direction: column; /* Mobile */
+    flex-direction: column;
     gap: 3rem;
-}
-
-@media (min-width: 1024px) {
-    .pub-content-layout {
-        flex-direction: row-reverse; /* Desktop: Sidebar na direita */
-        justify-content: flex-end;
-        gap: 5rem;
-    }
-    .pub-main-column { flex: 1; }
-    .pub-sidebar { width: 300px; flex-shrink: 0; }
 }
 
 .pub-sidebar-block {
@@ -82,14 +124,24 @@
     margin-bottom: 0.5rem;
 }
 
-.pub-sidebar-name, .pub-sidebar-list li {
+.pub-sidebar-name {
     font-size: 1.2rem;
     font-weight: 800;
     color: #1e293b;
     margin-bottom: 0.5rem;
 }
 
-.pub-sidebar-list { list-style: none; padding: 0; }
+.pub-sidebar-list { 
+    list-style: none; 
+    padding: 0; 
+}
+
+.pub-sidebar-list li {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
 
 .pub-lead-text {
     background: #064e3b;
@@ -134,9 +186,39 @@
     box-shadow: 0 15px 30px rgba(6, 78, 59, 0.2);
 }
 
-/* telas de no min 481px até 768px */
+/* =========================================
+   MEDIA QUERIES
+   ========================================= */
+
+/* Tablet (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-    .pub-banner-hero { padding: 3rem 1.5rem; border-radius: 2.5rem !important; min-height: 400px; background-attachment: scroll; }
-    .pub-lead-text { padding: 2rem; font-size: 1.2rem; }
-    .pub-hero-title {font-size: 2rem;}
+    .pub-banner-hero { 
+        padding: 3rem 1.5rem; 
+        border-radius: 2.5rem !important; 
+        min-height: 400px; 
+        background-attachment: scroll; 
+    }
+    .pub-lead-text { 
+        padding: 2rem; 
+        font-size: 1.2rem; 
+    }
+    .pub-hero-title {
+        font-size: 2rem;
+    }
+}
+
+/* Desktop (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .pub-content-layout {
+        flex-direction: row-reverse; /* Sidebar na direita */
+        justify-content: flex-end;
+        gap: 5rem;
+    }
+    .pub-main-column { 
+        flex: 1; 
+    }
+    .pub-sidebar { 
+        width: 300px; 
+        flex-shrink: 0; 
+    }
 }

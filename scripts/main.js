@@ -1,6 +1,7 @@
 import { navigateTo } from './modules/navigation.js';
 import { toggleMenu, setupScrollSnap } from './modules/ui.js';
-import { moveB, renderPubPage } from './modules/publications.js';
+// CORREÇÃO: importando 'moveB' e 'renderPublications' (o nome correto)
+import { moveB, renderPublications } from './modules/publications.js';
 import { copyCitation } from './modules/database.js';
 import { moveResearch, moveResearchTo } from './modules/team.js';
 
@@ -8,7 +9,10 @@ import { moveResearch, moveResearchTo } from './modules/team.js';
 window.navigateTo = navigateTo;
 window.toggleMenu = toggleMenu;
 window.moveB = moveB;
-window.renderPubPage = renderPubPage;
+
+// CORREÇÃO: Atribuindo renderPublications à variável global que você usava
+window.renderPubPage = renderPublications;
+
 window.copyCitation = copyCitation;
 window.moveResearch = moveResearch;
 window.moveResearchTo = moveResearchTo;
@@ -20,6 +24,8 @@ window.closeMobileMenu = () => {
 
 async function initApp() {
   setupScrollSnap();
+
+  // Inicia na home
   navigateTo('home');
 
   const injections = [

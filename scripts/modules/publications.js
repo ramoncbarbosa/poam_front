@@ -1,185 +1,264 @@
 import { pubData } from '../../database/publications.js';
 
-let currentPubB = 0;
-let currentPubPage = 1;
-const pubsPerPage = 5;
-let bannerInterval;
+// =========================================================
+// ESTADO INTERNO
+// =========================================================
+let currentBannerIndex = 0;
+let currentPage = 1;
+const ITEMS_PER_PAGE = 5;
 
-/**
- * Ordenação decrescente por data
- */
-const sortedPubs = [...pubData].sort((a, b) => {
-    const dateA = new Date(a.data.split('/').reverse().join('-'));
-    const dateB = new Date(b.data.split('/').reverse().join('-'));
-    return dateB - dateA;
-});
+// =========================================================
+// FUNÇÕES EXPORTADAS
+// =========================================================
 
-const filterEmpty = (arr) => (arr && Array.isArray(arr) ? arr.filter(item => item.trim() !== "") : []);
-const formatType = (type) => (type ? type.replace(/_/g, ' ').toUpperCase() : 'PUBLICAÇÃO');
-
+// 1. Renderiza a página principal de publicações (Lista + Banner + Paginação)
 export function renderPublications() {
-    const track = document.getElementById('bannerTrack');
-    if (!track) return;
-    if (bannerInterval) clearInterval(bannerInterval);
+    const listContainer = document.getElementById('pub-list');
+    const paginationContainer = document.getElementById('pub-pagination');
+    const bannerTrack = document.getElementById('bannerTrack');
 
-    const latestPubs = sortedPubs.slice(0, 5);
+    // Renderiza a Lista com Paginação
+    if (listContainer) {
+        // Reseta para página 1 ao entrar na tela
+        currentPage = 1;
+        updatePublicationView(listContainer, paginationContainer);
+    }
 
-    track.innerHTML = latestPubs.map(p => `
-    <div class="article-slide flex flex-col justify-end p-8 md:p-12 text-white w-full flex-shrink-0 cursor-pointer relative min-h-[400px]" 
-         style="background: linear-gradient(to top, rgba(195, 188, 188, 0.37), transparent), url('${p.imagem}') center/cover no-repeat;"
-         onclick="navigateTo('pubdetail', ${p.id})">
-        <div class="relative z-10">
-            <span class="bg-[#064e3b] text-white font-bold uppercase text-[0.8rem] px-4 py-1.5 rounded-full mb-3 inline-block shadow-lg border border-green-800/50">
-                ${formatType(p.tipo)}
-            </span>
-            <h2 class="text-[2rem] font-black mb-2 leading-tight uppercase italic tracking-tighter">${p.titulo}</h2>
-        </div>
-    </div>`).join('');
-
-    renderPubPage(1);
-    bannerInterval = setInterval(() => moveB(1), 5000);
-}
-
-export function renderPubPage(page) {
-    const list = document.getElementById('pub-list');
-    const container = document.getElementById('pub-pagination');
-    if (!list || !container) return;
-
-    currentPubPage = page;
-    const start = (page - 1) * pubsPerPage;
-    const paginatedItems = sortedPubs.slice(start, start + pubsPerPage);
-    const totalPages = Math.ceil(sortedPubs.length / pubsPerPage);
-
-    list.innerHTML = paginatedItems.map(p => `
-        <div class="p-6 md:p-8 bg-white border-l-[6px] border-green-800 shadow-sm hover:shadow-xl transition-all cursor-pointer group mb-4" onclick="navigateTo('pubdetail', ${p.id})">
-            <div class="flex flex-wrap gap-2 mb-3">
-                 <span class="bg-[#064e3b] text-white font-bold uppercase text-[1rem] px-3 py-1 rounded-full shadow-sm">
-                    ${formatType(p.tipo)}
-                 </span>
-            </div>
-            <h4 class="text-[1.8rem] font-black text-gray-900 group-hover:text-green-800 transition-colors leading-tight">${p.titulo}</h4>
-            <p class="text-[1rem] font-extrabold text-[#000] uppercase tracking-widest mt-2 mb-4">${p.data}</p>
-
-        </div>`).join('');
-
-    container.innerHTML = `
-        <div class="flex items-center justify-center gap-6 mt-12">
-            <button onclick="renderPubPage(${currentPubPage - 1})" class="pub-page-btn" ${currentPubPage === 1 ? 'disabled' : ''}>← Anterior</button>
-            <span class="font-black text-[#064e3b] uppercase text-[1rem] tracking-widest">Página ${currentPubPage} de ${totalPages}</span>
-            <button onclick="renderPubPage(${currentPubPage + 1})" class="pub-page-btn" ${currentPubPage === totalPages ? 'disabled' : ''}>Próxima →</button>
-        </div>`;
-}
-
-/**
- * Renderiza Detalhe da Publicação
- */
-export function renderPubDetail(id) {
-    const container = document.getElementById('detail-content');
-    const pub = pubData.find(p => p.id === parseInt(id));
-    if (!container || !pub) return;
-
-    const autores = filterEmpty(pub.autores);
-    const orientacao = filterEmpty(pub.orientação);
-    const pesquisadores = filterEmpty(pub.pesquisadores);
-
-    container.innerHTML = `
-      <div class="pub-banner-hero shadow-2xl" style="background-image: linear-gradient(to top, rgba(195, 188, 188, 0.37)), url('${pub.imagem}');">
-          <div class="pub-hero-inner">
-              <span class="pub-type-tag" style="background-color: #064e3b;">${formatType(pub.tipo)}</span>
-              <h1 class="pub-hero-title">${pub.titulo}</h1>
-              <p class="text-white opacity-80 font-bold tracking-widest uppercase text-sm">${pub.data}</p>
-          </div>
-      </div>
-
-      <div class="pub-content-layout container mx-auto px-4">
-          <aside class="pub-sidebar flex flex-col gap-6">
-              <div class="p-8 rounded-[2rem] border-4 border-[#064e3b] text-black shadow-2xl">
-                  ${autores.length > 0 ? `
-                  <div class="mb-6">
-                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Autores</h4>
-                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
-                          ${autores.map(n => `<li>${n}</li>`).join('')}
-                      </ul>
-                  </div>` : ''}
-
-                  ${orientacao.length > 0 ? `
-                  <div class="mb-6">
-                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Orientação</h4>
-                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
-                          ${orientacao.map(n => `<li>${n}</li>`).join('')}
-                      </ul>
-                  </div>` : ''}
-
-                  ${pesquisadores.length > 0 ? `
-                  <div>
-                      <h4 class="text-[#064e3b] text-[1.6rem] font-black uppercase tracking-tighter mb-2">Pesquisadores</h4>
-                      <ul class="text-black opacity-100 text-[1.3rem] space-y-1">
-                          ${pesquisadores.map(n => `<li>${n}</li>`).join('')}
-                      </ul>
-                  </div>` : ''}
-              </div>
-              
-              <div class="p-8 rounded-[2rem] border-4 border-[#064e3b] text-black flex flex-col">
-                  <h4 class="text-[1.6rem] font-black uppercase tracking-tighter mb-1 text-[#064e3b]">
-                      Como citar
-                  </h4>
-                  <div class="text-justify italic leading-relaxed mb-6 text-[1.3rem] text-black opacity-100" id="citation-text">
-                      "${pub.comocitar}"
-                  </div> 
-
-                  <button 
-                      class="w-full border-none py-4 rounded-xl text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all duration-300 hover:-translate-y-1 active:scale-95 shadow-lg"
-                      style="background-color: #064e3b; color: #ffffff;"
-                      onclick="copyPubCitation(this, '${pub.comocitar}')">
-                      Copiar Citação
-                  </button>
-              </div>
-          </aside>
-
-          <div class="pub-main-column">
-              <div class="border-4 border-[#064e3b] rounded-[2rem] p-8 md:p-12 shadow-inner flex flex-col relative min-h-[400px]"> 
-                  <h2 class="text-[2rem] font-black text-[#064e3b] mb-8 uppercase tracking-tighter">
-                      Resumo
-                  </h2>
-                  <div class="text-black leading-relaxed text-justify text-[1.5rem] font-normal opacity-100 antialiased mb-16">
-                      ${pub.resumo}
-                  </div>
-
-                  <div class="absolute bottom-8 right-8 md:bottom-12 md:right-12">
-                      <a href="${pub.link}" target="_blank" 
-                         class="flex items-center gap-2 bg-white text-[#064e3b] text-[11px] font-black uppercase py-4 px-8 rounded-xl hover:-translate-y-1 transition-all shadow-xl group"
-                         style="background-color: #064e3b; color: #ffffff;">
-                          Acessar Completo
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="7 7 17 7 17 17"></polyline>
-                          </svg>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>`;
-}
-
-export function copyPubCitation(btn, text) {
-    if (text) {
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = btn.innerText;
-            btn.innerText = "Copiado!";
-            btn.style.backgroundColor = "#10b981";
-            btn.style.color = "#ffffff";
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.backgroundColor = "#ffffff";
-                btn.style.color = "#064e3b";
-            }, 2000);
-        });
+    // Renderiza o Banner
+    if (bannerTrack) {
+        currentBannerIndex = 0;
+        renderBanner(pubData, bannerTrack);
     }
 }
 
-export function moveB(dir) {
+// 2. Renderiza a página de detalhes
+export function renderPubDetail(extraData = null) {
+    const detailContainer = document.getElementById('detail-content');
+
+    if (!detailContainer) return;
+
+    // Tenta pegar o ID vindo do roteador ou da URL
+    let pubId = extraData;
+
+    if (pubId === null || pubId === undefined) {
+        const params = new URLSearchParams(window.location.search);
+        pubId = params.get('id');
+    }
+
+    const publication = pubData.find(p => p.id == pubId) || pubData[pubId];
+
+    if (publication) {
+        renderDetailContent(publication, detailContainer);
+    } else {
+        detailContainer.innerHTML = '<p class="pub-full-text" style="text-align: center; padding: 2rem;">Publicação não encontrada.</p>';
+    }
+}
+
+// 3. Lógica do Movimento do Carrossel (moveB)
+export function moveB(direction) {
     const track = document.getElementById('bannerTrack');
     if (!track) return;
-    currentPubB = (currentPubB + dir + 5) % 5;
-    track.style.transform = `translateX(-${currentPubB * 100}%)`;
+
+    const bannerItems = track.children.length; // Quantidade real de slides
+    if (bannerItems === 0) return;
+
+    currentBannerIndex += direction;
+
+    if (currentBannerIndex < 0) {
+        currentBannerIndex = bannerItems - 1;
+    } else if (currentBannerIndex >= bannerItems) {
+        currentBannerIndex = 0;
+    }
+
+    track.style.transform = `translateX(-${currentBannerIndex * 100}%)`;
+}
+
+
+// =========================================================
+// FUNÇÕES INTERNAS (Lógica de Controle e Renderização)
+// =========================================================
+
+// Atualiza a visualização da lista com base na página atual
+function updatePublicationView(listContainer, paginationContainer) {
+    // Calcular intervalo
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+
+    // Fatiar dados
+    const paginatedPubs = pubData.slice(start, end);
+
+    // Renderizar Cards
+    renderPublicationList(paginatedPubs, listContainer);
+
+    // Renderizar Controles de Paginação (se container existir)
+    if (paginationContainer) {
+        renderPaginationControls(pubData.length, paginationContainer, listContainer);
+    }
+}
+
+// Gera os botões de paginação
+function renderPaginationControls(totalItems, container, listContainer) {
+    container.innerHTML = '';
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+    // Se só tem 1 página, esconde
+    if (totalPages <= 1) return;
+
+    // --- Botão Anterior ---
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'pub-page-btn';
+    prevBtn.innerHTML = '←';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePublicationView(listContainer, container);
+            window.scrollTo({ top: 400, behavior: 'smooth' }); // Scroll opcional para topo da lista
+        }
+    };
+    container.appendChild(prevBtn);
+
+    // --- Números ---
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `pub-page-btn ${i === currentPage ? 'active' : ''}`;
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            updatePublicationView(listContainer, container);
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        };
+        container.appendChild(btn);
+    }
+
+    // --- Botão Próximo ---
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pub-page-btn';
+    nextBtn.innerHTML = '→';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePublicationView(listContainer, container);
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+    };
+    container.appendChild(nextBtn);
+}
+
+// Gera o HTML da Lista de Cards
+function renderPublicationList(pubs, container) {
+    container.innerHTML = '';
+
+    pubs.forEach((pub) => {
+        const card = document.createElement('div');
+        card.className = 'pub-card-item'; // Classe CSS
+
+        const tipo = (pub.tipo || 'Artigo').replace(/_/g, ' ');
+        const autores = (pub.autores || []).join(', ');
+
+        card.innerHTML = `
+            <div class="pub-card-content">
+                <span class="pub-card-tag">${tipo}</span>
+                <h3 class="pub-card-title">${pub.titulo || 'Sem título'}</h3>
+                <p class="pub-card-authors">${autores}</p>
+                <div class="pub-card-action">
+                    Ver detalhes <span>→</span>
+                </div>
+            </div>
+        `;
+
+        card.onclick = () => {
+            if (window.navigateTo) {
+                window.navigateTo('pubdetail', pub.id);
+            } else {
+                console.error("Erro: navigateTo não definido globalmente.");
+            }
+        };
+
+        container.appendChild(card);
+    });
+}
+
+// Gera o HTML do Banner (Carrossel)
+function renderBanner(pubs, track) {
+    // 1. Clonar e Ordenar por data (Decrescente: 2025 -> 2024...)
+    const sortedPubs = [...pubs].sort((a, b) => {
+        const dateA = parseInt(a.data) || 0;
+        const dateB = parseInt(b.data) || 0;
+        return dateB - dateA;
+    });
+
+    // 2. Pegar os 5 mais recentes
+    const featured = sortedPubs.slice(0, 5);
+
+    // 3. Gerar HTML (Sem resumo, apenas Data, Tipo e Titulo)
+    track.innerHTML = featured.map(pub => {
+        const imgUrl = pub.imagem ? `../${pub.imagem}` : '';
+        const bgRule = imgUrl ? `url('${imgUrl}')` : 'linear-gradient(to bottom, #064e3b, #047857)';
+        const tipo = (pub.tipo || 'Destaque').replace(/_/g, ' ');
+        const dataPub = pub.data || '';
+
+        return `
+        <div class="article-slide">
+            <div class="banner-slide-bg" style="background-image: ${bgRule};">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <div class="banner-meta">
+                        <span class="banner-tag">${tipo}</span>
+                        <span class="banner-date">${dataPub}</span>
+                    </div>
+                    <h2 class="banner-title">${pub.titulo}</h2>
+                </div>
+            </div>
+        </div>
+    `}).join('');
+}
+
+// Gera o HTML do Detalhe
+function renderDetailContent(pub, container) {
+    const imagePath = pub.imagem ? `../${pub.imagem}` : '';
+    const bgStyle = imagePath ? `url('${imagePath}')` : 'linear-gradient(to right, #064e3b, #047857)';
+    const tipoFormatado = (pub.tipo || 'Artigo').replace(/_/g, ' ');
+
+    container.innerHTML = `
+        <div class="pub-banner-hero" style="background-image: ${bgStyle};">
+            <div class="pub-hero-inner">
+                <span class="pub-type-tag">${tipoFormatado}</span>
+                <h1 class="pub-hero-title">${pub.titulo}</h1>
+            </div>
+        </div>
+
+        <div class="pub-content-layout">
+            <div class="pub-main-column">
+                <div class="pub-lead-text">${pub.resumo || ''}</div>
+                
+                <div class="pub-full-text">
+                   <h3 style="color: #064e3b; margin-bottom: 1rem; font-weight:800;">Como Citar:</h3>
+                   <div style="background: #f1f5f9; padding: 1.5rem; border-left: 4px solid #064e3b; border-radius: 0 1rem 1rem 0;">
+                        <p style="font-style: italic; color: #334155;">${pub.comocitar || ''}</p>
+                   </div>
+                </div>
+
+                <div class="pub-footer-action">
+                    <a href="${pub.link || '#'}" target="_blank" class="pub-btn-green">
+                        Acessar Documento Original
+                    </a>
+                </div>
+            </div>
+
+            <aside class="pub-sidebar">
+                <div class="pub-sidebar-block">
+                    <div class="pub-sidebar-label">Autores</div>
+                    <ul class="pub-sidebar-list">
+                        ${(pub.autores || []).map(author => `<li>${author}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="pub-sidebar-block">
+                    <div class="pub-sidebar-label">Data</div>
+                    <div class="pub-sidebar-name">${pub.data || '2025'}</div>
+                </div>
+            </aside>
+        </div>
+    `;
 }

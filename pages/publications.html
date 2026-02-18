@@ -1,20 +1,23 @@
 <link rel="stylesheet" href="styles/publications.css">
-<div class="page-content bg-white pt-24 pb-20">
-    <div class="max-w-5xl mx-auto px-6">
+
+<div class="pub-page-container">
+    <div class="pub-content-wrapper">
         
-        <div class="article-banner mb-12 shadow-2xl relative overflow-hidden rounded-[3rem] h-[400px]">
-            <div class="article-track flex h-full transition-transform duration-700" id="bannerTrack"></div>
+        <div class="article-banner">
+            <div class="article-track" id="bannerTrack">
+                </div>
             
-            <div class="absolute inset-y-0 w-full flex justify-between items-center px-6 pointer-events-none">
-                <button onclick="moveB(-1)" class="pointer-events-auto bg-black/20 p-3 rounded-full text-white backdrop-blur-md">←</button>
-                <button onclick="moveB(1)" class="pointer-events-auto bg-black/20 p-3 rounded-full text-white backdrop-blur-md">→</button>
+            <div class="banner-controls">
+                <button onclick="moveB(-1)" class="banner-arrow">←</button>
+                <button onclick="moveB(1)" class="banner-arrow">→</button>
             </div>
         </div>
 
-        <h2 class="text-4xl font-black text-green-900 uppercase mb-12">Publicações</h2>
+        <h2 class="pub-section-title">Publicações</h2>
         
-        <div id="pub-list" class="space-y-6"></div>
+        <div id="pub-list" class="pub-list-container">
+            </div>
 
-        <div id="pub-pagination" class="mt-12"></div>
+        <div id="pub-pagination" class="pub-pagination-area"></div>
     </div>
 </div>
