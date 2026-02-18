@@ -240,7 +240,7 @@ function startBannerAutoplay(track) {
 // =========================================================
 
 function renderDetailContent(pub, container) {
-    const imagePath = pub.imagem ? `../${pub.imagem}` : '';
+    const imagePath = pub.imagem ? `./${pub.imagem}` : '';
     const bgRule = imagePath ? `url('${imagePath}')` : 'linear-gradient(to bottom, #064e3b, #047857)';
     const tipo = (pub.tipo || 'Artigo').replace(/_/g, ' ');
     const dataPub = pub.data || '';
