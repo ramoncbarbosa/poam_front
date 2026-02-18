@@ -1,72 +1,72 @@
+@import url('./banner.css');
+
 /* =========================================
-   ESTILOS GERAIS (Desktop First / Base)
+   PÁGINA DE DETALHES (Conteúdo e Layout)
    ========================================= */
 
-/* Layout da Página de Detalhe */
 .detail-page-container {
-    background-color: #f9fafb; /* bg-gray-50 */
+    background-color: #f9fafb;
     min-height: 100vh;
-    padding-top: 6rem; /* pt-24 */
-    padding-bottom: 5rem; /* pb-20 */
+    padding-top: 6rem;
+    padding-bottom: 5rem;
 }
 
 .detail-content-wrapper {
-    max-width: 80rem; /* max-w-7xl */
+    max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1.5rem; /* px-6 */
+    padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
 
-/* Container do Botão Voltar */
+/* Botão Voltar */
 .back-btn-container {
-    margin-bottom: 3rem; /* mb-12 */
+    margin-bottom: 3rem;
 }
 
-/* Botão Voltar (Estilo Group) */
 .back-btn-group {
     display: inline-flex;
     align-items: center;
-    gap: 1rem; /* gap-4 */
-    color: #064e3b; /* text-green-900 */
-    font-weight: 900; /* font-black */
+    gap: 1rem;
+    color: #064e3b;
+    font-weight: 900;
     text-transform: uppercase;
-    font-size: 0.75rem; /* text-xs */
-    letter-spacing: 0.1em; /* tracking-widest */
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
     background: none;
     border: none;
     cursor: pointer;
     transition: opacity 0.3s ease;
 }
 
-/* Círculo do Ícone */
 .back-btn-circle {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem; /* w-12 */
-    height: 3rem; /* h-12 */
+    width: 3rem;
+    height: 3rem;
     background-color: white;
-    border-radius: 9999px; /* rounded-full */
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* shadow-lg */
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     color: #064e3b;
 }
 
-/* Hover Effects (Group Hover logic) */
 .back-btn-group:hover .back-btn-circle {
-    background-color: #064e3b; /* group-hover:bg-green-900 */
-    color: white; /* group-hover:text-white */
+    background-color: #064e3b;
+    color: white;
 }
 
-/* --- ESTILO PREMIUM POAM (Conteúdo Injetado) --- */
-
+/* =========================================
+   HERO / BANNER DESTAQUE
+   ========================================= */
+/* Ajustado para não usar !important */
 .pub-banner-hero {
     width: 100%;
     min-height: 450px;
     background-size: cover;
     background-position: center;
-    border-radius: 3rem !important;
+    border-radius: 3rem; /* Removido !important */
     display: flex;
     align-items: center;
     padding: 5rem;
@@ -103,11 +103,23 @@
     letter-spacing: -0.04em;
 }
 
-/* Layout Colunas (Mobile Default) */
+/* =========================================
+   LAYOUT DO CONTEÚDO
+   ========================================= */
+
 .pub-content-layout {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+}
+
+.pub-main-column {
+    flex: 1;
+}
+
+/* Sidebar (Lateral) */
+.pub-sidebar {
+    width: 100%;
 }
 
 .pub-sidebar-block {
@@ -124,7 +136,7 @@
     margin-bottom: 0.5rem;
 }
 
-.pub-sidebar-name {
+.pub-sidebar-name, .pub-sidebar-list li {
     font-size: 1.2rem;
     font-weight: 800;
     color: #1e293b;
@@ -136,23 +148,51 @@
     padding: 0; 
 }
 
-.pub-sidebar-list li {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 0.5rem;
-}
+/* =========================================
+   CARD RESUMO (Com botão dentro)
+   ========================================= */
 
 .pub-lead-text {
     background: #064e3b;
     color: white;
     padding: 3.5rem;
     border-radius: 2.5rem;
-    font-size: 1.6rem;
-    line-height: 1.4;
-    font-weight: 700;
+    font-size: 1.25rem; /* Ajustado levemente para caber melhor */
+    line-height: 1.6;
+    font-weight: 500;
     margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start; /* Alinha o botão à esquerda */
 }
+
+/* Novo estilo para o botão dentro do card verde (Contraste) */
+.pub-btn-contrast {
+    display: inline-block;
+    background: #ffffff;
+    color: #064e3b;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.pub-btn-contrast:hover {
+    background: #10b981;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* =========================================
+   COMO CITAR
+   ========================================= */
 
 .pub-full-text {
     font-size: 1.25rem;
@@ -161,61 +201,43 @@
     text-align: justify;
 }
 
-.pub-footer-action {
-    margin-top: 5rem;
-    padding-top: 3rem;
-    border-top: 2px solid #e2e8f0;
-    text-align: center;
+.pub-citation-title {
+    color: #064e3b;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    font-size: 1.4rem;
 }
 
-.pub-btn-green {
-    display: inline-block;
-    background: #064e3b;
-    color: white;
-    padding: 1.5rem 3.5rem;
-    border-radius: 100px;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.3s ease;
+.pub-citation-box {
+    background: #f1f5f9;
+    padding: 1.5rem;
+    border-left: 4px solid #064e3b;
+    border-radius: 0 1rem 1rem 0;
+    margin-bottom: 2rem;
 }
 
-.pub-btn-green:hover {
-    background: #059669;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(6, 78, 59, 0.2);
+.pub-citation-text {
+    font-style: italic;
+    color: #334155;
+    margin: 0;
 }
 
 /* =========================================
-   MEDIA QUERIES
+   RESPONSIVIDADE
    ========================================= */
 
-/* Tablet (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-    .pub-banner-hero { 
-        padding: 3rem 1.5rem; 
-        border-radius: 2.5rem !important; 
-        min-height: 400px; 
-        background-attachment: scroll; 
-    }
     .pub-lead-text { 
         padding: 2rem; 
-        font-size: 1.2rem; 
-    }
-    .pub-hero-title {
-        font-size: 2rem;
+        font-size: 1.1rem; 
     }
 }
 
-/* Desktop (min-width: 1024px) */
 @media (min-width: 1024px) {
     .pub-content-layout {
-        flex-direction: row-reverse; /* Sidebar na direita */
+        flex-direction: row-reverse;
         justify-content: flex-end;
         gap: 5rem;
-    }
-    .pub-main-column { 
-        flex: 1; 
     }
     .pub-sidebar { 
         width: 300px; 

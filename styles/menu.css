@@ -1,6 +1,9 @@
-/* --- MENU MOBILE (styles/menu.css) --- */
+/* =========================================
+   ESTRUTURA PRINCIPAL (Slide-in Panel)
+   ========================================= */
 
-/* 1. Container Principal do Menu */
+/* O ID #mobile-menu geralmente está no elemento pai que injeta este HTML
+   Se este CSS for global, certifique-se que o container pai tenha este ID */
 #mobile-menu { 
     position: fixed; 
     top: 0; 
@@ -9,189 +12,126 @@
     height: 100dvh; /* Altura dinâmica para mobile */
     z-index: 3000; 
     background: #fcfcfc; 
-    width: 75%; 
+    width: 85%; /* Um pouco mais largo para mobile */
     max-width: 320px; 
     transform: translateX(100%); 
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    
-    /* Padding lateral e inferior, removido o topo para alinhar via header */
-    padding: 0 2rem 2rem 2rem; 
-    
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-direction: column;
 }
 
-/* Estado Aberto */
 #mobile-menu.open { 
     transform: translateX(0); 
 }
 
-/* 2. Estrutura Interna */
+/* Container Interno */
 #mobile-menu-inner {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
+    padding: 2.5rem; /* p-10 equivalent */
+    background-color: #fcfcfc;
 }
 
-/* 3. Cabeçalho do Menu (Alinhado com o Header do site) */
+/* =========================================
+   CABEÇALHO DO MENU
+   ========================================= */
 .menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    /* Altura ajustada para bater com o py-4 do seu index.html */
-    height: 80px; 
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #66422b;
+    margin-bottom: 3rem; /* mb-12 */
 }
 
-.menu-label {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.7rem;
-    font-weight: 900;
+.menu-title {
+    color: #66422b;
+    font-size: 1.5rem;
+    font-weight: 900; /* font-black */
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.1em; /* tracking-widest */
 }
 
-/* 4. Botão de Fechar (Alinhado visualmente) */
-.close-btn {
+.menu-close-btn {
     background: none;
     border: none;
-    color: white;
-    font-size: 2.2rem; /* Aumentado levemente para facilitar o toque */
+    color: #66422b;
+    font-size: 2rem;
     line-height: 1;
     cursor: pointer;
-    padding: 0; 
-    margin-right: -0.4rem; /* Ajuste fino para alinhar à borda direita */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s ease;
+    padding: 0;
 }
 
-.close-btn:active {
-    transform: scale(0.9);
+.menu-close-btn:hover {
+    transform: scale(1.1);
 }
 
-/* 5. Navegação (Links subindo) */
+/* =========================================
+   NAVEGAÇÃO (Links)
+   ========================================= */
 .menu-nav {
-    flex-grow: 1; 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinha no topo */
-    padding-top: 2rem;           /* Respiro após o header */
-    gap: 1.8rem;
+    gap: 2rem; /* space-y-8 */
 }
 
-.menu-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    opacity: 0.9;
-}
-
-/* 6. Rodapé do Menu (Instagram na base) */
-.menu-footer {
-    margin-top: auto; 
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-label {
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: block;
-}
-
-.instagram-link {
-    color: white;
-    font-weight: 900;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-}
-
-/* 7. Overlay de Fundo */
-#menu-overlay { 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(0, 0, 0, 0.6); 
-    z-index: 2500; 
-    display: none; 
-    backdrop-filter: blur(3px);
-}
-
-#menu-overlay.active { 
-    display: block; 
-}
-
-/* 8. Animação de Entrada dos Links */
-#mobile-menu.open .menu-nav a {
-    animation: slideIn 0.4s ease forwards;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* --- CONFIGURAÇÕES DO FILTRO MARROM --- */
-/* Converte o SVG para a cor #66422b */
-.icon-marrom {
-    filter: invert(30%) sepia(16%) saturate(1633%) hue-rotate(338deg) brightness(93%) contrast(88%);
-}
-
-/* --- EFEITO DE SALTAR (JUMP) --- */
-.menu-link-jump {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
+.menu-link {
     color: #66422b;
-    /* Transição suave com efeito elástico no final */
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+    font-size: 1.5rem;
+    font-weight: 800; /* font-bold */
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.menu-link-jump:hover {
-    /* Salta 15px para a direita e aumenta 5% */
-    transform: translateX(15px) scale(1.05);
-    /* Mantém a cor marrom original para não mudar para verde */
-    color: #66422b; 
-}
-
-/* Ajuste de salto para o item do Instagram (por ser flex) */
-.mt-auto .menu-link-jump:hover {
+/* Efeito Jump no Hover */
+.menu-link:hover {
     transform: translateX(10px);
 }
 
-/* --- ESTRUTURA BASE DO MENU --- */
-#mobile-menu { 
-    position: fixed; 
-    top: 0; 
-    right: 0; 
-    height: 100vh; 
-    height: 100dvh; 
-    z-index: 3000; 
-    background: #fcfcfc; 
-    width: 75%; 
-    max-width: 320px; 
-    transform: translateX(100%); 
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+/* =========================================
+   RODAPÉ DO MENU (Social)
+   ========================================= */
+.menu-footer {
+    margin-top: auto; /* Empurra para o fundo */
+    padding-top: 1.5rem;
+    border-top: 1px solid #66422b;
 }
 
-#mobile-menu.open { 
-    transform: translateX(0); 
+.menu-social-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #66422b;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Overlay de fundo */
+.menu-social-link:hover {
+    transform: translateX(10px);
+}
+
+/* Ícone com filtro para ficar marrom (#66422b) */
+.menu-icon {
+    width: 2rem; /* w-8 */
+    height: 2rem; /* h-8 */
+    object-fit: contain;
+    /* Filtro para converter preto em #66422b */
+    filter: invert(24%) sepia(47%) saturate(579%) hue-rotate(339deg) brightness(96%) contrast(89%);
+}
+
+/* =========================================
+   OVERLAY DE FUNDO
+   ========================================= */
 #menu-overlay { 
     position: fixed; 
     inset: 0; 

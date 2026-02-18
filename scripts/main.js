@@ -1,17 +1,19 @@
 import { navigateTo } from './modules/navigation.js';
 import { toggleMenu, setupScrollSnap } from './modules/ui.js';
-// CORREÇÃO: importando 'moveB' e 'renderPublications' (o nome correto)
-import { moveB, renderPublications } from './modules/publications.js';
+// REMOVIDO moveB da importação
+import { renderPublications, renderPubDetail } from './modules/publications.js';
 import { copyCitation } from './modules/database.js';
 import { moveResearch, moveResearchTo } from './modules/team.js';
 
 // Exposição global
 window.navigateTo = navigateTo;
 window.toggleMenu = toggleMenu;
-window.moveB = moveB;
 
-// CORREÇÃO: Atribuindo renderPublications à variável global que você usava
+// REMOVIDO window.moveB = moveB; (Não é mais necessário, o controle é interno)
+
+// Mapeia renderPubPage para renderPublications para manter compatibilidade
 window.renderPubPage = renderPublications;
+window.renderPubDetail = renderPubDetail;
 
 window.copyCitation = copyCitation;
 window.moveResearch = moveResearch;

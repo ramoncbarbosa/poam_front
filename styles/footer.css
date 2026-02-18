@@ -1,58 +1,105 @@
+/* =========================================
+   FOOTER GERAL
+   ========================================= */
+.home-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 3rem 0;
+    margin-top: auto; /* Empurra para o fundo se o conteúdo for curto */
+}
+
 .footer-container {
     max-width: 80rem;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza o bloco inteiro no meio da página */
+    flex-direction: column; /* Mobile: Coluna */
+    align-items: center;    /* Mobile: Centralizado */
+    gap: 2rem;
 }
 
-/* Criamos um wrapper para garantir que os textos comecem no mesmo ponto vertical */
+/* =========================================
+   ELEMENTOS INTERNOS
+   ========================================= */
+
 .footer-socials, .footer-info {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Alinha os ícones na mesma linha vertical */
-    width: fit-content;      /* O container só ocupa o espaço necessário */
+    align-items: center; /* Centraliza itens internos no mobile */
+    gap: 1rem;
 }
 
-.footer-info {
-    padding-bottom: 1rem;
-}
-
-.footer-socials {
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.social-link, .dev-link {
+/* Links (Instagram e Dev) */
+.footer-link-item {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espaço entre ícone e texto */
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: 0.2em;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
     color: #064e3b;
     text-decoration: none;
     transition: all 0.3s ease;
-    white-space: nowrap; /* Impede que o nome do dev quebre em duas linhas */
+    text-transform: uppercase;
 }
 
+.footer-link-item.dev-link {
+    text-transform: none; /* Nome do dev normal */
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #4b5563;
+}
+
+/* Ícones */
 .footer-icon {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0; /* Impede o ícone de amassar se o texto for grande */
+    width: 1.5rem;
+    height: 1.5rem;
     object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
+/* Copyright Text */
 .copyright {
     color: #94a3b8;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-style: italic;
-    margin-bottom: 1rem;
-    align-self: center; /* O copyright continua centralizado em relação ao bloco */
+    margin: 0;
+    text-align: center;
 }
 
-.social-link:hover, .dev-link:hover {
+/* =========================================
+   INTERATIVIDADE (Hover)
+   ========================================= */
+
+.footer-link-item:hover {
     color: #10b981;
-    transform: translateX(5px); /* Feedback visual de deslize */
+    transform: translateX(5px);
+}
+
+.footer-link-item:hover .footer-icon {
+    transform: scale(1.1);
+}
+
+/* =========================================
+   RESPONSIVIDADE (Desktop)
+   ========================================= */
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row; /* Desktop: Linha */
+        justify-content: space-between; /* Espalha nas pontas */
+        align-items: flex-end; /* Alinha na base */
+    }
+
+    .footer-socials {
+        align-items: flex-start; /* Alinha à esquerda */
+    }
+
+    .footer-info {
+        align-items: flex-end; /* Alinha à direita */
+    }
+
+    .copyright {
+        text-align: right;
+    }
 }

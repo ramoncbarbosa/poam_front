@@ -1,13 +1,17 @@
+/* =========================================
+   HEADER GERAL
+   ========================================= */
 .main-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: #fff;
+    background: #fff; /* Leve transparência */
     backdrop-filter: blur(10px);
     border-bottom: 1px solid #064e3b;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
 }
 
 .header-container {
@@ -16,51 +20,112 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
+/* =========================================
+   LOGO
+   ========================================= */
 .header-logo {
     display: flex;
     align-items: center;
     cursor: pointer;
-    gap: 10px;
+    transition: opacity 0.2s;
+}
+
+.header-logo:hover {
+    opacity: 0.9;
 }
 
 .logo-img {
-    width: 12rem;
-    height: 6rem;
-    /* border-radius: 50%; */
-    /* object-fit: cover; */
+    height: 3.5rem; /* Altura controlada para não estourar */
+    width: auto;
+    object-fit: contain;
 }
 
-.logo-text {
-    font-weight: 900;
-    /* color: #064e3b; */
-    /* color: #976a4b; */
-    color: #66422b;
-    font-size: 1.5rem;
-    letter-spacing: -0.05em;
-}
-
+/* =========================================
+   NAVEGAÇÃO (Desktop)
+   ========================================= */
 .header-nav {
-    display: none;
-    gap: 2rem;
+    display: none; /* Escondido no Mobile */
+    gap: 2.5rem;
+    align-items: center;
 }
 
 .nav-link {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    /* color: #4b5563; */
-    /* color: #8f6243; */
     color: #66422b;
     text-decoration: none;
-    transition: color 0.3s;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-.nav-link:hover { color: #66422b; }
+/* Efeito de sublinhado animado no hover */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #064e3b;
+    transition: width 0.3s ease;
+}
 
+.nav-link:hover {
+    color: #064e3b;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* =========================================
+   BOTÃO MOBILE
+   ========================================= */
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+    color: #66422b; /* Cor do ícone */
+}
+
+.mobile-menu-btn:hover {
+    background-color: #f3f4f6;
+    color: #064e3b;
+}
+
+.menu-icon-svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* =========================================
+   RESPONSIVIDADE (Desktop)
+   ========================================= */
 @media (min-width: 768px) {
-    .header-nav { display: flex; }
-    .mobile-menu-btn { display: none; }
+    .main-header {
+        padding: 1rem 2rem; /* Mais espaçoso no desktop */
+    }
+
+    .logo-img {
+        height: 4.5rem;
+    }
+
+    .header-nav {
+        display: flex; /* Mostra menu no desktop */
+    }
+
+    .mobile-menu-btn {
+        display: none; /* Esconde botão hambúrguer no desktop */
+    }
 }

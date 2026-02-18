@@ -1,27 +1,23 @@
 <link rel="stylesheet" href="styles/menu.css">
-<div id="mobile-menu-inner" class="flex flex-col h-full p-10 bg-[#fcfcfc]">
+
+<div id="mobile-menu-inner">
     
-    <div class="flex justify-between items-center pb-4 border-b border-[#66422b] mb-12">
-        <span class="text-[#66422b] text-[1.5rem] font-black uppercase tracking-widest">Navegação</span>
-        <button class="text-[#66422b] text-[2rem] leading-none hover:scale-110 transition-transform" onclick="toggleMenu()">✕</button>
+    <div class="menu-header">
+        <span class="menu-title">Navegação</span>
+        <button class="menu-close-btn" onclick="toggleMenu()" aria-label="Fechar Menu">✕</button>
     </div>
     
-    <nav class="flex flex-col space-y-8">
-        <a href="javascript:void(0)" onclick="navigateTo('home')" 
-           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Início</a>
-        
-        <a href="javascript:void(0)" onclick="navigateTo('publications')" 
-           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Publicações</a>
-        
-        <a href="javascript:void(0)" onclick="navigateTo('team')" 
-           class="menu-link-jump text-[#66422b] text-[1.5rem] font-bold uppercase">Equipe</a>
+    <nav class="menu-nav">
+        <a href="javascript:void(0)" onclick="navigateTo('home')" class="menu-link">Início</a>
+        <a href="javascript:void(0)" onclick="navigateTo('publications')" class="menu-link">Publicações</a>
+        <a href="javascript:void(0)" onclick="navigateTo('team')" class="menu-link">Equipe</a>
     </nav>
 
-    <div class="mt-auto pt-6 border-t border-[#66422b]">
-        <a href="https://www.instagram.com/poam.ufpa/" target="_blank" 
-           class="menu-link-jump flex items-center gap-4 text-[#66422b] font-black text-[1.2rem] uppercase tracking-widest">
-            <img src="assets/icons/instagram_brown.svg" alt="Instagram" class="w-8 h-8 object-contain">
+    <div class="menu-footer">
+        <a href="https://www.instagram.com/poam.ufpa/" target="_blank" class="menu-social-link">
+            <img src="assets/icons/instagram_brown.svg" alt="Instagram" class="menu-icon">
             INSTAGRAM
         </a>
     </div>
+
 </div>

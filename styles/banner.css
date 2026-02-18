@@ -1,0 +1,222 @@
+/* =========================================
+   1. BANNER CARROSSEL (Página de Lista)
+   ========================================= */
+
+.article-banner {
+    /* Removido !important. Certifique-se que este arquivo carrega após resets globais */
+    border-radius: 3.5rem;
+    background: #064e3b;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    /* Margem inferior menor, pois os indicadores ficarão abaixo */
+    margin-bottom: 1.5rem; 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.article-track {
+    display: flex;
+    height: 100%;
+    /* Transição suave para o slide */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.article-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Imagem de Fundo e Overlay */
+.banner-slide-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 78, 59, 0.95) 0%, rgba(6, 78, 59, 0.4) 50%, rgba(6, 78, 59, 0.1) 100%);
+    z-index: 1;
+}
+
+/* Conteúdo do Banner */
+.banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 3rem 4rem 3rem;
+    max-width: 800px;
+    color: white;
+}
+
+.banner-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.banner-tag {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.banner-date {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.banner-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin: 0;
+}
+
+/* =========================================
+   CONTROLES (INDICADORES)
+   ========================================= */
+
+/* Container dos indicadores (injetado via JS logo após o banner) */
+.banner-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+/* Estilo Base do Indicador */
+.banner-indicator {
+    border: none;
+    cursor: pointer;
+    background-color: #cbd5e1; /* Cinza inativo */
+    transition: all 0.3s ease;
+    padding: 0;
+    
+    /* Padrão Desktop: Risco Horizontal */
+    width: 2.5rem;
+    height: 0.4rem;
+    border-radius: 4px;
+}
+
+.banner-indicator:hover {
+    background-color: #94a3b8;
+}
+
+.banner-indicator.active {
+    background-color: #064e3b; /* Verde Ativo */
+    transform: scale(1.05);
+}
+
+/* =========================================
+   2. BANNER HERO (Página de Detalhes)
+   ========================================= */
+
+.pub-banner-hero {
+    width: 100%;
+    min-height: 450px;
+    background-size: cover;
+    background-position: center;
+    /* Removido !important */
+    border-radius: 3rem;
+    display: flex;
+    align-items: center;
+    padding: 5rem;
+    margin-bottom: 4rem;
+    position: relative;
+    color: white;
+    overflow: hidden;
+}
+
+.pub-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+}
+
+.pub-type-tag {
+    background: #10b981;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.pub-hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.04em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. Ajustes do Carrossel */
+    .article-banner {
+        height: 350px;
+        border-radius: 2rem; /* Sem !important */
+    }
+    
+    .banner-content {
+        padding: 1.5rem;
+    }
+
+    .banner-title {
+        font-size: 1.5rem;
+    }
+
+    /* 2. Transformação dos Indicadores em PONTOS no Mobile */
+    .banner-indicator {
+        width: 0.8rem;  /* Largura igual à altura */
+        height: 0.8rem;
+        border-radius: 50%; /* Totalmente redondo */
+    }
+
+    /* 3. Ajustes do Hero (Detalhes) */
+    .pub-banner-hero {
+        min-height: 350px;
+        padding: 2rem;
+        border-radius: 2rem; /* Sem !important */
+    }
+
+    .pub-hero-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .pub-banner-hero { 
+        padding: 3rem 1.5rem; 
+        border-radius: 2.5rem; 
+        min-height: 400px; 
+    }
+}
