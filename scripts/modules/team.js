@@ -45,7 +45,7 @@ function injectTeamCSS() {
     const link = document.createElement('link');
     link.id = 'home-team-css';
     link.rel = 'stylesheet';
-    link.href = './styles/home-team.css'; // Caminho relativo à raiz do projeto
+    link.href = './styles/home-team.css';
     document.head.appendChild(link);
   }
 }
@@ -57,7 +57,6 @@ export async function initHomeTeam() {
   const injectionPoint = document.getElementById('home-team-injection-point');
   if (!injectionPoint) return;
 
-  // Injeta o CSS antes de renderizar para evitar flash de conteúdo sem estilo
   injectTeamCSS();
 
   try {
@@ -114,6 +113,25 @@ function renderHomeCarousel() {
   moveResearchTo(htCurrentIndex);
 }
 
+/* =========================================================
+   PÁGINA COMPLETA DE EQUIPE (A função que estava faltando!)
+   ========================================================= */
+export function renderFullTeamPage() {
+  const coordContainer = document.getElementById('coord-team');
+  const othersContainer = document.getElementById('full-research-team');
+
+  if (coordContainer) {
+    coordContainer.innerHTML = getCoords().map(createTeamCard).join('');
+  }
+
+  if (othersContainer) {
+    othersContainer.innerHTML = getOthersSorted().map(createTeamCard).join('');
+  }
+}
+
+/* =========================================================
+   LÓGICA DE NAVEGAÇÃO
+   ========================================================= */
 export function moveResearch(dir) {
   const track = document.getElementById('home-research-track');
   if (!track) return;
