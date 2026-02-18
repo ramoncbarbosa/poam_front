@@ -6,20 +6,22 @@
     <title>POAM - Políticas Ambientais na Amazônia</title>
     <link rel="icon" type="image/png" href="assets/logoPOAM2.png">
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/footer.css">
 </head>
-<body class="bg-white flex flex-col min-h-screen">
+<body class="app-body">
 
     <div id="header-injection-point"></div>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[2500] hidden opacity-0 transition-opacity duration-300" onclick="toggleMenu()"></div>
-    <aside id="mobile-menu" class="fixed top-0 right-0 h-full w-[75%] max-w-[320px] bg-[#064e3b] z-[3000] translate-x-full transition-transform duration-300 shadow-2xl flex flex-col"></aside>
+    <div id="menu-overlay"></div>
+    <aside id="mobile-menu"></aside>
 
-    <main id="content-area" class="flex-grow pt-16"></main>
+    <main id="content-area"></main>
 
     <div id="global-footer-root"></div>
 

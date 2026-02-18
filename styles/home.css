@@ -1,8 +1,11 @@
-/* Correção do Scroll Duplo: Home usa o scroll do navegador */
+/* =========================================
+   ESTRUTURA DE SCROLL SNAP
+   ========================================= */
 .snap-container {
     height: auto; 
     overflow: visible;
-    scroll-snap-type: y proximity;
+    /* Scroll behavior nativo do navegador */
+    scroll-snap-type: y proximity; 
 }
 
 .snap-section {
@@ -11,29 +14,145 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 }
 
-/* Ajuste das seções automáticas */
 .snap-section.auto-height {
     min-height: 100vh;
     height: auto;
 }
 
-/* Garantia que o objetivo alinhe com o Diamond */
-.custom-objective-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
+/* =========================================
+   SEÇÃO 1: HERO (CAPA)
+   ========================================= */
+.home-hero-section {
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://ramoncbarbosa.github.io/poam_front/assets/home/home.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
 }
 
-@media (min-width: 1084px) {
-    .custom-objective-grid {
-        grid-template-columns: 1fr 1fr;
+.home-hero-content {
+    max-width: 56rem; /* max-w-4xl */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.home-main-title {
+    font-size: 3.75rem; /* text-6xl */
+    font-weight: 900;   /* font-black */
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.home-subtitle {
+    font-size: 3rem;
+    font-weight: 700;
+    font-style: italic;
+    color: white;
+    line-height: 1.2;
+}
+
+/* Responsividade Hero */
+@media (min-width: 768px) {
+    .home-main-title {
+        font-size: 6rem; /* md:text-8xl */
     }
 }
 
-.custom-objective-grid > div:first-child {
-    width: 100%;
-    max-width: 100%;
+/* =========================================
+   SEÇÃO 2: SOBRE (OBJETIVO E FOCO)
+   ========================================= */
+.home-about-section {
+    background-color: white;
+    padding: 5rem 1.5rem; /* py-20 px-6 */
+}
+
+.home-about-wrapper {
+    max-width: 80rem; /* max-w-7xl */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem; /* gap-12 */
+    align-items: center;
+}
+
+.about-text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* gap-8 */
+}
+
+/* Card Objetivo (Borda) */
+.objective-card {
+    text-align: justify;
+    padding: 2.5rem; /* p-10 */
+    border: 4px solid #064e3b;
+    border-radius: 2rem;
+}
+
+.section-heading {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 800;   /* font-extrabold */
+    color: #064e3b;     /* text-green-900 */
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.05em; /* tracking-tighter */
+}
+
+.section-text {
+    font-size: 1.5rem; /* text-2xl */
+    line-height: 1.625; /* leading-relaxed */
+}
+
+.section-text.text-gray {
+    color: #4b5563; /* text-gray-600 */
+}
+
+.section-text.text-white {
+    color: white;
+}
+
+/* Card Foco (Preenchido) */
+.focus-card {
+    background-color: #064e3b;
+    border-radius: 2rem;
+    padding: 2.5rem; /* p-10 */
+    color: white;
+    text-align: justify;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
+}
+
+.focus-heading {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700;    /* font-bold */
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* Coluna Visual */
+.about-visual-column {
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsividade Grid */
+@media (min-width: 1024px) {
+    .home-about-wrapper {
+        grid-template-columns: 1fr 1fr; /* lg:grid-cols-2 */
+    }
+    
+    .about-visual-column {
+        justify-content: flex-end;
+    }
+}
+
+/* =========================================
+   SEÇÃO 3: EQUIPE (Preview)
+   ========================================= */
+.team-preview-section {
+    background-color: #f9fafb; /* bg-gray-50 */
+    padding: 0 1.5rem;
 }
