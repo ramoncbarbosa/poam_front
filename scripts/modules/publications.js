@@ -156,7 +156,7 @@ function renderBanner(pubs, track) {
     const featured = sortedPubs.slice(0, 5);
 
     track.innerHTML = featured.map(pub => {
-        const imgUrl = pub.imagem ? `../${pub.imagem}` : '';
+        const imgUrl = pub.imagem ? `./${pub.imagem}` : '';
         const bgRule = imgUrl ? `url('${imgUrl}')` : 'linear-gradient(to bottom, #064e3b, #047857)';
         const tipo = (pub.tipo || 'Destaque').replace(/_/g, ' ');
         const dataPub = pub.data || '';
