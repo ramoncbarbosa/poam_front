@@ -93,7 +93,6 @@
 .pub-content-layout {
     display: flex;
     flex-direction: column-reverse; /* Inverte a ordem no mobile: Sidebar sobe, Resumo desce */
-    gap: 3rem;
 }
 
 .pub-main-column {
@@ -362,5 +361,12 @@
     font-size: 0.9rem;
     color: #3d2516;
     margin-bottom: 0.75rem;
+}
+#citation-text {
+    font-style: italic;
+    color: #3d2516;
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 }
