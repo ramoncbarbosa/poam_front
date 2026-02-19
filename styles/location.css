@@ -30,3 +30,8 @@
     height: 100%;
     border: 0;
 }
+@media (max-width: 926px) {
+.location-title {
+    font-size: 2rem;
+}
+}
