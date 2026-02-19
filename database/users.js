@@ -67,7 +67,7 @@ export const teamData = [
     nome: 'Arantxa Carla da Silva Santos',
     titulo: 'Mestra em Antropologia pela UFPA',
     cargo: 'Pesquisadora',
-    areaPesquisa: 'Políticas Públicas; Mudanças Climáticas; Organismos Internacionais',
+    areaPesquisa: 'Políticas Públicas, Mudanças Climáticas e Organismos Internacionais',
     foto: 'assets/users/arantxa.gif',
     lattes: 'http://lattes.cnpq.br/0930090381211098'
   },
@@ -131,7 +131,7 @@ export const teamData = [
     nome: 'Alan Alysson Da Silva Brito',
     titulo: 'Graduado em Ciências Sociais pela UFPA',
     cargo: 'Pesquisador',
-    areaPesquisa: 'Políticas Públicas na Amazônia',
+    areaPesquisa: 'Políticas Ambientais, Conflitos Socioambientais e Desenvolvimento na Amazônia',
     foto: 'assets/users/alan.gif',
     lattes: 'http://lattes.cnpq.br/3110004716030723',
   },

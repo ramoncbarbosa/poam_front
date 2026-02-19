@@ -77,13 +77,13 @@
 .banner-date {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #cbd5e1;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .banner-title {
-    font-size: 2.5rem;
+
     font-weight: 900;
     line-height: 1.1;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -179,8 +179,16 @@
    RESPONSIVIDADE
    ========================================= */
 
-@media (max-width: 768px) {
-    /* 1. Ajustes do Carrossel */
+
+@media (max-width: 926px) {
+      /* 1. Ajustes do Carrossel */
+    
+    /* 3. Ajustes do Hero (Detalhes) */
+    .pub-banner-hero { 
+        padding: 3rem 1.5rem; 
+        border-radius: 2.5rem; 
+        min-height: 400px; 
+    }
     .article-banner {
         height: 350px;
         border-radius: 2rem; /* Sem !important */
@@ -191,7 +199,9 @@
     }
 
     .banner-title {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
+        text-align: justify;
+    
     }
 
     /* 2. Transformação dos Indicadores em PONTOS no Mobile */
@@ -200,23 +210,9 @@
         height: 0.8rem;
         border-radius: 50%; /* Totalmente redondo */
     }
-
-    /* 3. Ajustes do Hero (Detalhes) */
-    .pub-banner-hero {
-        min-height: 350px;
-        padding: 2rem;
-        border-radius: 2rem; /* Sem !important */
-    }
-
-    .pub-hero-title {
-        font-size: 1.8rem;
-    }
+    .banner-date {
+    font-size: 0.9rem;
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
-    .pub-banner-hero { 
-        padding: 3rem 1.5rem; 
-        border-radius: 2.5rem; 
-        min-height: 400px; 
-    }
+
 }

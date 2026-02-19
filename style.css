@@ -22,6 +22,10 @@ html, body {
     flex-direction: column; 
     min-height: 100vh;
     background-color: white;
+            /* Faz a quebra da palavra no limite da margem, mas anula os hifens */    /* word-break: break-all;  */
+    /*  Melhora a hifenização automática (se o navegador suportar). Necessário para versões mais antigas do Chrome/Safari */
+    hyphens: auto;
+    -webkit-hyphens: auto;
 }
 
 /* CORREÇÃO 1: Ajuste de padding responsivo para o Header 
