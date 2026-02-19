@@ -161,6 +161,7 @@
     display: inline-flex;
     align-items: center;
     transition: all 800ms ease;
+
 }
 
 
@@ -169,15 +170,21 @@
    ========================================= */
 
 .pub-sidebar-block {
-    border-left: 4px solid #10b981;
+     border-radius: 2.5rem;
+    border-color: #064e3b;
+   border-style: solid; /* A borda precisa de um estilo para aparecer */
+    border-width: 3px; 
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
     margin-bottom: 3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
 }
 
 .pub-sidebar-label {
     text-transform: uppercase;
-    color: #059669;
-    font-size: 0.8rem;
+    color: #064e3b;
+    font-size: 1rem;
     font-weight: 900;
     margin-bottom: 1rem;
     letter-spacing: 0.1em;
@@ -191,8 +198,8 @@
 
 .pub-sidebar-list li {
     font-size: 1.1rem;
-    font-weight: 700;
-    color: #1e293b;
+    font-weight: 500;
+    color: #3d2516;
     margin-bottom: 0.75rem;
 }
 
@@ -330,6 +337,35 @@
     letter-spacing: 0.05em;
     transition: all 0.3s ease;
     margin-top: 0.5rem;
+   /* INCLUINDO SETA: Mudança para flex para alinhar a seta perfeitamente */
+        display: inline-flex;
+        align-items: center;
+        gap: 8px; /* Espaço entre o texto e a seta */
 }
+/* Adiciona a seta ↗ */
+    .pub-btn-contrast::after {
+        content: '↗';
+        font-size: 0.9rem; /* Um pouco maior que o texto para dar destaque */
+        font-weight: bold;
+        transition: transform 0.3s ease;
+    }
 
+    /* Efeito de feedback ao tocar (simula o hover no mobile) 
+    .pub-btn-contrast:active {
+        background-color: #1b8c3d;
+        transform: scale(1);*/
+.pub-sidebar-label {
+    text-transform: uppercase;
+    color: #064e3b;
+    font-size: 0.9rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+}
+.pub-sidebar-list li {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #3d2516;
+    margin-bottom: 0.75rem;
+}
 }
