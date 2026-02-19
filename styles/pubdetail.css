@@ -298,7 +298,7 @@
     border-radius: 2.5rem;
     border-color: #064e3b;
    border-style: solid; /* A borda precisa de um estilo para aparecer */
-    border-width: 2px;   /* Aqui você define a grossura */
+    border-width: 3px;   /* Aqui você define a grossura */
     font-size: 0.8rem;
     text-align: justify;
     line-height: 1.8;
