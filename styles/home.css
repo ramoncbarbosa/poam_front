@@ -145,10 +145,20 @@
 /* =========================================
    SEÇÃO 3: EQUIPE (Preview)
    ========================================= */
-.team-preview-section {
-    background-color: #f9fafb; /* bg-gray-50 */
+/* .team-preview-section {
+    background-color: #f9fafb;
     padding: 0 1.5rem;
+} */
+
+@media (min-width: 901px) and (max-width: 1023px) {
+    .home-main-title {
+        font-size: 3rem; /* md:text-8xl */
+    }
+    .home-subtitle {
+    font-size: 1.5rem;
 }
+}
+
 /* Responsividade Hero */
 @media (max-width: 900px) {
     .home-main-title {
@@ -170,3 +180,4 @@
     font-size:1.1rem;
 }
 }
+
