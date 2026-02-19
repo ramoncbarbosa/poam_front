@@ -40,7 +40,7 @@
 }
 
 .home-main-title {
-    font-size: 3.75rem; /* text-6xl */
+    font-size: 5rem; /* text-6xl */
     font-weight: 900;   /* font-black */
     margin-bottom: 1rem;
     line-height: 1;
@@ -48,18 +48,12 @@
 
 .home-subtitle {
     font-size: 3rem;
-    font-weight: 700;
+    font-weight: 500;
     font-style: italic;
     color: white;
     line-height: 1.2;
 }
 
-/* Responsividade Hero */
-@media (min-width: 768px) {
-    .home-main-title {
-        font-size: 6rem; /* md:text-8xl */
-    }
-}
 
 /* =========================================
    SEÇÃO 2: SOBRE (OBJETIVO E FOCO)
@@ -87,7 +81,7 @@
 /* Card Objetivo (Borda) */
 .objective-card {
     text-align: justify;
-    padding: 2.5rem; /* p-10 */
+    padding: 1.2rem; /* p-10 */
     border: 4px solid #064e3b;
     border-radius: 2rem;
 }
@@ -96,33 +90,32 @@
     font-size: 2.25rem; /* text-4xl */
     font-weight: 800;   /* font-extrabold */
     color: #064e3b;     /* text-green-900 */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-transform: uppercase;
-    letter-spacing: -0.05em; /* tracking-tighter */
+    letter-spacing: 0.02em; /* tracking-tighter */
 }
 
 .section-text {
-    font-size: 1.5rem; /* text-2xl */
-    line-height: 1.625; /* leading-relaxed */
+    font-size:1.5rem; /* text-2xl */
+    line-height: 1.625;
+     color:#3d2516; 
+     font-weight: 500;  /* leading-relaxed */
 }
 
-.section-text.text-gray {
-    color: #4b5563; /* text-gray-600 */
-}
-
-.section-text.text-white {
-    color: white;
-}
-
-/* Card Foco (Preenchido) */
+/* Card Foco */
 .focus-card {
     background-color: #064e3b;
     border-radius: 2rem;
-    padding: 2.5rem; /* p-10 */
+    padding: 2rem; /* p-10 */
     color: white;
     text-align: justify;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
 }
+
+.section-text.text-white {
+    color: #ffffff;
+}
+
 
 .focus-heading {
     font-size: 1.875rem; /* text-3xl */
@@ -155,4 +148,25 @@
 .team-preview-section {
     background-color: #f9fafb; /* bg-gray-50 */
     padding: 0 1.5rem;
+}
+/* Responsividade Hero */
+@media (max-width: 900px) {
+    .home-main-title {
+        font-size: 3rem; /* md:text-8xl */
+    }
+    .home-subtitle {
+    font-size: 1.5rem;
+}
+.section-heading {
+    font-size: 1.8rem;
+}
+.section-text {
+    font-size:1.2rem;}
+   
+    .focus-heading {
+    font-size: 1.5rem;
+}
+.section-text.text-white {
+    font-size:1.1rem;
+}
 }
