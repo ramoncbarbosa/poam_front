@@ -27,7 +27,7 @@ export const teamData = [
     nome: 'Ramon Castro Barbosa',
     titulo: 'Graduado em Sistemas de Informação pela UNIFESSPA',
     cargo: 'Técnico em Desenvolvimento',
-    areaPesquisa: 'Ciência de Dados e Tecnlogias Aplicadas a Educação.',
+    areaPesquisa: 'Ciência de Dados, Desenvolvimento de Softwares e Tecnlogias Aplicadas a Educação.',
     foto: 'assets/users/rcb.gif',
     lattes: 'http://lattes.cnpq.br/6718025092923871'
   },
