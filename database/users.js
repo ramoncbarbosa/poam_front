@@ -121,10 +121,18 @@ export const teamData = [
   },
    {
     nome: 'Vitória da Silva Rodrigues',
-    titulo: 'Graduadaa em Ciências Sociais pela UFPA',
+    titulo: 'Graduada em Ciências Sociais pela UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Políticas Públicas na Amazônia, com ênfase em Comunidades Tradicionais no Estado do Pará.',
     foto: 'assets/users/vitoria.png',
     lattes: 'http://lattes.cnpq.br/9560780633120411',
+  },
+  {
+    nome: 'Alan Alysson Da Silva Brito',
+    titulo: 'Graduado em Ciências Sociais pela UFPA',
+    cargo: 'Pesquisador',
+    areaPesquisa: 'Políticas Públicas na Amazônia',
+    foto: 'assets/users/alan.gif',
+    lattes: 'http://lattes.cnpq.br/3110004716030723',
   },
 ]
