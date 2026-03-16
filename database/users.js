@@ -2,7 +2,7 @@ export const teamData = [
   {
     nome: 'Maria Dolores Lima da Silva',
     titulo: 'Doutora em Ciência Política pelo IUPERJ',
-    vinculo: 'PPGCP',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Coordenadora Geral',
     areaPesquisa: 'Instituições Políticas e Políticas Públicas na Amazônia',
     foto: 'assets/users/mariadolores.gif',
@@ -20,6 +20,7 @@ export const teamData = [
   {
     nome: 'Ananda Ridart Ribeiro Duarte',
     titulo: 'Mestra em Ciência Política pela UFPA',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Técnica em Direito',
     areaPesquisa: 'Instituições e Políticas na Amazônia',
     foto: 'assets/users/ananda.gif',
@@ -28,6 +29,7 @@ export const teamData = [
   {
     nome: 'Ramon Castro Barbosa',
     titulo: 'Graduado em Sistemas de Informação pela UNIFESSPA',
+    vinculo: 'UNIFESSPA',
     cargo: 'Técnico em Desenvolvimento',
     areaPesquisa: 'Ciência de Dados, Desenvolvimento de Softwares e Tecnlogias Aplicadas a Educação.',
     foto: 'assets/users/rcb.gif',
@@ -36,6 +38,7 @@ export const teamData = [
    {
     nome: 'Eugênia Rosa Cabral',
     titulo: 'Doutora em Sociologia e Política pela UFMG',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Lobby e Políticas Públicas na Amazônia',
     foto: 'assets/users/eugenia.gif',
@@ -44,6 +47,7 @@ export const teamData = [
   {
     nome: 'Nírvia Ravena',
     titulo: 'Doutora em Ciência Política pelo IUPERJ',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Políticas Públicas, Comportamento Político e Comportamento Ambiental',
     foto: 'assets/users/nirvia.jpg',
@@ -52,6 +56,7 @@ export const teamData = [
   {
     nome: 'Maycon Yuri Nascimento Costa',
     titulo: 'Doutor em Ciência Política pela UFMG',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisador',
     areaPesquisa: 'Lobby e Políticas Públicas Ambientais',
     foto: 'assets/users/maycon.gif',
@@ -60,6 +65,7 @@ export const teamData = [
   {
     nome: 'Marcos Felipe Rodrigues de Sousa',
     titulo: 'Doutor em Ciências do Desenvolvimento Socioambiental pela UFPA',
+    vinculo: 'NAEA/UFPA',
     cargo: 'Pesquisador',
     areaPesquisa: 'Instituições e Políticas na Amazônia',
     foto: 'assets/users/marcos.gif',
@@ -68,6 +74,7 @@ export const teamData = [
   {
     nome: 'Arantxa Carla da Silva Santos',
     titulo: 'Mestra em Antropologia pela UFPA',
+    vinculo: 'PPGSA/UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Políticas Públicas, Mudanças Climáticas e Organismos Internacionais',
     foto: 'assets/users/arantxa.gif',
@@ -76,6 +83,7 @@ export const teamData = [
   {
     nome: 'Ricardo Damasceno Moura Antunes',
     titulo: 'Mestre em Ciência Política pela UFPA',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisador',
     areaPesquisa: 'Políticas Públicas Ambientais, Transição justa e Tecnologias',
     foto: 'assets/users/ricardo.gif',
@@ -84,6 +92,7 @@ export const teamData = [
   {
     nome: 'Laís Vieira Guimarães',
     titulo: 'Mestra em Ciência Política pela UFPA',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Instituições Políticas e Estudos Legislativos',
     foto: 'assets/users/Lais.gif',
@@ -92,30 +101,34 @@ export const teamData = [
   {
     nome: 'Gabriel Creão de Oliveira',
     titulo: 'Mestre em Ciência Política pela UFPA',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'Pesquisador',
     areaPesquisa: 'Instituições Políticas e Políticas Ambientais.',
     foto: 'assets/users/gabriel.gif',
     lattes: 'http://lattes.cnpq.br/1460960866662239'
   },
-  {
-    nome: 'Lucas Pereira Barbosa Filho',
-    titulo: 'Mestre',
-    cargo: 'Pesquisador',
-    areaPesquisa: '',
-    foto: 'assets/users/lucas.jpg',
-    lattes: ''
-  },
-  {
-    nome: 'Tamires Lúcia Pinheiro',
-    titulo: 'Mestra',
-    cargo: 'Pesquisadora',
-    areaPesquisa: '',
-    foto: 'assets/users/tamires.jpg',
-    lattes: ''
-  },
+  // {
+  //   nome: 'Lucas Pereira Barbosa Filho',
+  //   titulo: 'Mestre',
+  //   vinculo: 'UFPA',
+  //   cargo: 'Pesquisador',
+  //   areaPesquisa: '',
+  //   foto: 'assets/users/lucas.jpg',
+  //   lattes: ''
+  // },
+  // {
+  //   nome: 'Tamires Lúcia Pinheiro',
+  //   titulo: 'Mestra',
+  //   vinculo: 'UFPA',
+  //   cargo: 'Pesquisadora',
+  //   areaPesquisa: '',
+  //   foto: 'assets/users/tamires.jpg',
+  //   lattes: ''
+  // },
   {
     nome: 'Isabella Feitoza Siqueira',
     titulo: 'Mestra em Ciência política pela UFPA',
+    vinculo: 'PPGCP/UFPA',
     cargo: 'pesquisadora',
     areaPesquisa: 'Instituiçõs e Políticas Públicas Ambientais',
     foto: 'assets/users/isabella.gif',
@@ -124,6 +137,7 @@ export const teamData = [
    {
     nome: 'Vitória da Silva Rodrigues',
     titulo: 'Graduada em Ciências Sociais pela UFPA',
+    vinculo: 'UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Políticas Públicas na Amazônia, com ênfase em Comunidades Tradicionais no Estado do Pará.',
     foto: 'assets/users/vitoria.png',
@@ -132,6 +146,7 @@ export const teamData = [
   {
     nome: 'Alan Alysson Da Silva Brito',
     titulo: 'Graduado em Ciências Sociais pela UFPA',
+    vinculo: 'UFPA',
     cargo: 'Pesquisador',
     areaPesquisa: 'Políticas Ambientais, Conflitos Socioambientais e Desenvolvimento na Amazônia',
     foto: 'assets/users/alan.gif',
