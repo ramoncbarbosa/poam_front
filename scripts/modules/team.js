@@ -157,6 +157,10 @@ export function createTeamCard(m) {
                     <p>${m.titulo || 'N/A'}</p>
                 </div>
                 <div class="info-group">
+                    <label>Vínculo</label>
+                    <p>${m.vinculo || 'Não informada'}</p>
+                </div>
+                <div class="info-group">
                     <label>Área de Atuação</label>
                     <p>${m.areaPesquisa || 'Não informada'}</p>
                 </div>

@@ -2,6 +2,7 @@ export const teamData = [
   {
     nome: 'Maria Dolores Lima da Silva',
     titulo: 'Doutora em Ciência Política pelo IUPERJ',
+    vinculo: 'PPGCP',
     cargo: 'Coordenadora Geral',
     areaPesquisa: 'Instituições Políticas e Políticas Públicas na Amazônia',
     foto: 'assets/users/mariadolores.gif',
@@ -10,6 +11,7 @@ export const teamData = [
   {
     nome: 'Dâina Naíny Cunha do Rego',
     titulo: 'Graduada em Ciências Sociais pela UFPA',
+    vinculo: 'UFPA',
     cargo: 'Coordenadora Adjunta',
     areaPesquisa: 'Políticas Ambientais na Amazônia',
     foto: 'assets/users/dainanainy.gif',
