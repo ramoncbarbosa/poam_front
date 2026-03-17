@@ -74,7 +74,7 @@ export const teamData = [
   {
     nome: 'Arantxa Carla da Silva Santos',
     titulo: 'Mestra em Antropologia pela UFPA',
-    vinculo: 'PPGSA/UFPA',
+    vinculo: 'PPGA/UFPA',
     cargo: 'Pesquisadora',
     areaPesquisa: 'Políticas Públicas, Mudanças Climáticas e Organismos Internacionais',
     foto: 'assets/users/arantxa.gif',
