@@ -20,7 +20,7 @@ export const pubData = [
     pesquisadores: [""],
     data: "2024",
     tipo: "capítulo_de_livro",
-    resumo: "ATUALIZAR",
+    resumo: "Sem informação",
     link: "https://www.taylorfrancis.com/books/edit/10.4324/9781003487777/social-policies-times-austerity-populism-nat%C3%A1lia-s%C3%A1tyro?refId=643a5fc6-f3c2-489c-b2cd-418a7c4913a3&context=ubx",
     imagem: 'assets/publications/pub1.png',
     comocitar: 'Silva, Maria Dolores L.; Medeiros, Ana Luiza M. (2024) Opportunities and strategies of the  dismantling process of Brazilian environmental policy: Forests and indigenous populations under attack In: Sátyro, Natália (edit.) Social Policies in Times of Austerity and Populism Lessons from Brazil., ed.1ª. New York: Routledge, v.1, p. 301 - 327.',
